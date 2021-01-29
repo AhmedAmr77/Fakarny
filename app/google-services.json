@@ -1,0 +1,98 @@
+{
+  "project_info": {
+    "project_number": "499722924936",
+    "firebase_url": "https://prototype-827aa.firebaseio.com",
+    "project_id": "prototype-827aa",
+    "storage_bucket": "prototype-827aa.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:499722924936:android:09c8e3ffe77a46e3ee003d",
+        "android_client_info": {
+          "package_name": "com.example.prototype"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "499722924936-ph4fbloq18ahp7q9boejhlqbipsfkfrl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCFkAiJQWYaJXL3wD09fRAFcltPKMAy3AM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "499722924936-ph4fbloq18ahp7q9boejhlqbipsfkfrl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:499722924936:android:ad0ac540b5e18fedee003d",
+        "android_client_info": {
+          "package_name": "com.example.serveces"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "499722924936-ph4fbloq18ahp7q9boejhlqbipsfkfrl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCFkAiJQWYaJXL3wD09fRAFcltPKMAy3AM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "499722924936-ph4fbloq18ahp7q9boejhlqbipsfkfrl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:499722924936:android:b2ad4ddc6163c8c6ee003d",
+        "android_client_info": {
+          "package_name": "com.example.tripreminder"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "499722924936-ph4fbloq18ahp7q9boejhlqbipsfkfrl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCFkAiJQWYaJXL3wD09fRAFcltPKMAy3AM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "499722924936-ph4fbloq18ahp7q9boejhlqbipsfkfrl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
