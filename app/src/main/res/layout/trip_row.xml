@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:card_view="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:id="@+id/card_view"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+card_view:cardCornerRadius="4dp">
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/row"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/textViewTripName"
+        android:layout_width="222dp"
+        android:layout_height="25dp"
+        android:text="@string/upcoming_trip_name"
+        card_view:layout_constraintStart_toStartOf="parent"
+        card_view:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textViewTripFrom"
+        android:layout_width="222dp"
+        android:layout_height="25dp"
+        android:layout_marginTop="24dp"
+        android:text="@string/upcoming_trip_start"
+        card_view:layout_constraintStart_toEndOf="@+id/textView12"
+        card_view:layout_constraintTop_toBottomOf="@+id/textViewTripTime" />
+
+    <TextView
+        android:id="@+id/textViewTripTo"
+        android:layout_width="222dp"
+        android:layout_height="25dp"
+        android:layout_marginTop="12dp"
+        android:text="@string/upcoming_trip_end"
+        card_view:layout_constraintStart_toEndOf="@+id/textView13"
+        card_view:layout_constraintTop_toBottomOf="@+id/textViewTripFrom" />
+
+    <TextView
+        android:id="@+id/textViewTripDate"
+        android:layout_width="72dp"
+        android:layout_height="19dp"
+        android:text="@string/upcoming_trip_date"
+        card_view:layout_constraintStart_toStartOf="@+id/textViewTripName"
+        card_view:layout_constraintTop_toBottomOf="@+id/textViewTripName" />
+
+    <TextView
+        android:id="@+id/textViewTripTime"
+        android:layout_width="97dp"
+        android:layout_height="21dp"
+        android:text="@string/upcoming_trip_time"
+        card_view:layout_constraintEnd_toEndOf="@+id/textViewTripName"
+        card_view:layout_constraintTop_toBottomOf="@+id/textViewTripName" />
+
+    <TextView
+        android:id="@+id/textView12"
+        android:layout_width="62dp"
+        android:layout_height="19dp"
+        android:layout_marginTop="28dp"
+        android:text="from"
+        card_view:layout_constraintStart_toStartOf="parent"
+        card_view:layout_constraintTop_toBottomOf="@+id/textViewTripDate" />
+
+    <TextView
+        android:id="@+id/textView13"
+        android:layout_width="63dp"
+        android:layout_height="21dp"
+        android:layout_marginTop="16dp"
+        android:text="to"
+        card_view:layout_constraintStart_toStartOf="parent"
+        card_view:layout_constraintTop_toBottomOf="@+id/textView12" />
+
+    <Button
+        android:id="@+id/buttonTripStart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Start"
+        card_view:layout_constraintBottom_toBottomOf="parent"
+        card_view:layout_constraintEnd_toStartOf="@+id/buttonTripOptions"
+        card_view:layout_constraintStart_toEndOf="@+id/buttonTripNotes" />
+
+    <Button
+        android:id="@+id/buttonTripOptions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="optopns"
+        card_view:layout_constraintBottom_toBottomOf="parent"
+        card_view:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/buttonTripNotes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Notes"
+        card_view:layout_constraintBottom_toBottomOf="parent"
+        card_view:layout_constraintStart_toStartOf="parent"
+        card_view:layout_constraintTop_toBottomOf="@+id/textView13" />
+
+    <TextView
+        android:id="@+id/textViewTripWay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/upcoming_trip_way"
+        card_view:layout_constraintStart_toEndOf="@+id/textViewTripName"
+        card_view:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

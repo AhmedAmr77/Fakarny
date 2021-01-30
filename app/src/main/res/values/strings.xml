@@ -112,4 +112,10 @@
     </string>
     <string name="oneWay">One Way Trip</string>
     <string name="roundTrip">Round Trip</string>
+    <string name="upcoming_trip_name">Trip Name</string>
+    <string name="upcoming_trip_date">25-12-2021</string>
+    <string name="upcoming_trip_time">11:25 AM</string>
+    <string name="upcoming_trip_way">Round</string>
+    <string name="upcoming_trip_start">Cairo</string>
+    <string name="upcoming_trip_end">Aswan</string>
 </resources>

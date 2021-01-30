@@ -96,7 +96,7 @@ public class NewTripActivity extends AppCompatActivity implements
             }
         });
         if (!Places.isInitialized()) {
-            Places.initialize(getApplicationContext(),"AIzaSyBay54UhoEPbk2gcX0EmTXNEMDmr2MbRyk", Locale.US);
+            Places.initialize(getApplicationContext(),"AIzaSyDnbtBwgXmFh-e3jDYu3ffqDpOEOb8vU3Y", Locale.US);
         }
         List<Place.Field> fields = Arrays.asList(Place.Field.ID, Place.Field.NAME);
 
