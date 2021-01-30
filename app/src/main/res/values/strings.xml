@@ -18,7 +18,7 @@
     <string name="menu_slideshow">Slideshow</string>
     <string name="menu_History">History</string>
     <string name="menu_sync">Sync</string>
-    <string name="menu_login">Login</string>
+    <string name="menu_login">Logout</string>
     <string name="menu_upcoming">Upcoming</string>
     <string name="title_activity_new_trip">ScrollingActivity</string>
     <string name="large_text">

@@ -95,15 +95,15 @@ public class NewTripActivity extends AppCompatActivity implements
 
             }
         });
-//        if (!Places.isInitialized()) {
-//            Places.initialize(getApplicationContext(),"AIzaSyBcJbbTAYI2Y3Gc2GWvZ0Z2dD7M7JijFL0", Locale.US);
-//        }
-//        List<Place.Field> fields = Arrays.asList(Place.Field.ID, Place.Field.NAME);
-//
-//        // Start the autocomplete intent.
-//        Intent intent = new Autocomplete.IntentBuilder(AutocompleteActivityMode.OVERLAY, fields)
-//                .build(this);
-//        startActivityForResult(intent, 88);
+        if (!Places.isInitialized()) {
+            Places.initialize(getApplicationContext(),"AIzaSyBay54UhoEPbk2gcX0EmTXNEMDmr2MbRyk", Locale.US);
+        }
+        List<Place.Field> fields = Arrays.asList(Place.Field.ID, Place.Field.NAME);
+
+        // Start the autocomplete intent.
+        Intent intent = new Autocomplete.IntentBuilder(AutocompleteActivityMode.OVERLAY, fields)
+                .build(this);
+        startActivityForResult(intent, 88);
 
     }
 

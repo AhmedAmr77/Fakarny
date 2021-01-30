@@ -108,8 +108,8 @@
                 android:layout_height="150dp"
                 android:layout_margin="4dp"
                 android:layout_weight="1"
-                android:background="@drawable/date"
-                android:foreground="@drawable/date" />
+                android:background="@drawable/date_background"
+                android:foreground="@drawable/date_background" />
 
             <Button
                 android:id="@+id/btnTime"
@@ -117,8 +117,8 @@
                 android:layout_height="150dp"
                 android:layout_margin="4dp"
                 android:layout_weight="1"
-                android:background="@drawable/time"
-                android:foreground="@drawable/time" />
+                android:background="@drawable/time_background"
+                android:foreground="@drawable/time_background" />
         </LinearLayout>
 
         <LinearLayout

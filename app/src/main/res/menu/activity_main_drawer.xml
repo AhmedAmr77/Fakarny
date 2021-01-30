@@ -16,10 +16,7 @@
             android:id="@+id/nav_sync"
             android:icon="@android:drawable/ic_popup_sync"
             android:title="@string/menu_sync" />
-        <item
-            android:id="@+id/nav_login"
-            android:icon="?attr/homeAsUpIndicator"
-            android:title="@string/menu_login" />
+
     </group>
 
 </menu>
