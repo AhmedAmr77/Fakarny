@@ -31,7 +31,7 @@ public class RecyclerViAdapter extends RecyclerView.Adapter<RecyclerViAdapter.Vi
 
         View layout;
         ConstraintLayout row;
-        TextView textViewTripName, textViewTripDate, textViewTripTime, textViewTripFrom, textViewTripTo, textViewTripWay;
+        TextView textViewTripName, textViewTripDate, textViewTripTime, textViewTripFrom, textViewTripTo, textViewTripWay,textViewRepeat;
         Button btnTripStart, btnTripOptions, btnTripNotes;
 
         public ViewHolder(@NonNull View itemView) {
@@ -41,13 +41,16 @@ public class RecyclerViAdapter extends RecyclerView.Adapter<RecyclerViAdapter.Vi
             row = itemView.findViewById(R.id.row);
             textViewTripName = itemView.findViewById(R.id.textViewTripName);
             textViewTripDate = itemView.findViewById(R.id.textViewTripDate);
-            textViewTripTime = itemView.findViewById(R.id.textViewTripTime);
-            textViewTripFrom = itemView.findViewById(R.id.textViewTripFrom);
-            textViewTripTo = itemView.findViewById(R.id.textViewTripTo);
-            textViewTripWay = itemView.findViewById(R.id.textViewTripWay);
+            textViewTripTime = itemView.findViewById(R.id.textTime);
+            textViewTripFrom = itemView.findViewById(R.id.textViewTripWayFrom);
+            textViewTripTo = itemView.findViewById(R.id.textViewTripWayTo);
+            textViewTripWay = itemView.findViewById(R.id.txtType);
+            textViewRepeat = itemView.findViewById(R.id.txtRepeat);
+
             btnTripStart = itemView.findViewById(R.id.buttonTripStart);
             btnTripNotes = itemView.findViewById(R.id.buttonTripNotes);
             btnTripOptions = itemView.findViewById(R.id.buttonTripOptions);
+
 
             Toast.makeText(context, "VHConstructor"+tripDataList.get(0).getTripName(), Toast.LENGTH_SHORT).show();
 
@@ -72,6 +75,7 @@ public class RecyclerViAdapter extends RecyclerView.Adapter<RecyclerViAdapter.Vi
         holder.textViewTripTime.setText(tripDataList.get(position).getTime());
         holder.textViewTripFrom.setText(tripDataList.get(position).getStartPoint());
         holder.textViewTripTo.setText(tripDataList.get(position).getEnaPoint());
+        holder.textViewRepeat.setText(tripDataList.get(position).getRepeatData());
         holder.textViewTripWay.setText(tripDataList.get(position).getWayData());
         Toast.makeText(context, "BIND"+tripDataList.get(0).getTripName(), Toast.LENGTH_SHORT).show();
     }

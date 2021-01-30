@@ -1,117 +1,208 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:card_view="http://schemas.android.com/apk/res-auto"
-xmlns:tools="http://schemas.android.com/tools"
-android:id="@+id/card_view"
-android:layout_width="match_parent"
-android:layout_height="wrap_content"
-card_view:cardCornerRadius="30dp"
-    android:elevation="22dp">
-
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:id="@+id/row"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/card_view"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:layout_marginStart="2dp"
+    android:layout_marginTop="10dp"
+    android:elevation="22dp"
+    card_view:cardCornerRadius="30dp">
 
-    <TextView
-        android:id="@+id/textViewTripName"
-        android:layout_width="222dp"
-        android:layout_height="25dp"
-        android:text="@string/upcoming_trip_name"
-        card_view:layout_constraintStart_toStartOf="parent"
-        card_view:layout_constraintTop_toTopOf="parent" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/textViewTripFrom"
-        android:layout_width="222dp"
-        android:layout_height="25dp"
-        android:layout_marginTop="24dp"
-        android:text="@string/upcoming_trip_start"
-        card_view:layout_constraintStart_toEndOf="@+id/textView12"
-        card_view:layout_constraintTop_toBottomOf="@+id/textViewTripTime" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:orientation="horizontal"
+            android:weightSum="6">
 
-    <TextView
-        android:id="@+id/textViewTripTo"
-        android:layout_width="222dp"
-        android:layout_height="25dp"
-        android:layout_marginTop="12dp"
-        android:text="@string/upcoming_trip_end"
-        card_view:layout_constraintStart_toEndOf="@+id/textView13"
-        card_view:layout_constraintTop_toBottomOf="@+id/textViewTripFrom" />
+            <TextView
+                android:id="@+id/textViewTripName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="18dp"
+                android:layout_marginTop="6dp"
+                android:layout_weight="5"
+                android:gravity="center_horizontal"
+                android:text="My Trip"
+                android:textSize="22sp" />
 
-    <TextView
-        android:id="@+id/textViewTripDate"
-        android:layout_width="72dp"
-        android:layout_height="19dp"
-        android:text="@string/upcoming_trip_date"
-        card_view:layout_constraintStart_toStartOf="@+id/textViewTripName"
-        card_view:layout_constraintTop_toBottomOf="@+id/textViewTripName" />
+            <Button
+                android:id="@+id/buttonTripOptions"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginEnd="10dp"
+                android:layout_weight="1"
+                android:textSize="1dp"
+                card_view:icon="@android:drawable/ic_menu_sort_by_size" />
+        </LinearLayout>
 
-    <TextView
-        android:id="@+id/textViewTripTime"
-        android:layout_width="97dp"
-        android:layout_height="21dp"
-        android:text="@string/upcoming_trip_time"
-        card_view:layout_constraintEnd_toEndOf="@+id/textViewTripName"
-        card_view:layout_constraintTop_toBottomOf="@+id/textViewTripName" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:orientation="horizontal"
+            android:weightSum="7">
 
-    <TextView
-        android:id="@+id/textView12"
-        android:layout_width="62dp"
-        android:layout_height="19dp"
-        android:layout_marginTop="28dp"
-        android:text="from"
-        card_view:layout_constraintStart_toStartOf="parent"
-        card_view:layout_constraintTop_toBottomOf="@+id/textViewTripDate" />
+            <TextView
+                android:id="@+id/textView10"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_weight="1.5"
+                android:text="@string/date" />
 
-    <TextView
-        android:id="@+id/textView13"
-        android:layout_width="63dp"
-        android:layout_height="21dp"
-        android:layout_marginTop="16dp"
-        android:text="to"
-        card_view:layout_constraintStart_toStartOf="parent"
-        card_view:layout_constraintTop_toBottomOf="@+id/textView12" />
+            <TextView
+                android:id="@+id/textViewTripDate"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.7"
+                android:text="21/10/1998" />
 
-    <Button
-        android:id="@+id/buttonTripStart"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Start"
-        card_view:layout_constraintBottom_toBottomOf="parent"
-        card_view:layout_constraintEnd_toStartOf="@+id/buttonTripOptions"
-        card_view:layout_constraintStart_toEndOf="@+id/buttonTripNotes" />
+            <TextView
+                android:id="@+id/textView14"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".5"
+                android:text="@string/at" />
 
-    <Button
-        android:id="@+id/buttonTripOptions"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="20dp"
-        android:text="optopns"
-        card_view:layout_constraintBottom_toBottomOf="parent"
-        card_view:layout_constraintEnd_toEndOf="parent" />
+            <TextView
+                android:id="@+id/textTime"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:layout_weight="3.3"
+                android:text="10:50Am" />
+        </LinearLayout>
 
-    <Button
-        android:id="@+id/buttonTripNotes"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="20dp"
-        android:text="Notes"
-        card_view:layout_constraintBottom_toBottomOf="parent"
-        card_view:layout_constraintStart_toStartOf="parent"
-        card_view:layout_constraintTop_toBottomOf="@+id/textView13"
-        card_view:layout_constraintVertical_bias="1.0" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="10dp"
+            android:orientation="horizontal"
+            android:weightSum="7">
 
-    <TextView
-        android:id="@+id/textViewTripWay"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/upcoming_trip_way"
-        card_view:layout_constraintStart_toEndOf="@+id/textViewTripName"
-        card_view:layout_constraintTop_toTopOf="parent" />
+            <TextView
+                android:id="@+id/textVi"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_weight="1.5"
+                android:text="@string/from" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/textViewTripWayFrom"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="5.5"
+                android:text="TextView" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="10dp"
+            android:orientation="horizontal"
+            android:weightSum="7">
+
+            <TextView
+                android:id="@+id/textView1to"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_weight="1.5"
+                android:text="@string/to" />
+
+            <TextView
+                android:id="@+id/textViewTripWayTo"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="5.5"
+                android:text="TextView" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="10dp"
+            android:orientation="horizontal"
+            android:weightSum="7">
+
+            <TextView
+                android:id="@+id/textViewtype"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_weight="1.5"
+                android:text="@string/type" />
+
+            <TextView
+                android:id="@+id/txtType"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="5.5"
+                android:text="TextView" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="10dp"
+            android:orientation="horizontal"
+            android:weightSum="7">
+
+            <TextView
+                android:id="@+id/textView16"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_weight="1.5"
+                android:text="@string/repeat" />
+
+            <TextView
+                android:id="@+id/txtRepeat"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="5.5"
+                android:text="TextView" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal"
+            android:weightSum="7">
+
+            <Button
+                android:id="@+id/buttonTripNotes"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="5dp"
+                android:layout_weight="1.5"
+                card_view:icon="?attr/actionModePasteDrawable" />
+
+            <Button
+                android:id="@+id/buttonTripStart"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="5.5"
+                android:text="@string/startTeip" />
+        </LinearLayout>
+    </LinearLayout>
 </androidx.cardview.widget.CardView>
