@@ -1,5 +1,6 @@
 package com.example.tripreminder.ui.upcoming;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,9 +16,11 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.tripreminder.NewTripActivity;
 import com.example.tripreminder.R;
 import com.example.tripreminder.RecyclerViAdapter;
 import com.example.tripreminder.TripData;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.Arrays;
 import java.util.List;
@@ -30,6 +33,7 @@ public class UpcomingFragment extends Fragment {
     RecyclerView.Adapter adapter;
     RecyclerView.LayoutManager layoutManager;
     List<TripData> tripDataList;
+    FloatingActionButton fab;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -37,6 +41,14 @@ public class UpcomingFragment extends Fragment {
                 new ViewModelProvider(this).get(UpcomingViewModel.class);
         View root = inflater.inflate(R.layout.fragment_upcoming, container, false);
 
+        fab = root.findViewById(R.id.btnNewTrip);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent outIntent =new Intent(getContext(), NewTripActivity.class);
+                startActivity(outIntent);
+            }
+        });
         recyclerView = root.findViewById(R.id.recyclerViID);
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this.getContext());

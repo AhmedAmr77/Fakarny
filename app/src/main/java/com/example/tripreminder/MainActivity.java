@@ -34,13 +34,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         FloatingActionButton fab = findViewById(R.id.btnMap);
         mAuth = FirebaseAuth.getInstance();
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent outIntent =new Intent(getApplicationContext(),NewTripActivity.class);
-                startActivity(outIntent);
-            }
-        });
+
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
 

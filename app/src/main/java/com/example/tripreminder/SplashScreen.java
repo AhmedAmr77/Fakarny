@@ -47,8 +47,9 @@ public class SplashScreen extends AppCompatActivity {
                     finish();
                 } else {
                     List<AuthUI.IdpConfig> providers = Arrays.asList(
-                            new AuthUI.IdpConfig.EmailBuilder().build(),
-                            new AuthUI.IdpConfig.GoogleBuilder().build());
+                            new AuthUI.IdpConfig.EmailBuilder().build()
+                       //     ,new AuthUI.IdpConfig.GoogleBuilder().build()
+                            );
                     startActivityForResult(AuthUI.getInstance().createSignInIntentBuilder()
                             .setAvailableProviders(providers).build(), RC_SIGN_IN);
                 }
