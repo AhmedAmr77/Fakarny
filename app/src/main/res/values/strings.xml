@@ -118,4 +118,11 @@
     <string name="upcoming_trip_way">Round</string>
     <string name="upcoming_trip_start">Cairo</string>
     <string name="upcoming_trip_end">Aswan</string>
+    <string name="from">From</string>
+    <string name="to">To</string>
+    <string name="at">at</string>
+    <string name="delete">Delete</string>
+    <string name="notes">Notes</string>
+    <string name="Type" />
+    <string name="type">Type</string>
 </resources>

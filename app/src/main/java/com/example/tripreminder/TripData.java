@@ -2,11 +2,11 @@ package com.example.tripreminder;
 
 public class TripData {
 
-    private int id;
+    private String id ,state;
     private String tripName,startPoint,enaPoint;
     private String date ,time ,repeatData,wayData ;
 
-    public TripData(int id, String tripName, String startPoint, String enaPoint, String date, String time, String repeatData, String wayData) {
+    public TripData(String id, String tripName, String startPoint, String enaPoint, String date, String time, String repeatData, String wayData) {
         this.id = id;
         this.tripName = tripName;
         this.startPoint = startPoint;
@@ -16,8 +16,19 @@ public class TripData {
         this.repeatData = repeatData;
         this.wayData = wayData;
     }
+    public TripData(String id,  String tripName, String startPoint, String enaPoint, String date, String time, String repeatData, String wayData,String state) {
+        this.id = id;
+        this.state = state;
+        this.tripName = tripName;
+        this.startPoint = startPoint;
+        this.enaPoint = enaPoint;
+        this.date = date;
+        this.time = time;
+        this.repeatData = repeatData;
+        this.wayData = wayData;
+    }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -49,7 +60,15 @@ public class TripData {
         this.wayData = wayData;
     }
 
-    public int getId() {
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public String getId() {
         return id;
     }
 

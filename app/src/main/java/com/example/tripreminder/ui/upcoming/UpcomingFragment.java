@@ -42,16 +42,12 @@ public class UpcomingFragment extends Fragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this.getContext());
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
-        tripDataList = Arrays.asList(new TripData(1, "TripOne", "Meno", "Cai", "12-6-2021", "3:45 PM", "No", "Round"),
-                new TripData(2, "TripTwo", "Lux", "Asw", "16-6-2021", "11:45 PM", "Yes", "OneWay"),
-                new TripData(3, "TripThree", "Cai", "Alex", "30-6-2021", "2:45 PM", "Yes", "Round"),
-                new TripData(4, "TripFour", "Alex", "Asw", "25-6-2021", "1:45 PM", "No", "OneWay"),
-                new TripData(5, "TripFive", "Asw", "Meno", "4-6-2021", "5:45 PM", "No", "Round"),
-                new TripData(1, "TripOne", "Meno", "Cai", "12-6-2021", "3:45 PM", "No", "Round"),
-                new TripData(2, "TripTwo", "Lux", "Asw", "16-6-2021", "11:45 PM", "Yes", "OneWay"),
-                new TripData(3, "TripThree", "Cai", "Alex", "30-6-2021", "2:45 PM", "Yes", "Round"),
-                new TripData(4, "TripFour", "Alex", "Asw", "25-6-2021", "1:45 PM", "No", "OneWay"),
-                new TripData(5, "TripFive", "Asw", "Meno", "4-6-2021", "5:45 PM", "No", "Round"));
+        tripDataList = Arrays.asList(new TripData("1", "TripOne", "Meno", "Cai", "12-6-2021", "3:45 PM", "No", "Round"),
+                new TripData("2", "TripTwo", "Lux", "Asw", "16-6-2021", "11:45 PM", "Yes", "OneWay"),
+                new TripData("3", "TripThree", "Cai", "Alex", "30-6-2021", "2:45 PM", "Yes", "Round"),
+                new TripData("4", "TripFour", "Alex", "Asw", "25-6-2021", "1:45 PM", "No", "OneWay"),
+                new TripData("5", "TripFive", "Asw", "Meno", "4-6-2021", "5:45 PM", "No", "Round"),
+                new TripData("1", "TripOne", "Meno", "Cai", "12-6-2021", "3:45 PM", "No", "Round"));
         adapter = new RecyclerViAdapter(this.getContext(), tripDataList);
         recyclerView.setAdapter(adapter);
 
