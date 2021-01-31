@@ -1,4 +1,4 @@
-package com.example.tripreminder;
+package com.example.tripreminder.ui.upcoming;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -14,6 +14,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 //import com.example.testdrawer.ui.home.HomeFragment;
 
+import com.example.tripreminder.R;
+import com.example.tripreminder.TripData;
+
 import java.util.List;
 
 public class RecyclerViAdapter extends RecyclerView.Adapter<RecyclerViAdapter.ViewHolder> {
@@ -24,14 +27,13 @@ public class RecyclerViAdapter extends RecyclerView.Adapter<RecyclerViAdapter.Vi
     public RecyclerViAdapter(Context context, List<TripData> tripDataList) {
         this.context = context;
         this.tripDataList = tripDataList;
-        Toast.makeText(context, "RVAdptConstruc"+tripDataList.get(0).getTripName(), Toast.LENGTH_SHORT).show();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         View layout;
         ConstraintLayout row;
-        TextView textViewTripName, textViewTripDate, textViewTripTime, textViewTripFrom, textViewTripTo, textViewTripWay,textViewRepeat;
+        TextView textViewTripName, textViewTripDate, textViewTripTime, textViewTripFrom, textViewTripTo, textViewTripWay;
         Button btnTripStart, btnTripOptions, btnTripNotes;
 
         public ViewHolder(@NonNull View itemView) {
@@ -41,18 +43,14 @@ public class RecyclerViAdapter extends RecyclerView.Adapter<RecyclerViAdapter.Vi
             row = itemView.findViewById(R.id.row);
             textViewTripName = itemView.findViewById(R.id.textViewTripName);
             textViewTripDate = itemView.findViewById(R.id.textViewTripDate);
-            textViewTripTime = itemView.findViewById(R.id.textTime);
-            textViewTripFrom = itemView.findViewById(R.id.textViewTripWayFrom);
-            textViewTripTo = itemView.findViewById(R.id.textViewTripWayTo);
-            textViewTripWay = itemView.findViewById(R.id.txtType);
-            textViewRepeat = itemView.findViewById(R.id.txtRepeat);
-
+            textViewTripTime = itemView.findViewById(R.id.textViewTripTime);
+            textViewTripFrom = itemView.findViewById(R.id.textViewTripFrom);
+            textViewTripTo = itemView.findViewById(R.id.textViewTripTo);
+            textViewTripWay = itemView.findViewById(R.id.textViewTripWay);
             btnTripStart = itemView.findViewById(R.id.buttonTripStart);
             btnTripNotes = itemView.findViewById(R.id.buttonTripNotes);
             btnTripOptions = itemView.findViewById(R.id.buttonTripOptions);
 
-
-            Toast.makeText(context, "VHConstructor"+tripDataList.get(0).getTripName(), Toast.LENGTH_SHORT).show();
 
         }
     }
@@ -64,7 +62,6 @@ public class RecyclerViAdapter extends RecyclerView.Adapter<RecyclerViAdapter.Vi
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View view = inflater.inflate(R.layout.trip_row, parent, false);
         ViewHolder viewHolder = new ViewHolder(view);
-        Toast.makeText(context, "CREATE"+tripDataList.get(0).getTripName(), Toast.LENGTH_SHORT).show();
         return viewHolder;
     }
 
@@ -75,9 +72,7 @@ public class RecyclerViAdapter extends RecyclerView.Adapter<RecyclerViAdapter.Vi
         holder.textViewTripTime.setText(tripDataList.get(position).getTime());
         holder.textViewTripFrom.setText(tripDataList.get(position).getStartPoint());
         holder.textViewTripTo.setText(tripDataList.get(position).getEnaPoint());
-        holder.textViewRepeat.setText(tripDataList.get(position).getRepeatData());
         holder.textViewTripWay.setText(tripDataList.get(position).getWayData());
-        Toast.makeText(context, "BIND"+tripDataList.get(0).getTripName(), Toast.LENGTH_SHORT).show();
     }
 
     @Override

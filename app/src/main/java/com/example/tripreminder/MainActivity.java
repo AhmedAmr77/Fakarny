@@ -54,8 +54,7 @@ public class MainActivity extends AppCompatActivity {
             mAuth.signOut();
             Intent i = new Intent(this, SplashScreen.class);
             startActivity(i);
-            Toast.makeText(this, "jhgcfxchvjbknlm", Toast.LENGTH_SHORT).show();
-            return true;
+            finish();
         }
         return super.onOptionsItemSelected(item);
     }

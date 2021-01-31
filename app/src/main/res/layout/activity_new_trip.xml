@@ -108,8 +108,8 @@
                 android:layout_height="150dp"
                 android:layout_margin="4dp"
                 android:layout_weight="1"
-                android:background="@drawable/date_background"
-                android:foreground="@drawable/date_background" />
+                android:background="@drawable/ic_baseline_calendar_today_24"
+                android:foreground="@drawable/ic_baseline_calendar_today_24" />
 
             <Button
                 android:id="@+id/btnTime"
@@ -117,8 +117,8 @@
                 android:layout_height="150dp"
                 android:layout_margin="4dp"
                 android:layout_weight="1"
-                android:background="@drawable/time_background"
-                android:foreground="@drawable/time_background" />
+                android:background="@drawable/ic_baseline_access_time_24"
+                android:foreground="@drawable/ic_baseline_access_time_24" />
         </LinearLayout>
 
         <LinearLayout

@@ -1,4 +1,4 @@
-package com.example.tripreminder;
+package com.example.tripreminder.ui.history;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,6 +11,9 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.tripreminder.R;
+import com.example.tripreminder.TripData;
 
 import java.util.List;
 

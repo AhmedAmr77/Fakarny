@@ -12,10 +12,7 @@
             android:id="@+id/nav_history"
             android:icon="@android:drawable/ic_menu_recent_history"
             android:title="@string/menu_History" />
-        <item
-            android:id="@+id/nav_sync"
-            android:icon="@android:drawable/ic_popup_sync"
-            android:title="@string/menu_sync" />
+
 
     </group>
 

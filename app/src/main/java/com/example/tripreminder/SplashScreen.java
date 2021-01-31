@@ -3,6 +3,7 @@ package com.example.tripreminder;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -11,6 +12,9 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.firebase.ui.auth.AuthUI;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -36,23 +40,22 @@ public class SplashScreen extends AppCompatActivity {
         intent = new Intent(this, MainActivity.class);
 
         mAuth = FirebaseAuth.getInstance();
-        authStateListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-                if (firebaseUser != null) {
-                    Toast.makeText(SplashScreen.this, "Welcome " + firebaseUser.getDisplayName(), Toast.LENGTH_SHORT)
-                            .show();
-                    startActivity(intent);
-                    finish();
-                } else {
-                    List<AuthUI.IdpConfig> providers = Arrays.asList(
-                            new AuthUI.IdpConfig.EmailBuilder().build()
-                       //     ,new AuthUI.IdpConfig.GoogleBuilder().build()
-                            );
-                    startActivityForResult(AuthUI.getInstance().createSignInIntentBuilder()
-                            .setAvailableProviders(providers).build(), RC_SIGN_IN);
-                }
+        authStateListener = firebaseAuth -> {
+            FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+            if (firebaseUser != null) {
+                Toast.makeText(SplashScreen.this, "Welcome " + firebaseUser.getEmail(), Toast.LENGTH_SHORT)
+                        .show();
+                startActivity(intent);
+                finish();
+            } else {
+                List<AuthUI.IdpConfig> providers = Arrays.asList(
+                        new AuthUI.IdpConfig.EmailBuilder().build()
+                        , new AuthUI.IdpConfig.GoogleBuilder().build()
+                );
+                startActivityForResult(AuthUI.getInstance().createSignInIntentBuilder()
+                        .setAvailableProviders(providers)
+                        .setIsSmartLockEnabled(false)
+                        .build(), RC_SIGN_IN);
             }
         };
 
@@ -62,25 +65,28 @@ public class SplashScreen extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
         if (requestCode == RC_SIGN_IN) {
             if (resultCode == RESULT_OK) {
-
                 startActivity(intent);
+                finish();
             } else {
                 finish();
             }
         }
+
+
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        new Handler().postDelayed(new Runnable() {
+        new Handler(Looper.myLooper()).postDelayed(new Runnable() {
             @Override
             public void run() {
                 mAuth.addAuthStateListener(authStateListener);
             }
-        }, 3000);
+        }, 2000);
 
     }
 
