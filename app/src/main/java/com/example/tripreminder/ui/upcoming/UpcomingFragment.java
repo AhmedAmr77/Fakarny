@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tripreminder.NewTripActivity;
 import com.example.tripreminder.R;
+import com.example.tripreminder.RecyclerViAdapter;
 import com.example.tripreminder.TripData;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
