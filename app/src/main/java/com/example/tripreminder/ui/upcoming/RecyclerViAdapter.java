@@ -1,6 +1,9 @@
-package com.example.tripreminder;
+package com.example.tripreminder.ui.upcoming;
 
+import android.content.ActivityNotFoundException;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +15,9 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
+
+import com.example.tripreminder.R;
+import com.example.tripreminder.TripData;
 
 import java.util.List;
 
@@ -73,6 +79,23 @@ public class RecyclerViAdapter extends RecyclerView.Adapter<RecyclerViAdapter.Vi
         holder.textViewTripTo.setText(tripDataList.get(position).getEnaPoint());
         holder.textViewRepeat.setText(tripDataList.get(position).getRepeatData());
         holder.textViewTripWay.setText(tripDataList.get(position).getWayData());
+
+        holder.btnTripStart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
+                        Uri.parse("http://maps.google.com/maps?daddr="+tripDataList.get(position).getLat_long_endPoint()));
+                String title = "Choose an Appp ";//context.getResources().getString(R.string.chooser_title);
+                Intent chooser = Intent.createChooser(intent, title);
+                try {
+                    context.startActivity(chooser);
+                } catch (ActivityNotFoundException e) {
+                    Toast.makeText(context, "NO APp Can Open THIS !!!", Toast.LENGTH_SHORT).show();
+                    // Define what your app should do if no activity can handle the intent.
+                }
+                Toast.makeText(context, "StartClickedddddddd", Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     @Override

@@ -4,7 +4,8 @@ public class TripData {
 
     private String id ,state;
     private String tripName,startPoint,enaPoint;
-    private String date ,time ,repeatData,wayData ;
+    private String date ,time ,repeatData,wayData;
+    private String lat_long_startPoint, lat_long_endPoint;
 
     public TripData(String id, String tripName, String startPoint, String enaPoint, String date, String time, String repeatData, String wayData) {
         this.id = id;
@@ -26,6 +27,40 @@ public class TripData {
         this.time = time;
         this.repeatData = repeatData;
         this.wayData = wayData;
+    }
+
+    public TripData(String id, String state, String tripName, String startPoint, String enaPoint, String date, String time, String repeatData, String wayData, String lat_long_startPoint, String lat_long_endPoint) {
+        this.id = id;
+        this.state = state;
+        this.tripName = tripName;
+        this.startPoint = startPoint;
+        this.enaPoint = enaPoint;
+        this.date = date;
+        this.time = time;
+        this.repeatData = repeatData;
+        this.wayData = wayData;
+        this.lat_long_startPoint = lat_long_startPoint;
+        this.lat_long_endPoint = lat_long_endPoint;
+    }
+
+    public TripData() {
+    }
+
+
+    public String getLat_long_startPoint() {
+        return lat_long_startPoint;
+    }
+
+    public void setLat_long_startPoint(String lat_long_startPoint) {
+        this.lat_long_startPoint = lat_long_startPoint;
+    }
+
+    public String getLat_long_endPoint() {
+        return lat_long_endPoint;
+    }
+
+    public void setLat_long_endPoint(String lat_long_endPoint) {
+        this.lat_long_endPoint = lat_long_endPoint;
     }
 
     public void setId(String id) {
