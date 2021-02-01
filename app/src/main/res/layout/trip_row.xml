@@ -8,6 +8,7 @@
     android:layout_marginStart="2dp"
     android:layout_marginTop="10dp"
     android:elevation="22dp"
+    card_view:cardElevation="30dp"
     card_view:cardCornerRadius="30dp">
 
     <LinearLayout
@@ -20,7 +21,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp"
             android:orientation="horizontal"
-            android:weightSum="6">
+            android:weightSum="10">
 
             <TextView
                 android:id="@+id/textViewTripName"
@@ -28,9 +29,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="18dp"
                 android:layout_marginTop="6dp"
-                android:layout_weight="5"
+                android:layout_weight="9"
+                android:textStyle="bold"
                 android:gravity="center_horizontal"
                 android:text="My Trip"
+                android:textColor="#FF2894A3"
                 android:textSize="22sp" />
 
             <Button
@@ -38,10 +41,16 @@
                 android:layout_width="0dp"
                 android:layout_height="40dp"
                 android:layout_gravity="center_horizontal"
+                android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
                 android:layout_weight="1"
-                android:textSize="1dp"
-                card_view:icon="@android:drawable/ic_menu_sort_by_size" />
+                android:background="@drawable/ic_baseline_close_24"
+                android:foreground="@drawable/ic_baseline_close_24"
+                android:paddingStart="15dp"
+                android:paddingEnd="15dp"
+                android:paddingBottom="15dp"
+                android:textSize="1dp" />
         </LinearLayout>
 
         <LinearLayout
@@ -195,14 +204,30 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="5dp"
                 android:layout_weight="1.5"
-                card_view:icon="?attr/actionModePasteDrawable" />
+                android:paddingStart="50dp"
+                android:paddingEnd="15dp"
+                android:background="@drawable/ic_baseline_note_24"
+                android:foreground="@drawable/ic_baseline_note_24"
+                 />
 
             <Button
                 android:id="@+id/buttonTripStart"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="5.5"
-                android:text="@string/startTeip" />
+                android:layout_weight="4"
+                android:text="@string/startTeip"
+                android:textStyle="bold"
+
+
+                card_view:backgroundTint="#2894A3" />
+
+            <Button
+                android:id="@+id/buttonAddNote"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.5"
+                android:background="@drawable/ic_baseline_note_add_24"
+                android:foreground="@drawable/ic_baseline_note_add_24" />
         </LinearLayout>
     </LinearLayout>
 </androidx.cardview.widget.CardView>
