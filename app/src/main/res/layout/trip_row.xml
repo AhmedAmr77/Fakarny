@@ -71,6 +71,8 @@
             <TextView
                 android:id="@+id/textView10"
                 android:layout_width="0dp"
+                android:textColor="#FF2894A3"
+
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_weight="1.5"
@@ -119,6 +121,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_weight="1.5"
+                android:textColor="#FF2894A3"
+
                 android:text="@string/from" />
 
             <TextView
@@ -140,6 +144,8 @@
             <TextView
                 android:id="@+id/textView1to"
                 android:layout_width="0dp"
+                android:textColor="#FF2894A3"
+
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_weight="1.5"
@@ -172,6 +178,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
+                android:textColor="#FF2894A3"
+
                 android:layout_weight="1.5"
                 android:text="@string/type" />
 
@@ -196,6 +204,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
+                android:textColor="#FF2894A3"
+
                 android:layout_weight="1.5"
                 android:text="@string/repeat" />
 

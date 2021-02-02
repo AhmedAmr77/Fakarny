@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tripreminder.R;
@@ -48,13 +49,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
         holder.fromVal.setText(current.getStartPoint());
         holder.toVal.setText(current.getEnaPoint());
         holder.typeVal.setText(current.getWayData());
-        holder.dateVal.setText(current.getDate());
-        holder.timeVal.setText(current.getTime());
-        holder.btnNotes.setOnClickListener((v) -> {
-        });
-        holder.btnDelete.setOnClickListener((v) -> {
-        });
-
+        holder.dateVal.setText(current.getDate()+" At "+current.getTime());
     }
 
     @Override
@@ -63,10 +58,9 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView tripName, txtStates, from, fromVal;
-        public TextView to, toVal, date, dateVal, timeVal, type, typeVal;
-        public Button btnNotes, btnDelete;
-        public LinearLayout linearLayout;
+        public TextView tripName, txtStates, fromVal;
+        public TextView toVal,  dateVal, typeVal;
+        public ConstraintLayout constraintLayout;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -75,12 +69,9 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
             fromVal = itemView.findViewById(R.id.txtFromVal);
             toVal = itemView.findViewById(R.id.txtToVal);
             dateVal = itemView.findViewById(R.id.txtDateVal);
-            timeVal = itemView.findViewById(R.id.txtTimeVal);
             typeVal = itemView.findViewById(R.id.txtTypeVal);
-            btnNotes = itemView.findViewById(R.id.btnNotes);
-            btnDelete = itemView.findViewById(R.id.btnDelete);
 
-            linearLayout = itemView.findViewById(R.id.row);
+            constraintLayout = itemView.findViewById(R.id.row);
 
         }
     }
