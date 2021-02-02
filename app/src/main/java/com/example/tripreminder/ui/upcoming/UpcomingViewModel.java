@@ -1,19 +1,34 @@
 package com.example.tripreminder.ui.upcoming;
 
+import android.app.Application;
+import android.content.Context;
+import android.util.Log;
+
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
+import androidx.room.Room;
 
-public class UpcomingViewModel extends ViewModel {
+import com.example.tripreminder.database.Database;
+import com.example.tripreminder.database.Repository;
+import com.example.tripreminder.database.TripData;
 
-    private MutableLiveData<String> mText;
+import java.util.List;
 
-    public UpcomingViewModel() {
-        mText = new MutableLiveData<>();
-        mText.setValue("This is Upcoming fragment");
+public class UpcomingViewModel extends AndroidViewModel {
+
+    private final LiveData<List<TripData>> upcoming;
+
+    public UpcomingViewModel(Application application) {
+        super(application);
+        Repository mRepository = new Repository(application);
+        upcoming = mRepository.getUpcomingTrips();
     }
 
-    public LiveData<String> getText() {
-        return mText;
+    LiveData<List<TripData>> getUpcoming() {
+        return upcoming;
     }
+
 }

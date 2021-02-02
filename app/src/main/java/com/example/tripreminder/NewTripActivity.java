@@ -1,11 +1,14 @@
 package com.example.tripreminder;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.room.Room;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -13,12 +16,18 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.example.tripreminder.database.Database;
+import com.example.tripreminder.database.Repository;
+import com.example.tripreminder.database.TripDao;
+import com.example.tripreminder.database.TripData;
 import com.google.android.gms.common.api.Status;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.widget.Autocomplete;
@@ -30,105 +39,196 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
-public class NewTripActivity extends AppCompatActivity implements
-        AdapterView.OnItemSelectedListener {
-    String[] dataRepeat = {"No Repeat", "Repeat Daily", "Repeat Weekly", "Repeat Monthly"};
-    String[] dataWay = {"One Way Trip", "Round Trip"};
+public class NewTripActivity extends AppCompatActivity implements View.OnClickListener {
+    private final String[] dataRepeat = {"No Repeat", "Repeat Daily", "Repeat Weekly", "Repeat Monthly"};
+    private final String[] dataWay = {"One Way Trip", "Round Trip"};
+    private final static int START_PLACE = 33;
+    private final static int END_PLACE = 55;
+    private TextView textDate, textTime, startPlace, endPlace;
+    private int year, month, day;
+    private int finalSelectedYear, finalSelectedMoth, finalSelectedDay;
+    private int hour, minute;
+    private int finalHours, finalMinute;
+    private List<Place.Field> fields;
+    private EditText name;
+    private LatLng startLatLng, endLatLng;
+    private Button btnTime, btnDate, addNewTrip;
+    private Spinner repeat, way;
+    private Calendar calendar;
+    private String finalWay, finalRepeat, finalStartAddress, finalEndAddress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_trip);
-        Spinner repeat = (Spinner) findViewById(R.id.spinner1);
-        repeat.setOnItemSelectedListener(this);
-        Spinner way = (Spinner) findViewById(R.id.spinner2);
-        way.setOnItemSelectedListener(this);
+        if (!Places.isInitialized()) {
+            Places.initialize(getApplicationContext(), "AIzaSyDnbtBwgXmFh-e3jDYu3ffqDpOEOb8vU3Y", Locale.US);
+        }
+        calendar = Calendar.getInstance();
+        initFindView();
+        initOnAction();
         ArrayAdapter<String> repeatAd = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, dataRepeat);
         ArrayAdapter<String> wayAd = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, dataWay);
         repeatAd.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         wayAd.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         repeat.setAdapter(repeatAd);
         way.setAdapter(wayAd);
-        Button btnTime = findViewById(R.id.btnTime);
-        Button btnDate = findViewById(R.id.btnDate);
-        TextView textDate = findViewById(R.id.textDate);
-        TextView textTime = findViewById(R.id.textTime);
-
-        btnDate.setOnClickListener(new View.OnClickListener() {
+        repeat.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onClick(View v) {
-                Calendar mcurrentDate = Calendar.getInstance();
-                int year = mcurrentDate.get(Calendar.YEAR);
-                int month = mcurrentDate.get(Calendar.MONTH);
-                int day = mcurrentDate.get(Calendar.DAY_OF_MONTH);
-
-                DatePickerDialog mDatePicker = new DatePickerDialog(NewTripActivity.this, new DatePickerDialog.OnDateSetListener() {
-                    public void onDateSet(DatePicker datepicker, int selectedYear, int selectedMonth, int selectedDay) {
-                        textDate.setText(selectedDay + "-" + (selectedMonth+1) + "-" + selectedYear);
-                    }
-                }, year, month, day);
-                mDatePicker.setTitle("Select date");
-                mDatePicker.show();
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                finalRepeat = dataRepeat[position];
             }
-        });
 
-        btnTime.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-
-
-                Calendar mcurrentTime = Calendar.getInstance();
-                int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
-                int minute = mcurrentTime.get(Calendar.MINUTE);
-                TimePickerDialog mTimePicker;
-                mTimePicker = new TimePickerDialog(NewTripActivity.this, new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                        textTime.setText( selectedHour + ":" + selectedMinute);
-                    }
-                }, hour, minute, true);//Yes 24 hour time
-                mTimePicker.setTitle("Select Time");
-                mTimePicker.show();
+            public void onNothingSelected(AdapterView<?> parent) {
 
             }
         });
-        if (!Places.isInitialized()) {
-            Places.initialize(getApplicationContext(),"AIzaSyDnbtBwgXmFh-e3jDYu3ffqDpOEOb8vU3Y", Locale.US);
-        }
-        List<Place.Field> fields = Arrays.asList(Place.Field.ID, Place.Field.NAME);
+        way.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                finalWay = dataWay[position];
+            }
 
-        // Start the autocomplete intent.
-        Intent intent = new Autocomplete.IntentBuilder(AutocompleteActivityMode.OVERLAY, fields)
-                .build(this);
-        startActivityForResult(intent, 88);
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
 
+            }
+        });
+        fields = Arrays.asList(Place.Field.ADDRESS, Place.Field.LAT_LNG);
     }
 
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        Toast.makeText(this, "" + position, Toast.LENGTH_SHORT).show();
+    private void initOnAction() {
+        endPlace.setOnClickListener(this);
+        btnDate.setOnClickListener(this);
+        btnTime.setOnClickListener(this);
+        startPlace.setOnClickListener(this);
+        addNewTrip.setOnClickListener(this);
+        addNewTrip.setOnClickListener(this);
     }
 
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-
+    private void initFindView() {
+        startPlace = findViewById(R.id.editStartPoint);
+        endPlace = findViewById(R.id.editEndPoint);
+        btnTime = findViewById(R.id.btnTime);
+        btnDate = findViewById(R.id.btnDate);
+        textDate = findViewById(R.id.textDate);
+        textTime = findViewById(R.id.textTime);
+        repeat = (Spinner) findViewById(R.id.spinner1);
+        way = (Spinner) findViewById(R.id.spinner2);
+        name = findViewById(R.id.editName);
+        addNewTrip = findViewById(R.id.addNewTrip);
     }
+
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if (requestCode == 88) {
+        if (requestCode == START_PLACE) {
             if (resultCode == RESULT_OK) {
-                Place place = Autocomplete.getPlaceFromIntent(data);
-                Log.i("TAG", "Place: " + place.getName() + ", " + place.getId());
-            } else if (resultCode == AutocompleteActivity.RESULT_ERROR) {
-                // TODO: Handle the error.
-                Status status = Autocomplete.getStatusFromIntent(data);
-                Log.i("", status.getStatusMessage());
-            } else if (resultCode == RESULT_CANCELED) {
-                // The user canceled the operation.
+                Place place = null;
+                if (data != null) {
+                    place = Autocomplete.getPlaceFromIntent(data);
+                    finalStartAddress = place.getAddress();
+                    startPlace.setText(finalStartAddress);
+
+                    startLatLng = place.getLatLng();
+                }
             }
-            return;
+        } else if (requestCode == END_PLACE) {
+            if (resultCode == RESULT_OK) {
+                Place place;
+                if (data != null) {
+                    place = Autocomplete.getPlaceFromIntent(data);
+                    finalEndAddress = place.getAddress();
+                    endPlace.setText(finalEndAddress);
+                    endLatLng = place.getLatLng();
+                }
+            }
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
 
+    @Override
+    public void onClick(View v) {
+        int id = v.getId();
+        if (id == R.id.btnDate) {
+            year = calendar.get(Calendar.YEAR);
+            month = calendar.get(Calendar.MONTH);
+            day = calendar.get(Calendar.DAY_OF_MONTH);
+            DatePickerDialog mDatePicker = new DatePickerDialog(NewTripActivity.this, new DatePickerDialog.OnDateSetListener() {
+                public void onDateSet(DatePicker datepicker, int selectedYear, int selectedMonth, int selectedDay) {
+                    textDate.setText(selectedDay + "-" + (selectedMonth + 1) + "-" + selectedYear);
+                    finalSelectedDay = selectedDay;
+                    finalSelectedMoth = selectedMonth;
+                    finalSelectedYear = selectedYear;
+                }
+            }, year, month, day);
+            mDatePicker.setTitle("Select Trip date");
+            mDatePicker.show();
+        } else if (id == R.id.btnTime) {
+            hour = calendar.get(Calendar.HOUR_OF_DAY);
+            minute = calendar.get(Calendar.MINUTE);
+            TimePickerDialog mTimePicker;
+            mTimePicker = new TimePickerDialog(NewTripActivity.this, new TimePickerDialog.OnTimeSetListener() {
+                @Override
+                public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+                    textTime.setText(selectedHour + ":" + selectedMinute);
+                    finalHours = selectedHour;
+                    finalMinute = selectedMinute;
+                }
+            }, hour, minute, true);
+            mTimePicker.setTitle("Select Trip Time");
+            mTimePicker.show();
+        } else if (id == R.id.editStartPoint) {
+            setPlace(START_PLACE);
+        } else if (id == R.id.editEndPoint) {
+            setPlace(END_PLACE);
+        } else if (id == R.id.addNewTrip) {
+            String cDate = year + "" + month + "" + day;
+            String sDate = finalSelectedYear + "" + finalSelectedMoth + "" + finalSelectedDay;
+            if (Integer.parseInt(cDate) < Integer.parseInt(sDate)) {
+                if (!textTime.getText().toString().isEmpty()) {
+                    setTrip();
+                } else {
+                    Toast.makeText(this, "please enter time", Toast.LENGTH_LONG).show();
+                }
+            } else if (Integer.parseInt(cDate) == Integer.parseInt(sDate)) {
+                if (hour < finalHours) {
+                    setTrip();
+                } else {
+                    if (minute < finalMinute) {
+                        setTrip();
+                    } else {
+                        Toast.makeText(this, "please enter correct time", Toast.LENGTH_LONG).show();
+                    }
+                }
+            } else {
+                Toast.makeText(this, "the date you selected is less than current date", Toast.LENGTH_LONG).show();
+            }
+        }
+
+    }
+
+    public void setTrip() {
+        Repository repository = new Repository(getApplication());
+        TripData data = new TripData();
+        data.date = textDate.getText().toString();
+        data.time = finalHours + ":" + finalMinute;
+        data.startPoint = finalStartAddress;
+        data.enaPoint = finalEndAddress;
+        data.tripName = name.getText().toString();
+        data.lat_long_startPoint = startLatLng.latitude + "," + startLatLng.longitude;
+        data.lat_long_endPoint = endLatLng.latitude + "," + endLatLng.longitude;
+        data.repeatData = finalRepeat;
+        data.wayData = finalWay;
+        data.state = "upcoming";
+        repository.insert(data);
+        finish();
+    }
+
+    public void setPlace(int id) {
+        Intent intent = new Autocomplete.IntentBuilder(AutocompleteActivityMode.OVERLAY, fields)
+                .build(this);
+        startActivityForResult(intent, id);
+    }
 }

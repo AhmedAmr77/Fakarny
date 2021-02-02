@@ -13,7 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tripreminder.R;
-import com.example.tripreminder.TripData;
+import com.example.tripreminder.database.TripData;
 
 import java.util.List;
 
@@ -30,29 +30,32 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        LayoutInflater layoutInflater=LayoutInflater.from(parent.getContext());
-        View view=layoutInflater.inflate(R.layout.row_layout,parent,false);
-        ViewHolder viewHolder=new ViewHolder(view);
+        LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
+        View view = layoutInflater.inflate(R.layout.row_layout, parent, false);
+        ViewHolder viewHolder = new ViewHolder(view);
         return viewHolder;
+    }
+
+    public void setValues(List<TripData> list) {
+        values = list;
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.tripName.setText(values.get(position).getTripName());
-        holder.txtStates.setText(values.get(position).getState());
-        holder.fromVal.setText(values.get(position).getStartPoint());
-        holder.toVal.setText(values.get(position).getEnaPoint());
-        holder.typeVal.setText(values.get(position).getWayData());
-        holder.txtStates.setText(values.get(position).getState());
-        holder.dateVal.setText(values.get(position).getDate());
-        holder.timeVal.setText(values.get(position).getTime());
+        holder.tripName.setText(values.get(position).tripName);
+        holder.txtStates.setText(values.get(position).state);
+        holder.fromVal.setText(values.get(position).startPoint);
+        holder.toVal.setText(values.get(position).enaPoint);
+        holder.typeVal.setText(values.get(position).wayData);
+        holder.dateVal.setText(values.get(position).date);
+        holder.timeVal.setText(values.get(position).time);
 
-        holder.linearLayout.setOnClickListener((v)->{
-            Toast.makeText(context, values.get(position).getState(), Toast.LENGTH_SHORT).show();
+        holder.linearLayout.setOnClickListener((v) -> {
+            Toast.makeText(context, values.get(position).state, Toast.LENGTH_SHORT).show();
         });
-        holder.btnNotes.setOnClickListener((v)->{
+        holder.btnNotes.setOnClickListener((v) -> {
         });
-        holder.btnDelete.setOnClickListener((v)->{
+        holder.btnDelete.setOnClickListener((v) -> {
         });
 
     }
@@ -62,25 +65,25 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
         return values.size();
     }
 
-    public class ViewHolder extends  RecyclerView.ViewHolder{
-        public TextView tripName,txtStates,from,fromVal;
-        public TextView to,toVal,date,dateVal,timeVal,type,typeVal;
-        public Button btnNotes,btnDelete;
+    public class ViewHolder extends RecyclerView.ViewHolder {
+        public TextView tripName, txtStates, from, fromVal;
+        public TextView to, toVal, date, dateVal, timeVal, type, typeVal;
+        public Button btnNotes, btnDelete;
         public LinearLayout linearLayout;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            tripName=itemView.findViewById(R.id.extName);
-            txtStates=itemView.findViewById(R.id.txtState);
-            fromVal=itemView.findViewById(R.id.txtFromVal);
-            toVal=itemView.findViewById(R.id.txtToVal);
-            dateVal=itemView.findViewById(R.id.txtDateVal);
-            timeVal=itemView.findViewById(R.id.txtTimeVal);
-            typeVal=itemView.findViewById(R.id.txtTypeVal);
-            btnNotes=itemView.findViewById(R.id.btnNotes);
-            btnDelete=itemView.findViewById(R.id.btnDelete);
+            tripName = itemView.findViewById(R.id.extName);
+            txtStates = itemView.findViewById(R.id.txtState);
+            fromVal = itemView.findViewById(R.id.txtFromVal);
+            toVal = itemView.findViewById(R.id.txtToVal);
+            dateVal = itemView.findViewById(R.id.txtDateVal);
+            timeVal = itemView.findViewById(R.id.txtTimeVal);
+            typeVal = itemView.findViewById(R.id.txtTypeVal);
+            btnNotes = itemView.findViewById(R.id.btnNotes);
+            btnDelete = itemView.findViewById(R.id.btnDelete);
 
-            linearLayout =itemView.findViewById(R.id.row);
+            linearLayout = itemView.findViewById(R.id.row);
 
         }
     }

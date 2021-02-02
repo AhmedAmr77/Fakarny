@@ -14,10 +14,13 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Update;
 
 
+import com.example.tripreminder.ApplicationR;
 import com.example.tripreminder.R;
-import com.example.tripreminder.TripData;
+import com.example.tripreminder.database.Repository;
+import com.example.tripreminder.database.TripData;
 
 import java.util.List;
 
@@ -35,8 +38,9 @@ public class RecyclerViAdapter extends RecyclerView.Adapter<RecyclerViAdapter.Vi
 
         View layout;
         ConstraintLayout row;
-        TextView textViewTripName, textViewTripDate, textViewTripTime, textViewTripFrom, textViewTripTo, textViewTripWay,textViewRepeat;
-        Button btnTripStart, btnTripOptions, btnTripNotes;
+        TextView textViewTripName, textViewTripDate, textViewTripTime,
+                textViewTripFrom, textViewTripTo, textViewTripWay, textViewRepeat;
+        Button btnTripStart, btnTripCancel, btnTripNotes;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -50,11 +54,9 @@ public class RecyclerViAdapter extends RecyclerView.Adapter<RecyclerViAdapter.Vi
             textViewTripTo = itemView.findViewById(R.id.textViewTripWayTo);
             textViewTripWay = itemView.findViewById(R.id.txtType);
             textViewRepeat = itemView.findViewById(R.id.txtRepeat);
-
             btnTripStart = itemView.findViewById(R.id.buttonTripStart);
             btnTripNotes = itemView.findViewById(R.id.buttonTripNotes);
-            btnTripOptions = itemView.findViewById(R.id.buttonTripOptions);
-
+            btnTripCancel = itemView.findViewById(R.id.buttonTripCancel);
 
 
         }
@@ -72,40 +74,55 @@ public class RecyclerViAdapter extends RecyclerView.Adapter<RecyclerViAdapter.Vi
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.textViewTripName.setText(tripDataList.get(position).getTripName());
-        holder.textViewTripDate.setText(tripDataList.get(position).getDate());
-        holder.textViewTripTime.setText(tripDataList.get(position).getTime());
-        holder.textViewTripFrom.setText(tripDataList.get(position).getStartPoint());
-        holder.textViewTripTo.setText(tripDataList.get(position).getEnaPoint());
-        holder.textViewRepeat.setText(tripDataList.get(position).getRepeatData());
-        holder.textViewTripWay.setText(tripDataList.get(position).getWayData());
+        TripData current = tripDataList.get(position);
+        holder.textViewTripName.setText(current.tripName);
+        holder.textViewTripDate.setText(current.date);
+        holder.textViewTripTime.setText(current.time);
+        holder.textViewTripFrom.setText(current.startPoint);
+        holder.textViewTripTo.setText(current.enaPoint);
+        holder.textViewRepeat.setText(current.repeatData);
+        holder.textViewTripWay.setText(current.wayData);
 
         holder.btnTripStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
-                        Uri.parse("http://maps.google.com/maps?daddr="+tripDataList.get(position).getLat_long_endPoint()));
-                String title = "Choose an Appp ";//context.getResources().getString(R.string.chooser_title);
+                        Uri.parse("http://maps.google.com/maps?daddr=" + tripDataList.get(position).lat_long_endPoint));
+                String title = "TripReminder ";
                 Intent chooser = Intent.createChooser(intent, title);
+
                 try {
                     context.startActivity(chooser);
+                    updateTrip(current, "done");
                 } catch (ActivityNotFoundException e) {
-                    Toast.makeText(context, "NO APp Can Open THIS !!!", Toast.LENGTH_SHORT).show();
-                    // Define what your app should do if no activity can handle the intent.
+                    Toast.makeText(context, "NO APP Can Open THIS !!!", Toast.LENGTH_SHORT).show();
                 }
-                Toast.makeText(context, "StartClickedddddddd", Toast.LENGTH_LONG).show();
             }
         });
+
+        holder.btnTripCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                updateTrip(current, "cancel");
+            }
+        });
+
+    }
+    public void setValues(List<TripData> list) {
+        tripDataList = list;
+    }
+
+    public void updateTrip(TripData tripData, String state) {
+        Repository repository = new Repository(ApplicationR.getApplication());
+        tripData.state = state;
+        repository.update(tripData);
+
     }
 
     @Override
     public int getItemCount() {
         return tripDataList.size();
     }
-
-
-
-
 
 
 }

@@ -42,14 +42,13 @@
             android:fontFamily="sans-serif-black"
             android:text="@string/start" />
 
-        <EditText
-            android:id="@+id/editStart"
+        <TextView
+            android:padding="10dp"
+            android:id="@+id/editStartPoint"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:drawableStart="@drawable/ic_baseline_search_24"
-            android:ems="10"
-            android:enabled="false"
-            android:inputType="textPersonName" />
+            android:background="#ECEDED"
+            app:drawableStartCompat="@drawable/ic_baseline_search_24" />
 
         <TextView
             android:id="@+id/textView4"
@@ -59,14 +58,13 @@
             android:fontFamily="sans-serif-black"
             android:text="@string/ena" />
 
-        <EditText
-            android:id="@+id/editEnd"
+        <TextView
+            android:padding="10dp"
+            android:id="@+id/editEndPoint"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:drawableStart="@drawable/ic_baseline_search_24"
-            android:ems="10"
-            android:enabled="false"
-            android:inputType="textPersonName" />
+            android:background="#ECEDED"
+            app:drawableStartCompat="@drawable/ic_baseline_search_24" />
 
 
         <LinearLayout
@@ -164,7 +162,7 @@
         </LinearLayout>
 
         <Button
-            android:id="@+id/button5"
+            android:id="@+id/addNewTrip"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="80dp"
