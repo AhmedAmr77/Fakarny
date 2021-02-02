@@ -82,7 +82,7 @@ public class Repository {
     }
 
 
-    public void backup() {
+    public void synchronizedTrips() {
         new Thread(new Runnable() {
             @Override
             public void run() {
