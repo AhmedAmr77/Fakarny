@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey;
 @Entity
 public class TripData {
     @PrimaryKey(autoGenerate = true)
-    public int id;
+    private int id;
     private String state;
     private String tripName, startPoint, enaPoint;
     private String date, time, repeatData, wayData;
