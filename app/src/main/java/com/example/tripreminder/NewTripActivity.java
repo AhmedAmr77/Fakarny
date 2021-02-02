@@ -212,16 +212,16 @@ public class NewTripActivity extends AppCompatActivity implements View.OnClickLi
     public void setTrip() {
         Repository repository = new Repository(getApplication());
         TripData data = new TripData();
-        data.date = textDate.getText().toString();
-        data.time = finalHours + ":" + finalMinute;
-        data.startPoint = finalStartAddress;
-        data.enaPoint = finalEndAddress;
-        data.tripName = name.getText().toString();
-        data.lat_long_startPoint = startLatLng.latitude + "," + startLatLng.longitude;
-        data.lat_long_endPoint = endLatLng.latitude + "," + endLatLng.longitude;
-        data.repeatData = finalRepeat;
-        data.wayData = finalWay;
-        data.state = "upcoming";
+        data.setDate(textDate.getText().toString());
+        data.setTime(finalHours + ":" + finalMinute);
+        data.setStartPoint(finalStartAddress);
+        data.setEnaPoint(finalEndAddress);
+        data.setTripName(name.getText().toString());
+        data.setLat_long_startPoint(startLatLng.latitude + "," + startLatLng.longitude);
+        data.setLat_long_endPoint(endLatLng.latitude + "," + endLatLng.longitude);
+        data.setRepeatData(finalRepeat);
+        data.setWayData(finalWay);
+        data.setState("upcoming");
         repository.insert(data);
         finish();
     }

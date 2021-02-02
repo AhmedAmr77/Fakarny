@@ -75,19 +75,19 @@ public class RecyclerViAdapter extends RecyclerView.Adapter<RecyclerViAdapter.Vi
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         TripData current = tripDataList.get(position);
-        holder.textViewTripName.setText(current.tripName);
-        holder.textViewTripDate.setText(current.date);
-        holder.textViewTripTime.setText(current.time);
-        holder.textViewTripFrom.setText(current.startPoint);
-        holder.textViewTripTo.setText(current.enaPoint);
-        holder.textViewRepeat.setText(current.repeatData);
-        holder.textViewTripWay.setText(current.wayData);
+        holder.textViewTripName.setText(current.getTripName());
+        holder.textViewTripDate.setText(current.getDate());
+        holder.textViewTripTime.setText(current.getTime());
+        holder.textViewTripFrom.setText(current.getStartPoint());
+        holder.textViewTripTo.setText(current.getEnaPoint());
+        holder.textViewRepeat.setText(current.getRepeatData());
+        holder.textViewTripWay.setText(current.getWayData());
 
         holder.btnTripStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
-                        Uri.parse("http://maps.google.com/maps?daddr=" + tripDataList.get(position).lat_long_endPoint));
+                        Uri.parse("http://maps.google.com/maps?daddr=" + tripDataList.get(position).getLat_long_endPoint()));
                 String title = "TripReminder ";
                 Intent chooser = Intent.createChooser(intent, title);
 
@@ -108,13 +108,14 @@ public class RecyclerViAdapter extends RecyclerView.Adapter<RecyclerViAdapter.Vi
         });
 
     }
+
     public void setValues(List<TripData> list) {
         tripDataList = list;
     }
 
     public void updateTrip(TripData tripData, String state) {
         Repository repository = new Repository(ApplicationR.getApplication());
-        tripData.state = state;
+        tripData.setState(state);
         repository.update(tripData);
 
     }

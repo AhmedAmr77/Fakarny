@@ -42,17 +42,14 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.tripName.setText(values.get(position).tripName);
-        holder.txtStates.setText(values.get(position).state);
-        holder.fromVal.setText(values.get(position).startPoint);
-        holder.toVal.setText(values.get(position).enaPoint);
-        holder.typeVal.setText(values.get(position).wayData);
-        holder.dateVal.setText(values.get(position).date);
-        holder.timeVal.setText(values.get(position).time);
-
-        holder.linearLayout.setOnClickListener((v) -> {
-            Toast.makeText(context, values.get(position).state, Toast.LENGTH_SHORT).show();
-        });
+        TripData current=values.get(position);
+        holder.tripName.setText(current.getTripName());
+        holder.txtStates.setText(current.getState());
+        holder.fromVal.setText(current.getStartPoint());
+        holder.toVal.setText(current.getEnaPoint());
+        holder.typeVal.setText(current.getWayData());
+        holder.dateVal.setText(current.getDate());
+        holder.timeVal.setText(current.getTime());
         holder.btnNotes.setOnClickListener((v) -> {
         });
         holder.btnDelete.setOnClickListener((v) -> {
