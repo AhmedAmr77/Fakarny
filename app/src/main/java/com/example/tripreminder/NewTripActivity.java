@@ -56,6 +56,8 @@ public class NewTripActivity extends AppCompatActivity implements View.OnClickLi
     private Spinner repeat, way;
     private Calendar calendar;
     private String finalWay, finalRepeat, finalStartAddress, finalEndAddress;
+    private TripData data;
+    private ArrayAdapter<String> repeatAd, wayAd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,11 +66,12 @@ public class NewTripActivity extends AppCompatActivity implements View.OnClickLi
         if (!Places.isInitialized()) {
             Places.initialize(getApplicationContext(), "AIzaSyDnbtBwgXmFh-e3jDYu3ffqDpOEOb8vU3Y", Locale.US);
         }
+
         calendar = Calendar.getInstance();
         initFindView();
         initOnAction();
-        ArrayAdapter<String> repeatAd = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, dataRepeat);
-        ArrayAdapter<String> wayAd = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, dataWay);
+        repeatAd = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, dataRepeat);
+        wayAd = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, dataWay);
         repeatAd.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         wayAd.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         repeat.setAdapter(repeatAd);
@@ -96,6 +99,42 @@ public class NewTripActivity extends AppCompatActivity implements View.OnClickLi
             }
         });
         fields = Arrays.asList(Place.Field.ADDRESS, Place.Field.LAT_LNG);
+        data = (TripData) getIntent().getSerializableExtra("updateObj");
+        if (data != null) {
+            initUpdateValues();
+            initUpdateView();
+        }
+    }
+
+    private void initUpdateValues() {
+        finalStartAddress = data.getStartPoint();
+        finalEndAddress = data.getEnaPoint();
+        String[] times = data.getTime().split(":");
+        finalMinute = Integer.parseInt(times[1]);
+        finalHours = Integer.parseInt(times[0]);
+        String[] dates = data.getDate().split("-");
+        finalSelectedDay = Integer.parseInt(dates[0]);
+        finalSelectedMoth = Integer.parseInt(dates[1]);
+        finalSelectedYear = Integer.parseInt(dates[2]);
+        finalWay = data.getWayData();
+        finalRepeat = data.getRepeatData();
+        String sll[] = data.getLat_long_startPoint().split(",");
+        startLatLng = new LatLng(Double.parseDouble(sll[0]), Double.parseDouble(sll[1]));
+        String ell[] = data.getLat_long_endPoint().split(",");
+        endLatLng = new LatLng(Double.parseDouble(ell[0]), Double.parseDouble(ell[1]));
+    }
+
+    private void initUpdateView() {
+        addNewTrip.setText("update");
+        name.setText(data.getTripName());
+        startPlace.setText(data.getStartPoint());
+        endPlace.setText(data.getEnaPoint());
+        textDate.setText(data.getDate());
+        textTime.setText(data.getTime());
+        int posR = repeatAd.getPosition(data.getRepeatData());
+        repeat.setSelection(posR);
+        int posW = wayAd.getPosition(data.getWayData());
+        way.setSelection(posW);
     }
 
     private void initOnAction() {
@@ -123,6 +162,8 @@ public class NewTripActivity extends AppCompatActivity implements View.OnClickLi
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        startPlace.setEnabled(true);
+        endPlace.setEnabled(true);
         if (requestCode == START_PLACE) {
             if (resultCode == RESULT_OK) {
                 Place place = null;
@@ -130,7 +171,6 @@ public class NewTripActivity extends AppCompatActivity implements View.OnClickLi
                     place = Autocomplete.getPlaceFromIntent(data);
                     finalStartAddress = place.getAddress();
                     startPlace.setText(finalStartAddress);
-
                     startLatLng = place.getLatLng();
                 }
             }
@@ -186,24 +226,28 @@ public class NewTripActivity extends AppCompatActivity implements View.OnClickLi
         } else if (id == R.id.addNewTrip) {
             String cDate = year + "" + month + "" + day;
             String sDate = finalSelectedYear + "" + finalSelectedMoth + "" + finalSelectedDay;
-            if (Integer.parseInt(cDate) < Integer.parseInt(sDate)) {
-                if (!textTime.getText().toString().isEmpty()) {
-                    setTrip();
-                } else {
-                    Toast.makeText(this, "please enter time", Toast.LENGTH_LONG).show();
-                }
-            } else if (Integer.parseInt(cDate) == Integer.parseInt(sDate)) {
-                if (hour < finalHours) {
-                    setTrip();
-                } else {
-                    if (minute < finalMinute) {
+            if (finalStartAddress != null && finalEndAddress != null) {
+                if (Integer.parseInt(cDate) < Integer.parseInt(sDate)) {
+                    if (!textTime.getText().toString().isEmpty()) {
                         setTrip();
                     } else {
-                        Toast.makeText(this, "please enter correct time", Toast.LENGTH_LONG).show();
+                        Toast.makeText(this, "please enter time", Toast.LENGTH_LONG).show();
                     }
+                } else if (Integer.parseInt(cDate) == Integer.parseInt(sDate)) {
+                    if (hour < finalHours) {
+                        setTrip();
+                    } else {
+                        if (minute < finalMinute) {
+                            setTrip();
+                        } else {
+                            Toast.makeText(this, "please enter correct time", Toast.LENGTH_LONG).show();
+                        }
+                    }
+                } else {
+                    Toast.makeText(this, "the date you selected is less than current date", Toast.LENGTH_LONG).show();
                 }
             } else {
-                Toast.makeText(this, "the date you selected is less than current date", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "please enter start and end points", Toast.LENGTH_LONG).show();
             }
         }
 
@@ -211,22 +255,37 @@ public class NewTripActivity extends AppCompatActivity implements View.OnClickLi
 
     public void setTrip() {
         Repository repository = new Repository(getApplication());
-        TripData data = new TripData();
-        data.setDate(textDate.getText().toString());
-        data.setTime(finalHours + ":" + finalMinute);
-        data.setStartPoint(finalStartAddress);
-        data.setEnaPoint(finalEndAddress);
-        data.setTripName(name.getText().toString());
-        data.setLat_long_startPoint(startLatLng.latitude + "," + startLatLng.longitude);
-        data.setLat_long_endPoint(endLatLng.latitude + "," + endLatLng.longitude);
-        data.setRepeatData(finalRepeat);
-        data.setWayData(finalWay);
-        data.setState("upcoming");
-        repository.insert(data);
+        if (data == null) {
+            data = new TripData();
+            data.setDate(textDate.getText().toString());
+            data.setTime(finalHours + ":" + finalMinute);
+            data.setStartPoint(finalStartAddress);
+            data.setEnaPoint(finalEndAddress);
+            data.setTripName(name.getText().toString());
+            data.setLat_long_startPoint(startLatLng.latitude + "," + startLatLng.longitude);
+            data.setLat_long_endPoint(endLatLng.latitude + "," + endLatLng.longitude);
+            data.setRepeatData(finalRepeat);
+            data.setWayData(finalWay);
+            data.setState("upcoming");
+            repository.insert(data);
+        } else {
+            data.setDate(textDate.getText().toString());
+            data.setTime(finalHours + ":" + finalMinute);
+            data.setStartPoint(finalStartAddress);
+            data.setEnaPoint(finalEndAddress);
+            data.setTripName(name.getText().toString());
+            data.setLat_long_startPoint(startLatLng.latitude + "," + startLatLng.longitude);
+            data.setLat_long_endPoint(endLatLng.latitude + "," + endLatLng.longitude);
+            data.setRepeatData(finalRepeat);
+            data.setWayData(finalWay);
+            repository.update(data);
+        }
         finish();
     }
 
     public void setPlace(int id) {
+        startPlace.setEnabled(false);
+        endPlace.setEnabled(false);
         Intent intent = new Autocomplete.IntentBuilder(AutocompleteActivityMode.OVERLAY, fields)
                 .build(this);
         startActivityForResult(intent, id);

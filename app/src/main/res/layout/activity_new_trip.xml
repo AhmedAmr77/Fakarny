@@ -31,7 +31,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="textPersonName" />
+            android:gravity="center"
+            android:inputType="textAutoCorrect"
+            android:maxLength="18"
+            android:autofillHints="name"
+            tools:ignore="LabelFor" />
 
         <TextView
             android:id="@+id/textView3"
@@ -42,11 +46,11 @@
             android:text="@string/start" />
 
         <TextView
-            android:padding="10dp"
             android:id="@+id/editStartPoint"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#ECEDED"
+            android:padding="10dp"
             app:drawableStartCompat="@drawable/ic_baseline_search_24" />
 
         <TextView
@@ -58,11 +62,11 @@
             android:text="@string/ena" />
 
         <TextView
-            android:padding="10dp"
             android:id="@+id/editEndPoint"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#ECEDED"
+            android:padding="10dp"
             app:drawableStartCompat="@drawable/ic_baseline_search_24" />
 
 
@@ -127,15 +131,15 @@
 
             <TextView
                 android:id="@+id/textDate"
-                android:layout_height="wrap_content"
                 android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center_horizontal" />
 
             <TextView
                 android:id="@+id/textTime"
-                android:layout_height="wrap_content"
                 android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center_horizontal" />
         </LinearLayout>

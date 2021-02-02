@@ -11,6 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.tripreminder.database.Repository;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -68,6 +69,8 @@ public class SplashScreen extends AppCompatActivity {
 
         if (requestCode == RC_SIGN_IN) {
             if (resultCode == RESULT_OK) {
+                Repository repository =new Repository(getApplication());
+                repository.initDatabase();
                 startActivity(intent);
                 finish();
             } else {

@@ -107,10 +107,16 @@ public class RecyclerViAdapter extends RecyclerView.Adapter<RecyclerViAdapter.Vi
             }
         });
 
+
+
     }
 
     public void setValues(List<TripData> list) {
         tripDataList = list;
+    }
+
+    public List<TripData> getTripDataList() {
+        return tripDataList;
     }
 
     public void updateTrip(TripData tripData, String state) {

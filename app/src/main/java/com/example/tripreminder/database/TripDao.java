@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
@@ -17,7 +18,7 @@ public interface TripDao {
     @Query("select * from TripData where state='done' OR state='cancel'")
     LiveData<List<TripData>> getHistory();
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void addTrip(TripData tripData);
 
     @Delete
@@ -29,4 +30,8 @@ public interface TripDao {
     @Query("delete from TripData")
     void deleteAll();
 
+
+
+    @Query("select * from TripData  ")
+    List<TripData> getAllData();
 }

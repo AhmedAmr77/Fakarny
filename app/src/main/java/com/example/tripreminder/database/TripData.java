@@ -3,8 +3,12 @@ package com.example.tripreminder.database;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import com.google.firebase.database.Exclude;
+
+import java.io.Serializable;
+
 @Entity
-public class TripData {
+public class TripData implements Serializable {
     @PrimaryKey(autoGenerate = true)
     private int id;
     private String state;

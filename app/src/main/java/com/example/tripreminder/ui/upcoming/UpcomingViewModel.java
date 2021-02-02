@@ -20,10 +20,11 @@ import java.util.List;
 public class UpcomingViewModel extends AndroidViewModel {
 
     private final LiveData<List<TripData>> upcoming;
+    private Repository mRepository;
 
     public UpcomingViewModel(Application application) {
         super(application);
-        Repository mRepository = new Repository(application);
+        mRepository = new Repository(application);
         upcoming = mRepository.getUpcomingTrips();
     }
 
@@ -31,4 +32,7 @@ public class UpcomingViewModel extends AndroidViewModel {
         return upcoming;
     }
 
+    public void remove(TripData tripData) {
+          mRepository.delete(tripData);
+    }
 }

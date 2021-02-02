@@ -59,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
+        Repository repository =new Repository(getApplication());
         if (id == R.id.logout) {
             new AlertDialog.Builder(this)
                     .setTitle("Logout")
@@ -69,7 +70,6 @@ public class MainActivity extends AppCompatActivity {
                             mAuth.signOut();
                             Intent i = new Intent(MainActivity.this, SplashScreen.class);
                             startActivity(i);
-                            Repository repository =new Repository(getApplication());
                             repository.deleteAll();
                             finish();
                         }
@@ -77,6 +77,9 @@ public class MainActivity extends AppCompatActivity {
                     .setIcon(android.R.drawable.ic_dialog_alert)
                     .show();
 
+        }else if(id==R.id.nav_sync){
+            repository.backup();
+            Toast.makeText(this, "data synchronized", Toast.LENGTH_LONG).show();
         }
         return super.onOptionsItemSelected(item);
     }
