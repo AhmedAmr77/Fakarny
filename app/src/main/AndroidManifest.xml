@@ -3,6 +3,7 @@
     package="com.example.tripreminder">
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
     <application
         android:allowBackup="true"
@@ -23,6 +24,10 @@
             android:name=".MainActivity"
             android:label="@string/app_name"
             android:theme="@style/Theme.TripReminder.NoActionBar" />
+        <service
+            android:name=".FloatingViewService"
+            android:enabled="true"
+            android:exported="false" />
     </application>
 
 </manifest>

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content">
+
+
+<RelativeLayout
+    android:id="@+id/relativeLayoutParent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    tools:ignore="UselessParent">
+
+    <!-- this is the collapsed layout -->
+    <RelativeLayout
+        android:id="@+id/layoutCollapsed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="visible"
+        tools:visibility="gone">
+
+        <ImageView
+            android:id="@+id/collapsed_iv"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginTop="8dp"
+            android:src="@mipmap/ic_launcher_trip_round" />
+
+        <ImageView
+            android:id="@+id/buttonClose"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginLeft="50dp"
+            android:src="@drawable/ic_baseline_close_24" />
+    </RelativeLayout>
+
+    <!-- this is the expanded layout -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layoutExpanded"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="8dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible">
+
+        <TextView
+            android:id="@+id/tripNameTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#CF8C8C"
+            android:text="TRIPPPPNAME"
+            app:layout_constraintEnd_toEndOf="@+id/scrolly"
+            app:layout_constraintStart_toStartOf="@+id/scrolly"
+            app:layout_constraintTop_toTopOf="parent">
+
+        </TextView>
+
+        <ScrollView
+            android:id="@+id/scrolly"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:fillViewport="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tripNameTextView"
+            app:layout_constraintWidth_percent="0.7">
+
+            <LinearLayout
+                android:id="@+id/linearLayoutCheckBox"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#a0c3d7"
+                android:orientation="vertical"></LinearLayout>
+        </ScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</RelativeLayout>
+
+</FrameLayout>

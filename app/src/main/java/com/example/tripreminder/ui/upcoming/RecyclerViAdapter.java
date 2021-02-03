@@ -4,6 +4,8 @@ import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
+import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +20,8 @@ import androidx.room.Update;
 
 
 import com.example.tripreminder.ApplicationR;
+import com.example.tripreminder.FloatingViewService;
+import com.example.tripreminder.MainActivity;
 import com.example.tripreminder.R;
 import com.example.tripreminder.database.Repository;
 import com.example.tripreminder.database.TripData;
@@ -28,6 +32,7 @@ public class RecyclerViAdapter extends RecyclerView.Adapter<RecyclerViAdapter.Vi
 
     final Context context;
     List<TripData> tripDataList;
+    private static final int SYSTEM_ALERT_WINDOW_PERMISSION = 2084;
 
     public RecyclerViAdapter(Context context, List<TripData> tripDataList) {
         this.context = context;
@@ -58,10 +63,32 @@ public class RecyclerViAdapter extends RecyclerView.Adapter<RecyclerViAdapter.Vi
             btnTripNotes = itemView.findViewById(R.id.buttonTripNotes);
             btnTripCancel = itemView.findViewById(R.id.buttonTripCancel);
 
-
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(context)) {
+                askPermission();
+            }
         }
     }
 
+    private void askPermission() {
+        Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                Uri.parse("package:" + context.getPackageName()));
+        ((MainActivity)context).startActivityForResult(intent, SYSTEM_ALERT_WINDOW_PERMISSION);
+    }
+
+    void showWidget(){
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+            ((MainActivity)context).startService(new Intent(context, FloatingViewService.class));
+            ((MainActivity)context).finish();
+        } else if (Settings.canDrawOverlays(context)) {
+            ((MainActivity)context).startService(new Intent(context, FloatingViewService.class));
+            ((MainActivity)context).finish();
+        } else {
+            askPermission();
+            Toast.makeText(context, "You need System Alert Window Permission to do this", Toast.LENGTH_SHORT).show();
+        }
+
+    }
 
     @NonNull
     @Override
@@ -94,6 +121,7 @@ public class RecyclerViAdapter extends RecyclerView.Adapter<RecyclerViAdapter.Vi
                 try {
                     context.startActivity(chooser);
                     updateTrip(current, "done");
+                    showWidget();
                 } catch (ActivityNotFoundException e) {
                     Toast.makeText(context, "NO APP Can Open THIS !!!", Toast.LENGTH_SHORT).show();
                 }
@@ -106,9 +134,6 @@ public class RecyclerViAdapter extends RecyclerView.Adapter<RecyclerViAdapter.Vi
                 updateTrip(current, "cancel");
             }
         });
-
-
-
     }
 
     public void setValues(List<TripData> list) {
@@ -130,6 +155,5 @@ public class RecyclerViAdapter extends RecyclerView.Adapter<RecyclerViAdapter.Vi
     public int getItemCount() {
         return tripDataList.size();
     }
-
 
 }
