@@ -87,7 +87,8 @@ public class Repository {
 
     private void repeatAndRound(TripData tripData) {
         TripData data = new TripData();
-        data.setTime(tripData.getBackTime());
+
+        data.setTime(tripData.getDate());
         data.setDate(tripData.getBackDate());
         data.setAlarmTime(tripData.getEndAlarmTime());
         String end = tripData.getEnaPoint();
