@@ -56,6 +56,7 @@ public class SplashScreen extends AppCompatActivity {
                 startActivityForResult(AuthUI.getInstance().createSignInIntentBuilder()
                         .setAvailableProviders(providers)
                         .setIsSmartLockEnabled(false)
+                        .setTheme(R.style.Theme_TripReminder)
                         .build(), RC_SIGN_IN);
             }
         };
