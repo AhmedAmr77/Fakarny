@@ -33,7 +33,7 @@
                 android:layout_weight="9"
                 android:gravity="center_horizontal"
                 android:text="My Trip"
-                android:textColor="#FF2894A3"
+                android:textColor="@color/pro"
                 android:textSize="22sp"
                 android:textStyle="bold" />
 
@@ -58,7 +58,7 @@
             android:layout_width="match_parent"
             android:layout_height="2dp"
             android:layout_margin="10dp"
-            android:background="#FF2894A3" />
+            android:background="@color/pro" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -71,7 +71,7 @@
             <TextView
                 android:id="@+id/textView10"
                 android:layout_width="0dp"
-                android:textColor="#FF2894A3"
+                android:textColor="@color/pro"
 
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
@@ -105,7 +105,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_margin="10dp"
-            android:background="#FF2894A3" />
+            android:background="@color/pro" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -121,7 +121,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_weight="1.5"
-                android:textColor="#FF2894A3"
+                android:textColor="@color/pro"
 
                 android:text="@string/from" />
 
@@ -144,7 +144,7 @@
             <TextView
                 android:id="@+id/textView1to"
                 android:layout_width="0dp"
-                android:textColor="#FF2894A3"
+                android:textColor="@color/pro"
 
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
@@ -163,7 +163,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_margin="10dp"
-            android:background="#FF2894A3" />
+            android:background="@color/pro" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -178,7 +178,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:textColor="#FF2894A3"
+                android:textColor="@color/pro"
 
                 android:layout_weight="1.5"
                 android:text="@string/type" />
@@ -204,7 +204,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:textColor="#FF2894A3"
+                android:textColor="@color/pro"
 
                 android:layout_weight="1.5"
                 android:text="@string/repeat" />
@@ -221,7 +221,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_margin="10dp"
-            android:background="#FF2894A3" />
+            android:background="@color/pro" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -251,9 +251,7 @@
                 android:layout_weight="4"
                 android:text="@string/startTeip"
                 android:textStyle="bold"
-
-
-                card_view:backgroundTint="#2894A3" />
+                card_view:backgroundTint="@color/pro" />
 
             <Button
                 android:id="@+id/buttonAddNote"
