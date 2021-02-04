@@ -34,8 +34,10 @@ public class RecyclerViAdapter extends RecyclerView.Adapter<RecyclerViAdapter.Vi
     final Context context;
     List<TripData> tripDataList;
     private static final int SYSTEM_ALERT_WINDOW_PERMISSION = 2084;
+    private Repository repository ;
 
     public RecyclerViAdapter(Context context, List<TripData> tripDataList) {
+        repository = new Repository(ApplicationR.getApplication());
         this.context = context;
         this.tripDataList = tripDataList;
     }
@@ -61,7 +63,6 @@ public class RecyclerViAdapter extends RecyclerView.Adapter<RecyclerViAdapter.Vi
             textViewTripWay = itemView.findViewById(R.id.txtType);
             textViewRepeat = itemView.findViewById(R.id.txtRepeat);
             btnTripStart = itemView.findViewById(R.id.buttonTripStart);
-            btnTripNotes = itemView.findViewById(R.id.buttonTripNotes);
             btnTripCancel = itemView.findViewById(R.id.buttonTripCancel);
             btnAddNote =itemView.findViewById(R.id.buttonAddNote);
 
@@ -137,6 +138,7 @@ public class RecyclerViAdapter extends RecyclerView.Adapter<RecyclerViAdapter.Vi
             @Override
             public void onClick(View v) {
                 Intent intent =new Intent(context, AddNote.class);
+                intent.putExtra("TripData",current);
                 context.startActivity(intent);
             }
         });
@@ -151,10 +153,12 @@ public class RecyclerViAdapter extends RecyclerView.Adapter<RecyclerViAdapter.Vi
     }
 
     public void updateTrip(TripData tripData, String state) {
-        Repository repository = new Repository(ApplicationR.getApplication());
         tripData.setState(state);
-        repository.update(tripData);
-
+        if(state.equals("done")) {
+            repository.start(tripData);
+        }else {
+            repository.update(tripData);
+        }
     }
 
     @Override

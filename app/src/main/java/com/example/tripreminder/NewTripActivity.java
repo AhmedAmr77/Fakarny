@@ -36,8 +36,10 @@ import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 public class NewTripActivity extends AppCompatActivity implements View.OnClickListener {
     private final String[] dataRepeat = {"No Repeat", "Repeat Daily", "Repeat Weekly", "Repeat Monthly"};
@@ -58,7 +60,11 @@ public class NewTripActivity extends AppCompatActivity implements View.OnClickLi
     private String finalWay, finalRepeat, finalStartAddress, finalEndAddress;
     private TripData data;
     private ArrayAdapter<String> repeatAd, wayAd;
-
+    private String endDate, endTime;
+    private int backYear, backMonth, backDay;
+    private int backHour, backmint;
+    private long endAlarmTrim, startAlarmTime;
+    private long repeatPlus;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,6 +86,20 @@ public class NewTripActivity extends AppCompatActivity implements View.OnClickLi
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 finalRepeat = dataRepeat[position];
+                switch (position){
+                    case 0:
+                        repeatPlus=0;
+                        break;
+                    case 1:
+                        repeatPlus= TimeUnit.DAYS.toMillis(1);
+                        break;
+                    case 2:
+                        repeatPlus=TimeUnit.DAYS.toMillis(7);
+                        break;
+                    case 3:
+                        repeatPlus=TimeUnit.DAYS.toMillis(30);
+                        break;
+                }
             }
 
             @Override
@@ -91,6 +111,40 @@ public class NewTripActivity extends AppCompatActivity implements View.OnClickLi
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 finalWay = dataWay[position];
+                if (finalWay.endsWith("Round Trip")) {
+                    year = calendar.get(Calendar.YEAR);
+                    month = calendar.get(Calendar.MONTH);
+                    day = calendar.get(Calendar.DAY_OF_MONTH);
+                    DatePickerDialog mDatePicker = new DatePickerDialog(NewTripActivity.this, new DatePickerDialog.OnDateSetListener() {
+                        public void onDateSet(DatePicker datepicker, int selectedYear, int selectedMonth, int selectedDay) {
+                            endDate = selectedDay + "-" + (selectedMonth+1) + "-" + selectedYear;
+                            backYear = selectedYear;
+                            backDay = selectedDay;
+                            backMonth = selectedMonth+1;
+                            hour = calendar.get(Calendar.HOUR);
+                            minute = calendar.get(Calendar.MINUTE);
+                            TimePickerDialog mTimePicker;
+                            mTimePicker = new TimePickerDialog(NewTripActivity.this, new TimePickerDialog.OnTimeSetListener() {
+                                @Override
+                                public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+                                    endTime = selectedHour + ":" + selectedMinute;
+                                    backHour = selectedHour;
+                                    backmint = selectedMinute;
+                                    Calendar date = Calendar.getInstance();
+                                    date.set(backYear, backMonth, backDay, backHour, backmint);
+                                    endAlarmTrim = date.getTimeInMillis();
+                                }
+                            }, hour, minute, false);
+                            mTimePicker.setTitle("Select back Time");
+                            mTimePicker.show();
+
+
+                        }
+
+                    }, year, month, day);
+                    mDatePicker.setTitle("Select return date");
+                    mDatePicker.show();
+                }
             }
 
             @Override
@@ -122,6 +176,17 @@ public class NewTripActivity extends AppCompatActivity implements View.OnClickLi
         startLatLng = new LatLng(Double.parseDouble(sll[0]), Double.parseDouble(sll[1]));
         String ell[] = data.getLat_long_endPoint().split(",");
         endLatLng = new LatLng(Double.parseDouble(ell[0]), Double.parseDouble(ell[1]));
+        if(data.getBackDate()!=null){
+            Toast.makeText(this, data.getBackDate(), Toast.LENGTH_SHORT).show();
+
+            String[] backTimes = data.getTime().split(":");
+        backmint = Integer.parseInt(backTimes[1]);
+        backHour = Integer.parseInt(backTimes[0]);
+        String[] backdates = data.getBackDate().split("-");
+        backDay = Integer.parseInt(backdates[0]);
+        backMonth = Integer.parseInt(backdates[1]);
+        backYear = Integer.parseInt(backdates[2]);
+        }
     }
 
     private void initUpdateView() {
@@ -216,7 +281,7 @@ public class NewTripActivity extends AppCompatActivity implements View.OnClickLi
                     finalHours = selectedHour;
                     finalMinute = selectedMinute;
                 }
-            }, hour, minute, true);
+            }, hour, minute, false);
             mTimePicker.setTitle("Select Trip Time");
             mTimePicker.show();
         } else if (id == R.id.editStartPoint) {
@@ -224,37 +289,77 @@ public class NewTripActivity extends AppCompatActivity implements View.OnClickLi
         } else if (id == R.id.editEndPoint) {
             setPlace(END_PLACE);
         } else if (id == R.id.addNewTrip) {
-            String cDate = year + "" + month + "" + day;
-            String sDate = finalSelectedYear + "" + finalSelectedMoth + "" + finalSelectedDay;
-            if (finalStartAddress != null && finalEndAddress != null) {
-                if (Integer.parseInt(cDate) < Integer.parseInt(sDate)) {
-                    if (!textTime.getText().toString().isEmpty()) {
-                        setTrip();
-                    } else {
-                        Toast.makeText(this, "please enter time", Toast.LENGTH_LONG).show();
-                    }
-                } else if (Integer.parseInt(cDate) == Integer.parseInt(sDate)) {
-                    if (hour < finalHours) {
-                        setTrip();
-                    } else {
-                        if (minute < finalMinute) {
-                            setTrip();
-                        } else {
-                            Toast.makeText(this, "please enter correct time", Toast.LENGTH_LONG).show();
-                        }
-                    }
-                } else {
-                    Toast.makeText(this, "the date you selected is less than current date", Toast.LENGTH_LONG).show();
-                }
-            } else {
-                Toast.makeText(this, "please enter start and end points", Toast.LENGTH_LONG).show();
-            }
+            checkDataForSetTrip();
         }
 
     }
 
-    public void setTrip() {
+    private void checkDataForSetTrip() {
+        String cDate = year + "" + month + "" + day;
+        String sDate = finalSelectedYear + "" + finalSelectedMoth + "" + finalSelectedDay;
+        if (finalStartAddress != null && finalEndAddress != null) {
+            if (Integer.parseInt(cDate) < Integer.parseInt(sDate)) {
+                if (!finalWay.equals("Round Trip")) {
+                    if (!textTime.getText().toString().isEmpty()) {
+
+                        setTrip();
+                    } else {
+                        Toast.makeText(this, "please enter time", Toast.LENGTH_LONG).show();
+                    }
+                } else {
+
+                    String backDate = backYear + "" + backMonth + "" + backDay;
+                    Toast.makeText(this, backDate+ " "+sDate, Toast.LENGTH_SHORT).show();
+                    if (Integer.parseInt(sDate) < Integer.parseInt(backDate)) {
+                        setTrip();
+                    } else {
+                        way.setSelection(0);
+                        Toast.makeText(this, "please enter valid back date", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            } else if (Integer.parseInt(cDate) == Integer.parseInt(sDate)) {
+                if (hour < finalHours) {
+                    if (!finalWay.equals("Round Trip")) {
+                        setTrip();
+
+                    } else {
+                        if (finalHours < backHour) {
+                            setTrip();
+                        } else {
+                            way.setSelection(0);
+                            Toast.makeText(this, "please enter valid back time", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                } else {
+                    if (minute < finalMinute) {
+                        if (!finalWay.equals("Round Trip")) {
+                            setTrip();
+
+                        } else {
+                            if (finalMinute < backmint) {
+                                setTrip();
+                            } else {
+                                way.setSelection(0);
+                                Toast.makeText(this, "please enter valid back time", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    } else {
+                        Toast.makeText(this, "please enter correct time", Toast.LENGTH_LONG).show();
+                    }
+                }
+            } else {
+                Toast.makeText(this, "the date you selected is less than current date", Toast.LENGTH_LONG).show();
+            }
+        } else {
+            Toast.makeText(this, "please enter start and end points", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private void setTrip() {
         Repository repository = new Repository(getApplication());
+        Calendar date = Calendar.getInstance();
+        date.set(finalSelectedYear, finalSelectedMoth, finalSelectedDay, finalHours, finalMinute);
+        startAlarmTime = date.getTimeInMillis();
         if (data == null) {
             data = new TripData();
             data.setDate(textDate.getText().toString());
@@ -267,6 +372,11 @@ public class NewTripActivity extends AppCompatActivity implements View.OnClickLi
             data.setRepeatData(finalRepeat);
             data.setWayData(finalWay);
             data.setState("upcoming");
+            data.setBackDate(endDate);
+            data.setBackTime(endTime);
+            data.setAlarmTime(startAlarmTime);
+            data.setEndAlarmTime(endAlarmTrim);
+            data.setRepeatPlus(repeatPlus);
             repository.insert(data);
         } else {
             data.setDate(textDate.getText().toString());
@@ -278,6 +388,11 @@ public class NewTripActivity extends AppCompatActivity implements View.OnClickLi
             data.setLat_long_endPoint(endLatLng.latitude + "," + endLatLng.longitude);
             data.setRepeatData(finalRepeat);
             data.setWayData(finalWay);
+            data.setBackDate(endDate);
+            data.setBackTime(endTime);
+            data.setAlarmTime(startAlarmTime);
+            data.setEndAlarmTime(endAlarmTrim);
+            data.setRepeatPlus(repeatPlus);
             repository.update(data);
         }
         finish();

@@ -1,6 +1,7 @@
 package com.example.tripreminder.database;
 
 import android.app.Application;
+import android.provider.ContactsContract;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -18,6 +19,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class Repository {
@@ -62,6 +65,108 @@ public class Repository {
             }
         }).start();
     }
+
+    public void start(TripData tripData) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                tripDao.updateTripData(tripData);
+                Log.e("sdds", tripData.getEndAlarmTime() + "" + tripData.getWayData() + "");
+                if (tripData.getWayData().equals("Round Trip") && !tripData.getRepeatData().contains("No")) {
+                    repeatAndRound(tripData);
+                } else if (tripData.getWayData().equals("Round Trip")) {
+                    if (tripData.getEndAlarmTime() > 0) {
+                        round(tripData);
+                    }
+                } else {
+                      repeat(tripData);
+                }
+            }
+        }).start();
+    }
+
+    private void repeatAndRound(TripData tripData) {
+        TripData data = new TripData();
+        data.setTime(tripData.getBackTime());
+        data.setDate(tripData.getBackDate());
+        data.setAlarmTime(tripData.getEndAlarmTime());
+        String end = tripData.getEnaPoint();
+        String start = tripData.getStartPoint();
+        data.setStartPoint(end);
+        data.setEnaPoint(start);
+        end = tripData.getLat_long_endPoint();
+        start = tripData.getLat_long_startPoint();
+        data.setLat_long_startPoint(end);
+        data.setLat_long_endPoint(start);
+        data.setTripName(tripData.getTripName());
+        data.setRepeatData(tripData.getRepeatData());
+        data.setWayData(tripData.getWayData());
+        data.setState("upcoming");
+        Calendar calendar = Calendar.getInstance();
+        long cale = calendar.getTimeInMillis() + tripData.getRepeatPlus();
+        data.setRepeatPlus(tripData.getRepeatPlus());
+        calendar.setTimeInMillis(cale);
+        int mYear = calendar.get(Calendar.YEAR);
+        int mMonth = calendar.get(Calendar.MONTH);
+        int mDay = calendar.get(Calendar.DAY_OF_MONTH);
+        int hours = calendar.get(Calendar.HOUR);
+        int mints = calendar.get(Calendar.MINUTE);
+        data.setEndAlarmTime(cale);
+        data.setBackTime(hours + ":" + mints);
+        data.setBackDate(mDay + "-" + (mMonth+1) + "-" + mYear);
+        insert(data);
+    }
+
+    private void round(TripData tripData) {
+        TripData data = new TripData();
+        data.setTime(tripData.getBackTime());
+        data.setDate(tripData.getBackDate());
+        data.setAlarmTime(tripData.getEndAlarmTime());
+        String end = tripData.getEnaPoint();
+        String start = tripData.getStartPoint();
+        data.setStartPoint(end);
+        data.setEnaPoint(start);
+        end = tripData.getLat_long_endPoint();
+        start = tripData.getLat_long_startPoint();
+        data.setLat_long_startPoint(end);
+        data.setLat_long_endPoint(start);
+        data.setTripName(tripData.getTripName());
+        data.setRepeatData(tripData.getRepeatData());
+        data.setWayData(tripData.getWayData());
+        data.setState("upcoming");
+        insert(data);
+    }
+
+    private void repeat(TripData tripData) {
+        TripData data = new TripData();
+        String end = tripData.getEnaPoint();
+        String start = tripData.getStartPoint();
+        data.setStartPoint(start);
+        data.setEnaPoint(end);
+        end = tripData.getLat_long_endPoint();
+        start = tripData.getLat_long_startPoint();
+        data.setLat_long_startPoint(start);
+        data.setLat_long_endPoint(end);
+        data.setTripName(tripData.getTripName());
+        data.setRepeatData(tripData.getRepeatData());
+        data.setWayData(tripData.getWayData());
+        data.setState("upcoming");
+        Calendar calendar = Calendar.getInstance();
+        long cale=calendar.getTimeInMillis()+tripData.getRepeatPlus();
+        data.setRepeatPlus(tripData.getRepeatPlus());
+
+        calendar.setTimeInMillis(cale);
+        int mYear = calendar.get(Calendar.YEAR);
+        int mMonth = calendar.get(Calendar.MONTH);
+        int mDay = calendar.get(Calendar.DAY_OF_MONTH);
+        int hours = calendar.get(Calendar.HOUR);
+        int mints = calendar.get(Calendar.MINUTE);
+        data.setAlarmTime(cale);
+        data.setTime(hours + ":" + mints);
+        data.setDate(mDay + "-" + (mMonth+1) + "-" + mYear);
+        insert(data);
+    }
+
 
     public void deleteAll() {
         new Thread(new Runnable() {

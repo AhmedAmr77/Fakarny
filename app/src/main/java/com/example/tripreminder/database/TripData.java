@@ -6,6 +6,7 @@ import androidx.room.PrimaryKey;
 import com.google.firebase.database.Exclude;
 
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 public class TripData implements Serializable {
@@ -15,6 +16,10 @@ public class TripData implements Serializable {
     private String tripName, startPoint, enaPoint;
     private String date, time, repeatData, wayData;
     private String lat_long_startPoint, lat_long_endPoint;
+    private String backDate, backTime;
+    private long alarmTime,endAlarmTime;
+    private List<String> notes;
+    private long repeatPlus;
 
     public int getId() {
         return id;
@@ -102,5 +107,56 @@ public class TripData implements Serializable {
 
     public void setTime(String time) {
         this.time = time;
+    }
+
+
+    public List<String> getNotes() {
+        return notes;
+    }
+
+    public void setNotes(List<String> notes) {
+        this.notes = notes;
+    }
+
+
+
+    public void setAlarmTime(long alarmTime) {
+        this.alarmTime = alarmTime;
+    }
+
+    public long getAlarmTime() {
+        return alarmTime;
+    }
+
+    public long getEndAlarmTime() {
+        return endAlarmTime;
+    }
+
+    public void setEndAlarmTime(long endAlarmTime) {
+        this.endAlarmTime = endAlarmTime;
+    }
+
+    public String getBackTime() {
+        return backTime;
+    }
+
+    public void setBackTime(String backTime) {
+        this.backTime = backTime;
+    }
+
+    public String getBackDate() {
+        return backDate;
+    }
+
+    public void setBackDate(String backDate) {
+        this.backDate = backDate;
+    }
+
+    public void setRepeatPlus(long repeatPlus) {
+        this.repeatPlus = repeatPlus;
+    }
+
+    public long getRepeatPlus() {
+        return repeatPlus;
     }
 }
