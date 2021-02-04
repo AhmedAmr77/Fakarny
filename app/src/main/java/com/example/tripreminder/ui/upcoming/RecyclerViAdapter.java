@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Update;
 
 
+import com.example.tripreminder.AddNote;
 import com.example.tripreminder.ApplicationR;
 import com.example.tripreminder.FloatingViewService;
 import com.example.tripreminder.MainActivity;
@@ -45,7 +46,7 @@ public class RecyclerViAdapter extends RecyclerView.Adapter<RecyclerViAdapter.Vi
         ConstraintLayout row;
         TextView textViewTripName, textViewTripDate, textViewTripTime,
                 textViewTripFrom, textViewTripTo, textViewTripWay, textViewRepeat;
-        Button btnTripStart, btnTripCancel, btnTripNotes;
+        Button btnTripStart, btnTripCancel, btnTripNotes,btnAddNote;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -62,10 +63,8 @@ public class RecyclerViAdapter extends RecyclerView.Adapter<RecyclerViAdapter.Vi
             btnTripStart = itemView.findViewById(R.id.buttonTripStart);
             btnTripNotes = itemView.findViewById(R.id.buttonTripNotes);
             btnTripCancel = itemView.findViewById(R.id.buttonTripCancel);
+            btnAddNote =itemView.findViewById(R.id.buttonAddNote);
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(context)) {
-                askPermission();
-            }
         }
     }
 
@@ -132,6 +131,13 @@ public class RecyclerViAdapter extends RecyclerView.Adapter<RecyclerViAdapter.Vi
             @Override
             public void onClick(View v) {
                 updateTrip(current, "cancel");
+            }
+        });
+        holder.btnAddNote.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent =new Intent(context, AddNote.class);
+                context.startActivity(intent);
             }
         });
     }

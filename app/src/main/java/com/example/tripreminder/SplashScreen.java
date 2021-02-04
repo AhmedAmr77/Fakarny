@@ -89,7 +89,7 @@ public class SplashScreen extends AppCompatActivity {
             public void run() {
                 mAuth.addAuthStateListener(authStateListener);
             }
-        }, 2000);
+        }, 5000);
 
     }
 
