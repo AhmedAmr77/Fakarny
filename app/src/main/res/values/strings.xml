@@ -127,4 +127,5 @@
     <string name="type">Type</string>
     <string name="startTeip">Start</string>
     <string name="repeat">Repeat</string>
+    <string name="title_activity_history_maps">Map</string>
 </resources>
