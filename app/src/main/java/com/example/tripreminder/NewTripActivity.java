@@ -34,6 +34,7 @@ import com.google.android.libraries.places.widget.Autocomplete;
 import com.google.android.libraries.places.widget.AutocompleteActivity;
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
 
+import java.time.Month;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
@@ -96,7 +97,7 @@ public class NewTripActivity extends AppCompatActivity implements View.OnClickLi
     }
 
 
-    private void onRepeatClick(){
+    private void onRepeatClick() {
         repeat.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -123,6 +124,7 @@ public class NewTripActivity extends AppCompatActivity implements View.OnClickLi
             }
         });
     }
+
     private void onWayClick() {
         way.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -137,7 +139,7 @@ public class NewTripActivity extends AppCompatActivity implements View.OnClickLi
                             endDate = selectedDay + "-" + (selectedMonth + 1) + "-" + selectedYear;
                             backYear = selectedYear;
                             backDay = selectedDay;
-                            backMonth = selectedMonth + 1;
+                            backMonth = selectedMonth ;
                             hour = calendar.get(Calendar.HOUR);
                             minute = calendar.get(Calendar.MINUTE);
                             TimePickerDialog mTimePicker;
@@ -174,29 +176,26 @@ public class NewTripActivity extends AppCompatActivity implements View.OnClickLi
     private void initUpdateValues() {
         finalStartAddress = data.getStartPoint();
         finalEndAddress = data.getEnaPoint();
-        String[] times = data.getTime().split(":");
-        finalMinute = Integer.parseInt(times[1]);
-        finalHours = Integer.parseInt(times[0]);
-        String[] dates = data.getDate().split("-");
-        finalSelectedDay = Integer.parseInt(dates[0]);
-        finalSelectedMoth = Integer.parseInt(dates[1]);
-        finalSelectedYear = Integer.parseInt(dates[2]);
         finalWay = data.getWayData();
         finalRepeat = data.getRepeatData();
         String sll[] = data.getLat_long_startPoint().split(",");
         startLatLng = new LatLng(Double.parseDouble(sll[0]), Double.parseDouble(sll[1]));
         String ell[] = data.getLat_long_endPoint().split(",");
         endLatLng = new LatLng(Double.parseDouble(ell[0]), Double.parseDouble(ell[1]));
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(data.getAlarmTime());
+        finalSelectedYear = calendar.get(Calendar.YEAR);
+        finalSelectedMoth = calendar.get(Calendar.MONTH);
+        finalSelectedDay = calendar.get(Calendar.DAY_OF_MONTH);
+        finalHours = calendar.get(Calendar.HOUR);
+        finalMinute = calendar.get(Calendar.MINUTE);
         if (data.getBackDate() != null) {
-            Toast.makeText(this, data.getBackDate(), Toast.LENGTH_SHORT).show();
-
-            String[] backTimes = data.getTime().split(":");
-            backmint = Integer.parseInt(backTimes[1]);
-            backHour = Integer.parseInt(backTimes[0]);
-            String[] backdates = data.getBackDate().split("-");
-            backDay = Integer.parseInt(backdates[0]);
-            backMonth = Integer.parseInt(backdates[1]);
-            backYear = Integer.parseInt(backdates[2]);
+            calendar.setTimeInMillis(data.getEndAlarmTime());
+            backYear = calendar.get(Calendar.YEAR);
+            backMonth = calendar.get(Calendar.MONTH);
+            backDay = calendar.get(Calendar.DAY_OF_MONTH);
+            backHour = calendar.get(Calendar.HOUR);
+            backmint = calendar.get(Calendar.MINUTE);
         }
     }
 
@@ -327,7 +326,7 @@ public class NewTripActivity extends AppCompatActivity implements View.OnClickLi
                     }
                 } else {
 
-                    String backDate = backYear + "" + backMonth + "" + backDay;
+                    String backDate = backYear + "" + (backMonth) + "" + backDay;
                     if (Integer.parseInt(sDate) < Integer.parseInt(backDate)) {
                         setTrip();
                     } else {

@@ -3,6 +3,7 @@ package com.example.tripreminder.database;
 import android.app.Application;
 import android.provider.ContactsContract;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -139,7 +140,7 @@ public class Repository {
         int mints = calendar.get(Calendar.MINUTE);
         data.setAlarmTime(cale);
         data.setTime(hours + ":" + mints);
-        data.setDate(mDay + "-" + (mMonth) + "-" + mYear);
+        data.setDate(mDay + "-" + (mMonth+1) + "-" + mYear);
         if (tripData.getEndAlarmTime() > 0) {
             cale = cale + Math.abs(tripData.getEndAlarmTime() - tripData.getAlarmTime());
             calendar.setTimeInMillis(cale);
@@ -150,7 +151,8 @@ public class Repository {
             mints = calendar.get(Calendar.MINUTE);
             data.setEndAlarmTime(cale);
             data.setBackTime(hours + ":" + mints);
-            data.setBackDate(mDay + "-" + (mMonth) + "-" + mYear);
+            data.setBackDate(mDay + "-" + (mMonth+1) + "-" + mYear);
+            Log.e("kkkk",data.getBackDate()+"   "+data.getDate());
         }
         insert(data);
     }
