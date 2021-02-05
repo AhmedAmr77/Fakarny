@@ -328,7 +328,6 @@ public class NewTripActivity extends AppCompatActivity implements View.OnClickLi
                 } else {
 
                     String backDate = backYear + "" + backMonth + "" + backDay;
-                    Toast.makeText(this, backDate + " " + sDate, Toast.LENGTH_SHORT).show();
                     if (Integer.parseInt(sDate) < Integer.parseInt(backDate)) {
                         setTrip();
                     } else {
