@@ -75,47 +75,22 @@ public class Repository {
                 if (tripData.getWayData().equals("Round Trip") && !tripData.getRepeatData().contains("No")) {
                     repeatAndRound(tripData);
                 } else if (tripData.getWayData().equals("Round Trip")) {
-                    if (tripData.getEndAlarmTime() > 0) {
+                    if (tripData.getEndAlarmTime() > tripData.getAlarmTime()) {
                         round(tripData);
                     }
-                } else if(!tripData.getRepeatData().contains("No")){
-                      repeat(tripData);
+                } else if (!tripData.getRepeatData().contains("No")) {
+                    repeat(tripData);
                 }
             }
         }).start();
     }
 
     private void repeatAndRound(TripData tripData) {
-        TripData data = new TripData();
-
-        data.setTime(tripData.getDate());
-        data.setDate(tripData.getBackDate());
-        data.setAlarmTime(tripData.getEndAlarmTime());
-        String end = tripData.getEnaPoint();
-        String start = tripData.getStartPoint();
-        data.setStartPoint(end);
-        data.setEnaPoint(start);
-        end = tripData.getLat_long_endPoint();
-        start = tripData.getLat_long_startPoint();
-        data.setLat_long_startPoint(end);
-        data.setLat_long_endPoint(start);
-        data.setTripName(tripData.getTripName());
-        data.setRepeatData(tripData.getRepeatData());
-        data.setWayData(tripData.getWayData());
-        data.setState("upcoming");
-        Calendar calendar = Calendar.getInstance();
-        long cale = calendar.getTimeInMillis() + tripData.getRepeatPlus();
-        data.setRepeatPlus(tripData.getRepeatPlus());
-        calendar.setTimeInMillis(cale);
-        int mYear = calendar.get(Calendar.YEAR);
-        int mMonth = calendar.get(Calendar.MONTH);
-        int mDay = calendar.get(Calendar.DAY_OF_MONTH);
-        int hours = calendar.get(Calendar.HOUR);
-        int mints = calendar.get(Calendar.MINUTE);
-        data.setEndAlarmTime(cale);
-        data.setBackTime(hours + ":" + mints);
-        data.setBackDate(mDay + "-" + (mMonth+1) + "-" + mYear);
-        insert(data);
+        if (tripData.getEndAlarmTime() > tripData.getAlarmTime()) {
+            round(tripData);
+        } else {
+            repeat(tripData);
+        }
     }
 
     private void round(TripData tripData) {
@@ -134,6 +109,7 @@ public class Repository {
         data.setTripName(tripData.getTripName());
         data.setRepeatData(tripData.getRepeatData());
         data.setWayData(tripData.getWayData());
+        data.setEndAlarmTime(tripData.getAlarmTime());
         data.setState("upcoming");
         insert(data);
     }
@@ -153,9 +129,8 @@ public class Repository {
         data.setWayData(tripData.getWayData());
         data.setState("upcoming");
         Calendar calendar = Calendar.getInstance();
-        long cale=calendar.getTimeInMillis()+tripData.getRepeatPlus();
+        long cale = calendar.getTimeInMillis() + tripData.getRepeatPlus();
         data.setRepeatPlus(tripData.getRepeatPlus());
-
         calendar.setTimeInMillis(cale);
         int mYear = calendar.get(Calendar.YEAR);
         int mMonth = calendar.get(Calendar.MONTH);
@@ -164,7 +139,19 @@ public class Repository {
         int mints = calendar.get(Calendar.MINUTE);
         data.setAlarmTime(cale);
         data.setTime(hours + ":" + mints);
-        data.setDate(mDay + "-" + (mMonth+1) + "-" + mYear);
+        data.setDate(mDay + "-" + (mMonth) + "-" + mYear);
+        if (tripData.getEndAlarmTime() > 0) {
+            cale = cale + Math.abs(tripData.getEndAlarmTime() - tripData.getAlarmTime());
+            calendar.setTimeInMillis(cale);
+            mYear = calendar.get(Calendar.YEAR);
+            mMonth = calendar.get(Calendar.MONTH);
+            mDay = calendar.get(Calendar.DAY_OF_MONTH);
+            hours = calendar.get(Calendar.HOUR);
+            mints = calendar.get(Calendar.MINUTE);
+            data.setEndAlarmTime(cale);
+            data.setBackTime(hours + ":" + mints);
+            data.setBackDate(mDay + "-" + (mMonth) + "-" + mYear);
+        }
         insert(data);
     }
 
