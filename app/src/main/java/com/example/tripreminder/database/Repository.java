@@ -78,7 +78,7 @@ public class Repository {
                     if (tripData.getEndAlarmTime() > 0) {
                         round(tripData);
                     }
-                } else {
+                } else if(!tripData.getRepeatData().contains("No")){
                       repeat(tripData);
                 }
             }

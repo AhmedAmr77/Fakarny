@@ -65,6 +65,7 @@ public class NewTripActivity extends AppCompatActivity implements View.OnClickLi
     private int backHour, backmint;
     private long endAlarmTrim, startAlarmTime;
     private long repeatPlus;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,22 +83,36 @@ public class NewTripActivity extends AppCompatActivity implements View.OnClickLi
         wayAd.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         repeat.setAdapter(repeatAd);
         way.setAdapter(wayAd);
+
+
+        fields = Arrays.asList(Place.Field.ADDRESS, Place.Field.LAT_LNG);
+        data = (TripData) getIntent().getSerializableExtra("updateObj");
+        if (data != null) {
+            initUpdateValues();
+            initUpdateView();
+        }
+        onRepeatClick();
+        onWayClick();
+    }
+
+
+    private void onRepeatClick(){
         repeat.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 finalRepeat = dataRepeat[position];
-                switch (position){
+                switch (position) {
                     case 0:
-                        repeatPlus=0;
+                        repeatPlus = 0;
                         break;
                     case 1:
-                        repeatPlus= TimeUnit.DAYS.toMillis(1);
+                        repeatPlus = TimeUnit.DAYS.toMillis(1);
                         break;
                     case 2:
-                        repeatPlus=TimeUnit.DAYS.toMillis(7);
+                        repeatPlus = TimeUnit.DAYS.toMillis(7);
                         break;
                     case 3:
-                        repeatPlus=TimeUnit.DAYS.toMillis(30);
+                        repeatPlus = TimeUnit.DAYS.toMillis(30);
                         break;
                 }
             }
@@ -107,6 +122,8 @@ public class NewTripActivity extends AppCompatActivity implements View.OnClickLi
 
             }
         });
+    }
+    private void onWayClick() {
         way.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -117,10 +134,10 @@ public class NewTripActivity extends AppCompatActivity implements View.OnClickLi
                     day = calendar.get(Calendar.DAY_OF_MONTH);
                     DatePickerDialog mDatePicker = new DatePickerDialog(NewTripActivity.this, new DatePickerDialog.OnDateSetListener() {
                         public void onDateSet(DatePicker datepicker, int selectedYear, int selectedMonth, int selectedDay) {
-                            endDate = selectedDay + "-" + (selectedMonth+1) + "-" + selectedYear;
+                            endDate = selectedDay + "-" + (selectedMonth + 1) + "-" + selectedYear;
                             backYear = selectedYear;
                             backDay = selectedDay;
-                            backMonth = selectedMonth+1;
+                            backMonth = selectedMonth + 1;
                             hour = calendar.get(Calendar.HOUR);
                             minute = calendar.get(Calendar.MINUTE);
                             TimePickerDialog mTimePicker;
@@ -152,12 +169,6 @@ public class NewTripActivity extends AppCompatActivity implements View.OnClickLi
 
             }
         });
-        fields = Arrays.asList(Place.Field.ADDRESS, Place.Field.LAT_LNG);
-        data = (TripData) getIntent().getSerializableExtra("updateObj");
-        if (data != null) {
-            initUpdateValues();
-            initUpdateView();
-        }
     }
 
     private void initUpdateValues() {
@@ -176,16 +187,16 @@ public class NewTripActivity extends AppCompatActivity implements View.OnClickLi
         startLatLng = new LatLng(Double.parseDouble(sll[0]), Double.parseDouble(sll[1]));
         String ell[] = data.getLat_long_endPoint().split(",");
         endLatLng = new LatLng(Double.parseDouble(ell[0]), Double.parseDouble(ell[1]));
-        if(data.getBackDate()!=null){
+        if (data.getBackDate() != null) {
             Toast.makeText(this, data.getBackDate(), Toast.LENGTH_SHORT).show();
 
             String[] backTimes = data.getTime().split(":");
-        backmint = Integer.parseInt(backTimes[1]);
-        backHour = Integer.parseInt(backTimes[0]);
-        String[] backdates = data.getBackDate().split("-");
-        backDay = Integer.parseInt(backdates[0]);
-        backMonth = Integer.parseInt(backdates[1]);
-        backYear = Integer.parseInt(backdates[2]);
+            backmint = Integer.parseInt(backTimes[1]);
+            backHour = Integer.parseInt(backTimes[0]);
+            String[] backdates = data.getBackDate().split("-");
+            backDay = Integer.parseInt(backdates[0]);
+            backMonth = Integer.parseInt(backdates[1]);
+            backYear = Integer.parseInt(backdates[2]);
         }
     }
 
@@ -257,33 +268,9 @@ public class NewTripActivity extends AppCompatActivity implements View.OnClickLi
     public void onClick(View v) {
         int id = v.getId();
         if (id == R.id.btnDate) {
-            year = calendar.get(Calendar.YEAR);
-            month = calendar.get(Calendar.MONTH);
-            day = calendar.get(Calendar.DAY_OF_MONTH);
-            DatePickerDialog mDatePicker = new DatePickerDialog(NewTripActivity.this, new DatePickerDialog.OnDateSetListener() {
-                public void onDateSet(DatePicker datepicker, int selectedYear, int selectedMonth, int selectedDay) {
-                    textDate.setText(selectedDay + "-" + (selectedMonth + 1) + "-" + selectedYear);
-                    finalSelectedDay = selectedDay;
-                    finalSelectedMoth = selectedMonth;
-                    finalSelectedYear = selectedYear;
-                }
-            }, year, month, day);
-            mDatePicker.setTitle("Select Trip date");
-            mDatePicker.show();
+            getDate();
         } else if (id == R.id.btnTime) {
-            hour = calendar.get(Calendar.HOUR_OF_DAY);
-            minute = calendar.get(Calendar.MINUTE);
-            TimePickerDialog mTimePicker;
-            mTimePicker = new TimePickerDialog(NewTripActivity.this, new TimePickerDialog.OnTimeSetListener() {
-                @Override
-                public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                    textTime.setText(selectedHour + ":" + selectedMinute);
-                    finalHours = selectedHour;
-                    finalMinute = selectedMinute;
-                }
-            }, hour, minute, false);
-            mTimePicker.setTitle("Select Trip Time");
-            mTimePicker.show();
+            getTime();
         } else if (id == R.id.editStartPoint) {
             setPlace(START_PLACE);
         } else if (id == R.id.editEndPoint) {
@@ -292,6 +279,38 @@ public class NewTripActivity extends AppCompatActivity implements View.OnClickLi
             checkDataForSetTrip();
         }
 
+    }
+
+    private void getTime() {
+        hour = calendar.get(Calendar.HOUR_OF_DAY);
+        minute = calendar.get(Calendar.MINUTE);
+        TimePickerDialog mTimePicker;
+        mTimePicker = new TimePickerDialog(NewTripActivity.this, new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+                textTime.setText(selectedHour + ":" + selectedMinute);
+                finalHours = selectedHour;
+                finalMinute = selectedMinute;
+            }
+        }, hour, minute, false);
+        mTimePicker.setTitle("Select Trip Time");
+        mTimePicker.show();
+    }
+
+    private void getDate() {
+        year = calendar.get(Calendar.YEAR);
+        month = calendar.get(Calendar.MONTH);
+        day = calendar.get(Calendar.DAY_OF_MONTH);
+        DatePickerDialog mDatePicker = new DatePickerDialog(NewTripActivity.this, new DatePickerDialog.OnDateSetListener() {
+            public void onDateSet(DatePicker datepicker, int selectedYear, int selectedMonth, int selectedDay) {
+                textDate.setText(selectedDay + "-" + (selectedMonth + 1) + "-" + selectedYear);
+                finalSelectedDay = selectedDay;
+                finalSelectedMoth = selectedMonth;
+                finalSelectedYear = selectedYear;
+            }
+        }, year, month, day);
+        mDatePicker.setTitle("Select Trip date");
+        mDatePicker.show();
     }
 
     private void checkDataForSetTrip() {
@@ -309,7 +328,7 @@ public class NewTripActivity extends AppCompatActivity implements View.OnClickLi
                 } else {
 
                     String backDate = backYear + "" + backMonth + "" + backDay;
-                    Toast.makeText(this, backDate+ " "+sDate, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, backDate + " " + sDate, Toast.LENGTH_SHORT).show();
                     if (Integer.parseInt(sDate) < Integer.parseInt(backDate)) {
                         setTrip();
                     } else {
