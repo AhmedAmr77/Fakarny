@@ -63,6 +63,8 @@ public class UpcomingFragment extends Fragment {
         model.getUpcoming().observe(getViewLifecycleOwner(), new Observer<List<TripData>>() {
             @Override
             public void onChanged(List<TripData> tripData) {
+                if(tripData.size()>0)
+                    model.setAlarmToSystem(tripData.get(0));
                 adapter.setValues(tripData);
                 adapter.notifyDataSetChanged();
             }

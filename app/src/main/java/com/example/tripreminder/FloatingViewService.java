@@ -27,7 +27,7 @@ public class FloatingViewService extends Service implements View.OnClickListener
     private ScrollView scrolly;
     private int versionFlag;
 
-    ArrayList<String> notesList;
+    ArrayList<noteData> notesList;
 
     public FloatingViewService() {
     }
@@ -41,7 +41,7 @@ public class FloatingViewService extends Service implements View.OnClickListener
     public void onCreate() {
         super.onCreate();
 
-        addItemsNotesList();
+        //addItemsNotesList();
 
         //getting the widget layout from xml using layout inflater
         mFloatingView = LayoutInflater.from(this).inflate(R.layout.floating_widget, null);
@@ -146,7 +146,7 @@ public class FloatingViewService extends Service implements View.OnClickListener
             }
         });
     }
-
+/*
     void addItemsNotesList(){
         notesList = new ArrayList<>();
         notesList.add("Vege");
@@ -171,7 +171,7 @@ public class FloatingViewService extends Service implements View.OnClickListener
         notesList.add("car");
         notesList.add("beaks");
     }
-
+*/
     private void createCheckBox() {
         if(notesList.size()==0) {
             Toast.makeText(this, "There is no notes", Toast.LENGTH_LONG).show();
@@ -179,7 +179,7 @@ public class FloatingViewService extends Service implements View.OnClickListener
             for(int i=0; i<notesList.size();i++){
                 CheckBox c = new CheckBox(this);
                 c.setId(i);
-                c.setText(notesList.get(i));
+                c.setText(notesList.get(i).getNote());
                 c.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
                 linearLayoutCheckBox.addView(c);
             }
@@ -212,6 +212,7 @@ public class FloatingViewService extends Service implements View.OnClickListener
             */
             case R.id.buttonClose:
                 //closing the widget
+                checkedCheckBox();
                 stopSelf();
                 break;
 
@@ -222,23 +223,18 @@ public class FloatingViewService extends Service implements View.OnClickListener
         }
     }
 
-    public ArrayList checkedCheckBox(){         //to store in DB what user had check from list
+    public void checkedCheckBox(){         //to store in DB what user had check from list
         CheckBox c;
-        //ArrayList<Integer> index = new ArrayList<Integer>();
-        ArrayList<String> checked = null;
         if(notesList.size()==0) {
             Toast.makeText(this, "Dev, empty notes list", Toast.LENGTH_LONG).show();
         } else {
-            checked = new ArrayList<String>();
             for(int i=0; i<notesList.size();i++){
                 c = (CheckBox)linearLayoutCheckBox.getChildAt(i);
                 if (c.isChecked()){
-                    //index.add(i);
-                    checked.add((c.getText()).toString());
+                    notesList.get(i).setStatus(true);
                 }
             }
         }
-        return checked;
     }
 }
 

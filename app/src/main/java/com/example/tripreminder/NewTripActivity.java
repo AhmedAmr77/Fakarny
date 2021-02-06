@@ -218,7 +218,6 @@ public class NewTripActivity extends AppCompatActivity implements View.OnClickLi
         btnTime.setOnClickListener(this);
         startPlace.setOnClickListener(this);
         addNewTrip.setOnClickListener(this);
-        addNewTrip.setOnClickListener(this);
     }
 
     private void initFindView() {
@@ -315,6 +314,8 @@ public class NewTripActivity extends AppCompatActivity implements View.OnClickLi
     private void checkDataForSetTrip() {
         String cDate = year + "" + month + "" + day;
         String sDate = finalSelectedYear + "" + finalSelectedMoth + "" + finalSelectedDay;
+        Toast.makeText(this, year+"--"+month+"--"+day, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, finalSelectedYear+"--"+finalSelectedMoth+"--"+finalSelectedDay, Toast.LENGTH_SHORT).show();
         if (finalStartAddress != null && finalEndAddress != null) {
             if (Integer.parseInt(cDate) < Integer.parseInt(sDate)) {
                 if (!finalWay.equals("Round Trip")) {
@@ -388,7 +389,7 @@ public class NewTripActivity extends AppCompatActivity implements View.OnClickLi
             data.setLat_long_endPoint(endLatLng.latitude + "," + endLatLng.longitude);
             data.setRepeatData(finalRepeat);
             data.setWayData(finalWay);
-            data.setState("UPCOMING");
+            data.setState("upcoming");
             data.setBackDate(endDate);
             data.setBackTime(endTime);
             data.setAlarmTime(startAlarmTime);

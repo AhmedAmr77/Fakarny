@@ -18,6 +18,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.database.core.Repo;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -78,6 +79,29 @@ public class Repository {
         new Thread(new Runnable() {
             @Override
             public void run() {
+                tripDao.updateTripData(tripData);
+                Log.e("sdds", tripData.getEndAlarmTime() + "" + tripData.getWayData() + "");
+                if (tripData.getWayData().equals("Round Trip") && !tripData.getRepeatData().contains("No")) {
+                    repeatAndRound(tripData);
+                } else if (tripData.getWayData().equals("Round Trip")) {
+                    if (tripData.getEndAlarmTime() > tripData.getAlarmTime()) {
+                        round(tripData);
+                    }
+                } else if (!tripData.getRepeatData().contains("No")) {
+                    repeat(tripData);
+                }
+            }
+        }).start();
+    }
+
+    //overLoad
+    public void start(int tripId) {
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                TripData tripData = tripDao.getTripById(tripId);
+                tripData.setState("done");
                 tripDao.updateTripData(tripData);
                 Log.e("sdds", tripData.getEndAlarmTime() + "" + tripData.getWayData() + "");
                 if (tripData.getWayData().equals("Round Trip") && !tripData.getRepeatData().contains("No")) {

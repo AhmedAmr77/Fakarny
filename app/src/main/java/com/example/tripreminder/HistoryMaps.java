@@ -75,7 +75,7 @@ public class HistoryMaps extends FragmentActivity implements OnMapReadyCallback,
                 .findFragmentById(R.id.map);
         //data
         repository=new Repository(getApplication());
-        repository.getHistory().observeForever(new Observer<List<TripData>>() {
+        repository.getDoneHistory().observeForever(new Observer<List<TripData>>() {
             @Override
             public void onChanged(List<TripData> tripData) {
                 historyTrips = tripData;
@@ -105,12 +105,10 @@ public class HistoryMaps extends FragmentActivity implements OnMapReadyCallback,
         PolylineOptions polyOptions = new PolylineOptions();
         LatLng polylineStartLatLng=null;
         LatLng polylineEndLatLng=null;
-        Toast.makeText(this, route.get(0).getName(), Toast.LENGTH_LONG).show();
-        Toast.makeText(this, route.get(0).getDistanceText()+"DIST&+&DUR"+route.get(0).getDurationText(), Toast.LENGTH_LONG).show();
-        Toast.makeText(this, route.get(0).getDistanceValue()+"DISTval&+&DURval"+route.get(0).getDurationValue(), Toast.LENGTH_LONG).show();
-
+        
         //add route(s) to the map using polyline
         for (int i = 0; i <route.size(); i++) {
+            Toast.makeText(this, "TOOOOOOOOOOOAAAAAAAAAAAAST", Toast.LENGTH_SHORT).show();
             if(i==shortestRouteIndex)
             {
                 if (j > 8)
@@ -171,26 +169,6 @@ public class HistoryMaps extends FragmentActivity implements OnMapReadyCallback,
         }
 
         Log.i("map","onMapReadyyy");
-        /*for (int i = 0; i < allStartPoints.size(); i++) {
-
-            locationStart=dam1;
-            locationEnd=dam4;
-
-            if (locationStart != null && locationEnd != null) {
-                mMap.addMarker(new MarkerOptions().position(locationStart).title("Start Point OF " + "Trip1"));
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(locationStart, 10f));
-                if (j > 8)
-                    j = 0; //chande color from begining
-                mMap.addPolyline(
-                        new PolylineOptions().add(locationStart).add(locationEnd).width(5f).color(color[j])
-                );
-                mMap.addMarker(new MarkerOptions().position(locationEnd).title("End Point OF" + "Trip1"));
-                locationStart = null;
-                locationEnd = null;
-                j++;
-            }
-        }*/
-        //----------------------------------------------------------------------------------------------
     }
 
     public void Findroutes(LatLng Start, LatLng End) {

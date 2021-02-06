@@ -12,11 +12,14 @@ import java.util.List;
 
 @Dao
 public interface TripDao {
-    @Query("select * from TripData where state= 'upcoming' ")
+    @Query("select * from TripData where state= 'upcoming' order by alarmTime")
     LiveData<List<TripData>> getUpcoming();
 
     @Query("select * from TripData where state='done' OR state='cancel'")
     LiveData<List<TripData>> getHistory();
+
+    @Query("select * from TripData where id =:getId")
+    TripData getTripById(int getId);
 
     @Query("select * from TripData where state='done'")
     LiveData<List<TripData>> getDoneHistory();
