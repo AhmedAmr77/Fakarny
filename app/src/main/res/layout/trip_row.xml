@@ -233,15 +233,23 @@
             android:weightSum="7">
 
 
+            <Button
+                android:id="@+id/btnshowNote"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:background="@drawable/ic_baseline_note_24"
+                android:foreground="@drawable/ic_baseline_note_24"
+                android:layout_weight="1.5" />
 
             <Button
                 android:id="@+id/buttonTripStart"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="5.5"
+                android:layout_marginStart="5dp"
+                android:layout_weight="4"
                 android:text="@string/startTeip"
                 android:textStyle="bold"
-                android:layout_marginStart="30dp"
                 card_view:backgroundTint="@color/pro" />
 
             <Button
@@ -249,9 +257,10 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.5"
-                android:layout_marginStart="20dp"
+                android:layout_marginStart="3dp"
                 android:background="@drawable/ic_baseline_note_add_24"
                 android:foreground="@drawable/ic_baseline_note_add_24" />
+
         </LinearLayout>
     </LinearLayout>
 </androidx.cardview.widget.CardView>
