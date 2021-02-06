@@ -18,6 +18,9 @@ public interface TripDao {
     @Query("select * from TripData where state='done' OR state='cancel'")
     LiveData<List<TripData>> getHistory();
 
+    @Query("select * from TripData where state='done'")
+    LiveData<List<TripData>> getDoneHistory();
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void addTrip(TripData tripData);
 

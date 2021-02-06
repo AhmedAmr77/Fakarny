@@ -28,6 +28,7 @@ public class Repository {
     private TripDao tripDao;
     private LiveData<List<TripData>> upcoming;
     private LiveData<List<TripData>> history;
+    private LiveData<List<TripData>> doneHistory;
     private DatabaseReference myRef;
 
     public Repository(Application application) {
@@ -35,11 +36,17 @@ public class Repository {
         tripDao = db.tripDao();
         upcoming = tripDao.getUpcoming();
         history = tripDao.getHistory();
+        doneHistory = tripDao.getDoneHistory();
+
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         myRef = database.getReference().child(mAuth.getCurrentUser().getUid());
     }
 
+    public LiveData<List<TripData>> getDoneHistory() {
+
+        return doneHistory;
+    }
 
     public LiveData<List<TripData>> getUpcomingTrips() {
         return upcoming;

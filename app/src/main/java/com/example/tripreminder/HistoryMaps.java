@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.Observer;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
@@ -56,12 +57,15 @@ public class HistoryMaps extends FragmentActivity implements OnMapReadyCallback,
     int CYAN  = 0xFF00FFFF;
     int MAGENTA = 0xFFFF00FF;
     int j=0;
-    int [] color = {RED ,GREEN, BLUE,YELLOW, CYAN ,MAGENTA,BLACK,GRAY,WHITE};
+    int [] color = {RED, GREEN, BLUE, YELLOW, CYAN ,MAGENTA,BLACK,GRAY,WHITE};
     /////////////////////////
     protected LatLng start=null;
     protected LatLng end=null;
     //polyline object
     private List<Polyline> polylines=null;
+
+    int name=0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,11 +79,84 @@ public class HistoryMaps extends FragmentActivity implements OnMapReadyCallback,
             @Override
             public void onChanged(List<TripData> tripData) {
                 historyTrips = tripData;
+                Toast.makeText(HistoryMaps.this, historyTrips.size()+"", Toast.LENGTH_SHORT).show();
+                polylines = new ArrayList<>();
+                mapFragment.getMapAsync(HistoryMaps.this);
+                Log.i("map","onCREATEEEE");
             }
         });
 
-        mapFragment.getMapAsync(this);
     }
+
+    @Override
+    public void onRoutingStart() {
+        Toast.makeText(this,"Finding Route...",Toast.LENGTH_LONG).show();
+        Log.i("map","onRoutingStart");
+    }
+
+    @Override
+    public void onRoutingSuccess(ArrayList<Route> route, int shortestRouteIndex) {
+        Log.i("map","polly start");
+        CameraUpdate center = CameraUpdateFactory.newLatLng(start);
+        CameraUpdate zoom = CameraUpdateFactory.zoomTo(16);
+        if(polylines!=null) {
+            //polylines.clear();
+        }
+        PolylineOptions polyOptions = new PolylineOptions();
+        LatLng polylineStartLatLng=null;
+        LatLng polylineEndLatLng=null;
+        Toast.makeText(this, route.get(0).getName(), Toast.LENGTH_LONG).show();
+        Toast.makeText(this, route.get(0).getDistanceText()+"DIST&+&DUR"+route.get(0).getDurationText(), Toast.LENGTH_LONG).show();
+        Toast.makeText(this, route.get(0).getDistanceValue()+"DISTval&+&DURval"+route.get(0).getDurationValue(), Toast.LENGTH_LONG).show();
+
+        //add route(s) to the map using polyline
+        for (int i = 0; i <route.size(); i++) {
+            if(i==shortestRouteIndex)
+            {
+                if (j > 8)
+                    j = 0; //chande color from begining
+                polyOptions.color(color[j]);
+                polyOptions.width(7);
+                polyOptions.addAll(route.get(shortestRouteIndex).getPoints());
+                Polyline polyline = mMap.addPolyline(polyOptions);
+                polylineStartLatLng=polyline.getPoints().get(0);
+                int k=polyline.getPoints().size();
+                polylineEndLatLng=polyline.getPoints().get(k-1);
+                polylines.add(polyline);
+                j++;
+            }
+            else {
+            }
+        }
+        //Add Marker on route starting position
+        MarkerOptions startMarker = new MarkerOptions();
+        startMarker.position(polylineStartLatLng);
+        startMarker.title(historyTrips.get(name).getTripName());
+        mMap.addMarker(startMarker);
+        //Add Marker on route ending position
+        MarkerOptions endMarker = new MarkerOptions();
+        endMarker.position(polylineEndLatLng);
+        endMarker.title(historyTrips.get(name).getTripName());
+        mMap.addMarker(endMarker);
+        name++;
+        Log.i("map","poly end");
+    }
+
+    @Override
+    public void onRoutingFailure(RouteException e) {
+        View parentLayout = findViewById(android.R.id.content);
+        Snackbar snackbar= Snackbar.make(parentLayout, e.toString(), Snackbar.LENGTH_LONG);
+        snackbar.show();
+        Log.i("map","Routing Fail");
+        Findroutes(start,end);
+        Log.i("map","Routing Fail called again");
+    }
+
+    @Override
+    public void onRoutingCancelled() {
+        Log.i("map","CANCELED");
+    }
+
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
@@ -93,6 +170,7 @@ public class HistoryMaps extends FragmentActivity implements OnMapReadyCallback,
             Toast.makeText(this, "one", Toast.LENGTH_SHORT).show();
         }
 
+        Log.i("map","onMapReadyyy");
         /*for (int i = 0; i < allStartPoints.size(); i++) {
 
             locationStart=dam1;
@@ -114,17 +192,8 @@ public class HistoryMaps extends FragmentActivity implements OnMapReadyCallback,
         }*/
         //----------------------------------------------------------------------------------------------
     }
-    @Override
-    public void onRoutingFailure(RouteException e) {
-        View parentLayout = findViewById(android.R.id.content);
-        Snackbar snackbar= Snackbar.make(parentLayout, e.toString(), Snackbar.LENGTH_LONG);
-        snackbar.show();
-        Log.i("map","Routing Fail");
-        Findroutes(start,end);
-        Log.i("map","Routing Fail called again");
-    }
-    public void Findroutes(LatLng Start, LatLng End)
-    {
+
+    public void Findroutes(LatLng Start, LatLng End) {
         if(Start==null || End==null) {
             Toast.makeText(HistoryMaps.this,"Unable to get location", Toast.LENGTH_LONG).show();
         }
@@ -139,54 +208,8 @@ public class HistoryMaps extends FragmentActivity implements OnMapReadyCallback,
                     .build();
             routing.execute();
         }
-    }
-    @Override
-    public void onRoutingSuccess(ArrayList<Route> route, int shortestRouteIndex) {
-        Log.i("map","polly start");
-        CameraUpdate center = CameraUpdateFactory.newLatLng(start);
-        CameraUpdate zoom = CameraUpdateFactory.zoomTo(16);
-        if(polylines!=null) {
-            polylines.clear();
-        }
-        PolylineOptions polyOptions = new PolylineOptions();
-        LatLng polylineStartLatLng=null;
-        LatLng polylineEndLatLng=null;
 
-        polylines = new ArrayList<>();
-        //add route(s) to the map using polyline
-        for (int i = 0; i <route.size(); i++) {
-            if(i==shortestRouteIndex)
-            {
-                polyOptions.color(GREEN);
-                polyOptions.width(7);
-                polyOptions.addAll(route.get(shortestRouteIndex).getPoints());
-                Polyline polyline = mMap.addPolyline(polyOptions);
-                polylineStartLatLng=polyline.getPoints().get(0);
-                int k=polyline.getPoints().size();
-                polylineEndLatLng=polyline.getPoints().get(k-1);
-                polylines.add(polyline);
-            }
-            else {
-            }
-        }
-        //Add Marker on route starting position
-        MarkerOptions startMarker = new MarkerOptions();
-        startMarker.position(polylineStartLatLng);
-        startMarker.title("My Location");
-        mMap.addMarker(startMarker);
-        //Add Marker on route ending position
-        MarkerOptions endMarker = new MarkerOptions();
-        endMarker.position(polylineEndLatLng);
-        endMarker.title("Destination");
-        mMap.addMarker(endMarker);
-        Log.i("map","poly end");
-    }
-    @Override
-    public void onRoutingCancelled() {
-    }
-    @Override
-    public void onRoutingStart() {
-        Toast.makeText(this,"Finding Route...",Toast.LENGTH_LONG).show();
+        Log.i("map","FINDROUTES");
     }
 
 }

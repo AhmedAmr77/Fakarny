@@ -388,7 +388,7 @@ public class NewTripActivity extends AppCompatActivity implements View.OnClickLi
             data.setLat_long_endPoint(endLatLng.latitude + "," + endLatLng.longitude);
             data.setRepeatData(finalRepeat);
             data.setWayData(finalWay);
-            data.setState("upcoming");
+            data.setState("UPCOMING");
             data.setBackDate(endDate);
             data.setBackTime(endTime);
             data.setAlarmTime(startAlarmTime);
