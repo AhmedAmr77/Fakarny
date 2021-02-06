@@ -22,10 +22,12 @@ import java.util.List;
 public class ShowVoteAdapter extends RecyclerView.Adapter<ShowVoteAdapter.ViewHolder> {
     private final Context context;
     private List<NoteData> values;
+    private boolean upcoming;
 
-    public ShowVoteAdapter(Context context, List<NoteData> values) {
+    public ShowVoteAdapter(Context context, List<NoteData> values, boolean upcoming) {
         this.context = context;
         this.values = values;
+        this.upcoming = upcoming;
         if (values == null) {
             this.values = new ArrayList<>();
         }
@@ -48,11 +50,14 @@ public class ShowVoteAdapter extends RecyclerView.Adapter<ShowVoteAdapter.ViewHo
         holder.checkBox.setEnabled(false);
         boolean status = current.isStatus();
         holder.checkBox.setChecked(status);
-
-        if (status) {
-            holder.linearLayout.setBackgroundColor(Color.GREEN);
-        } else {
-            holder.linearLayout.setBackgroundColor(Color.RED);
+        if (!upcoming) {
+            if (!status) {
+                holder.linearLayout.setBackgroundColor(Color.RED);
+            } else {
+                holder.linearLayout.setBackgroundColor(Color.GREEN);
+            }
+        }else{
+            holder.linearLayout.setBackgroundColor(context.getResources().getColor(R.color.purple_200));
         }
     }
 

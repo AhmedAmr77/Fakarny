@@ -25,7 +25,7 @@ public class ShowNotes extends AppCompatActivity {
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
         TripData tripData = (TripData) getIntent().getSerializableExtra("tripNotes");
-        adapter = new ShowVoteAdapter(this, tripData.getNotes());
+        adapter = new ShowVoteAdapter(this, tripData.getNotes(),tripData.getState().equals("upcoming"));
         recyclerView.setAdapter(adapter);
 
     }
