@@ -80,7 +80,6 @@ public class Repository {
             @Override
             public void run() {
                 tripDao.updateTripData(tripData);
-                Log.e("sdds", tripData.getEndAlarmTime() + "" + tripData.getWayData() + "");
                 if (tripData.getWayData().equals("Round Trip") && !tripData.getRepeatData().contains("No")) {
                     repeatAndRound(tripData);
                 } else if (tripData.getWayData().equals("Round Trip")) {
@@ -94,28 +93,6 @@ public class Repository {
         }).start();
     }
 
-    //overLoad
-    public void start(int tripId) {
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                TripData tripData = tripDao.getTripById(tripId);
-                tripData.setState("done");
-                tripDao.updateTripData(tripData);
-                Log.e("sdds", tripData.getEndAlarmTime() + "" + tripData.getWayData() + "");
-                if (tripData.getWayData().equals("Round Trip") && !tripData.getRepeatData().contains("No")) {
-                    repeatAndRound(tripData);
-                } else if (tripData.getWayData().equals("Round Trip")) {
-                    if (tripData.getEndAlarmTime() > tripData.getAlarmTime()) {
-                        round(tripData);
-                    }
-                } else if (!tripData.getRepeatData().contains("No")) {
-                    repeat(tripData);
-                }
-            }
-        }).start();
-    }
 
     private void repeatAndRound(TripData tripData) {
         if (tripData.getEndAlarmTime() > tripData.getAlarmTime()) {
@@ -171,7 +148,7 @@ public class Repository {
         int mints = calendar.get(Calendar.MINUTE);
         data.setAlarmTime(cale);
         data.setTime(hours + ":" + mints);
-        data.setDate(mDay + "-" + (mMonth+1) + "-" + mYear);
+        data.setDate(mDay + "-" + (mMonth + 1) + "-" + mYear);
         if (tripData.getEndAlarmTime() > 0) {
             cale = cale + Math.abs(tripData.getEndAlarmTime() - tripData.getAlarmTime());
             calendar.setTimeInMillis(cale);
@@ -182,8 +159,8 @@ public class Repository {
             mints = calendar.get(Calendar.MINUTE);
             data.setEndAlarmTime(cale);
             data.setBackTime(hours + ":" + mints);
-            data.setBackDate(mDay + "-" + (mMonth+1) + "-" + mYear);
-            Log.e("kkkk",data.getBackDate()+"   "+data.getDate());
+            data.setBackDate(mDay + "-" + (mMonth + 1) + "-" + mYear);
+            Log.e("kkkk", data.getBackDate() + "   " + data.getDate());
         }
         insert(data);
     }
@@ -207,6 +184,11 @@ public class Repository {
         }).start();
     }
 
+    public TripData getByID(int id) {
+
+       return tripDao.getTripById(id);
+
+    }
 
     public void synchronizedTrips() {
         new Thread(new Runnable() {

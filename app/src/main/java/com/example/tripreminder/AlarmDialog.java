@@ -1,6 +1,5 @@
 package com.example.tripreminder;
 
-import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -12,12 +11,13 @@ import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.SystemClock;
-import android.util.Log;
+import android.os.Handler;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
 
 import com.example.tripreminder.database.Repository;
 import com.example.tripreminder.database.TripData;
@@ -27,22 +27,31 @@ public class AlarmDialog extends AppCompatActivity {
     private NotificationManager mNotificationManager;
     private static final int NOTIFICATION_ID = 77;
     private static final String PRIMARY_CHANNEL_ID = "primary_notification_channel";
-    long repeatInterval = AlarmManager.INTERVAL_FIFTEEN_MINUTES;//SystemClock.elapsedRealtime();    //AlarmManager.INTERVAL_TWO_MINUTES;
-    long triggerTime = SystemClock.elapsedRealtime() + repeatInterval;
-
     private Repository repository;
-    private int tripData;
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         repository = new Repository(getApplication());
-        tripData = (int) getIntent().getIntExtra("tripData", -1);
+        int ID = (int) getIntent().getIntExtra("tripData", -1);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                TripData tripData = repository.getByID(ID);
+                new Handler(getMainLooper()).post(new Runnable() {
+                    @Override
+                    public void run() {
+                        createNotificationChannel();
+                        showDialogWithSound(tripData);
+                    }
+                });
 
-        createNotificationChannel();
-        showDialogWithSound();
+            }
+        }).start();
+
+
     }
 
     public void createNotificationChannel() {
@@ -54,7 +63,7 @@ public class AlarmDialog extends AppCompatActivity {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
 
             // Create the NotificationChannel with all the parameters.
-            NotificationChannel notificationChannel = new NotificationChannel (PRIMARY_CHANNEL_ID,
+            NotificationChannel notificationChannel = new NotificationChannel(PRIMARY_CHANNEL_ID,
                     "Stand up notification",
                     NotificationManager.IMPORTANCE_HIGH);
             notificationChannel.enableLights(true);
@@ -64,22 +73,25 @@ public class AlarmDialog extends AppCompatActivity {
             mNotificationManager.createNotificationChannel(notificationChannel);
         }
     }
-    public void showDialogWithSound() {
-        MediaPlayer player =MediaPlayer.create(AlarmDialog.this,R.raw.fail);
+
+    public void showDialogWithSound(TripData tripData) {
+        MediaPlayer player = MediaPlayer.create(AlarmDialog.this, R.raw.fail);
         player.setLooping(true);
         player.start();
 
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(AlarmDialog.this,AlertDialog.THEME_DEVICE_DEFAULT_LIGHT);
+        AlertDialog.Builder builder = new AlertDialog.Builder(AlarmDialog.this, AlertDialog.THEME_DEVICE_DEFAULT_LIGHT);
         builder.setTitle("Reminder");
         builder.setMessage("Is this what you intended to do?");
         builder.setPositiveButton("Start ", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Log.i("trip","onClick "+tripData);
+
+                tripData.setState("done");
                 repository.start(tripData);
                 player.stop();
                 finish();
+
             }
         });
         builder.setNeutralButton("Snooze", new DialogInterface.OnClickListener() {
@@ -90,19 +102,21 @@ public class AlarmDialog extends AppCompatActivity {
                 finish();
             }
         });
-        builder.setNegativeButton("Cancel",  new DialogInterface.OnClickListener() {
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                //tripData.setState("cancel");
-                //repository.update(tripData);
+
+                tripData.setState("cancel");
+                repository.update(tripData);
                 player.stop();
                 finish();
+
             }
         });
-        // create and show the alert dialog
         builder.create();
         builder.show();
     }
+
     private void deliverNotification(Context context) {
         Intent contentIntent = new Intent(context.getApplicationContext(), AlarmDialog.class);
         PendingIntent contentPendingIntent = PendingIntent.getActivity

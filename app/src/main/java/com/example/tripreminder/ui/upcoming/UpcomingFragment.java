@@ -63,7 +63,7 @@ public class UpcomingFragment extends Fragment {
         model.getUpcoming().observe(getViewLifecycleOwner(), new Observer<List<TripData>>() {
             @Override
             public void onChanged(List<TripData> tripData) {
-                if(tripData.size()>0)
+                if (tripData.size() > 0)
                     model.setAlarmToSystem(tripData.get(0));
                 adapter.setValues(tripData);
                 adapter.notifyDataSetChanged();
@@ -96,7 +96,7 @@ public class UpcomingFragment extends Fragment {
                                 public void onClick(DialogInterface dialog, int which) {
                                     TripData tripData = adapter.getTripDataList().get(viewHolder.getAdapterPosition());
                                     Intent intent = new Intent(getContext(), NewTripActivity.class);
-                                    intent.putExtra("updateObj",tripData);
+                                    intent.putExtra("updateObj", tripData);
                                     startActivity(intent);
                                 }
                             })

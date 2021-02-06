@@ -17,8 +17,8 @@ public class TripData implements Serializable {
     private String date, time, repeatData, wayData;
     private String lat_long_startPoint, lat_long_endPoint;
     private String backDate, backTime;
-    private long alarmTime,endAlarmTime;
-    private List<String> notes;
+    private long alarmTime, endAlarmTime;
+    private List<NoteData> notes;
     private long repeatPlus;
 
     public int getId() {
@@ -110,14 +110,13 @@ public class TripData implements Serializable {
     }
 
 
-    public List<String> getNotes() {
+    public List<NoteData> getNotes() {
         return notes;
     }
 
-    public void setNotes(List<String> notes) {
+    public void setNotes(List<NoteData> notes) {
         this.notes = notes;
     }
-
 
 
     public void setAlarmTime(long alarmTime) {

@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.tripreminder.database.NoteData;
 import com.example.tripreminder.database.Repository;
 import com.example.tripreminder.database.TripData;
 
@@ -11,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AddNoteViewModle extends ViewModel {
-    private List<String> notes;
+    private List<NoteData> notes;
     private Repository repository;
     private TripData tripData;
 
@@ -23,7 +24,7 @@ public class AddNoteViewModle extends ViewModel {
         }
     }
 
-    public List<String> getNotes() {
+    public List<NoteData> getNotes() {
         if (notes == null) {
             notes = new ArrayList<>();
         }
@@ -31,7 +32,10 @@ public class AddNoteViewModle extends ViewModel {
     }
 
     public void addNote(String note) {
-        notes.add(note);
+        NoteData noteData = new NoteData();
+        noteData.setNote(note);
+        noteData.setStatus(false);
+        notes.add(noteData);
     }
 
     public void remove(int pos) {
@@ -39,10 +43,10 @@ public class AddNoteViewModle extends ViewModel {
     }
 
     public String getNote(int pos) {
-        return notes.get(pos);
+        return notes.get(pos).getNote();
     }
 
-    public void save(){
+    public void save() {
         tripData.setNotes(notes);
         repository.update(tripData);
     }

@@ -6,11 +6,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.widget.Toast;
+
+import com.example.tripreminder.database.TripData;
 
 public class ShowNotes extends AppCompatActivity {
     private RecyclerView recyclerView;
-    private NoteAdapter adapter;
-    private AddNoteViewModle model;
+    private ShowVoteAdapter adapter;
     private RecyclerView.LayoutManager layoutManager;
 
     @Override
@@ -18,14 +20,12 @@ public class ShowNotes extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_notes);
         recyclerView = (RecyclerView) findViewById(R.id.recyclerShow);
-        recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
-        model = new ViewModelProvider(this).get(AddNoteViewModle.class);
-
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
-        adapter = new NoteAdapter(this, model.getNotes());
+        TripData tripData = (TripData) getIntent().getSerializableExtra("tripNotes");
+        adapter = new ShowVoteAdapter(this, tripData.getNotes());
         recyclerView.setAdapter(adapter);
 
     }

@@ -1,6 +1,7 @@
 package com.example.tripreminder;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,44 +10,50 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.tripreminder.database.NoteData;
+
+import java.util.ArrayList;
 import java.util.List;
 
 
 public class ShowVoteAdapter extends RecyclerView.Adapter<ShowVoteAdapter.ViewHolder> {
     private final Context context;
-    private List<String> values;
+    private List<NoteData> values;
 
-    public ShowVoteAdapter(Context context, List<String> values) {
+    public ShowVoteAdapter(Context context, List<NoteData> values) {
         this.context = context;
         this.values = values;
+        if (values == null) {
+            this.values = new ArrayList<>();
+        }
     }
 
-
-
-    public List<String> getValues() {
-        return values;
-    }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        View view = layoutInflater.inflate(R.layout.row_note, parent, false);
-        ViewHolder viewHolder = new ViewHolder(view);
-        return viewHolder;
+        View view = layoutInflater.inflate(R.layout.row_show_note, parent, false);
+        return new ViewHolder(view);
     }
 
-    public void setValues(List<String> list) {
-        values = list;
-    }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        String current=values.get(position);
-        holder.note.setText(current);
-       // holder.checkBox.setText(current);
+        NoteData current = values.get(position);
+        holder.note.setText(current.getNote());
+        holder.checkBox.setEnabled(false);
+        boolean status = current.isStatus();
+        holder.checkBox.setChecked(status);
+
+        if (status) {
+            holder.linearLayout.setBackgroundColor(Color.GREEN);
+        } else {
+            holder.linearLayout.setBackgroundColor(Color.RED);
+        }
     }
 
     @Override
@@ -57,12 +64,12 @@ public class ShowVoteAdapter extends RecyclerView.Adapter<ShowVoteAdapter.ViewHo
     public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView note;
         public CheckBox checkBox;
-        public LinearLayout linearLayout;
+        public CardView linearLayout;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             note = itemView.findViewById(R.id.txtViewNote);
-            checkBox=itemView.findViewById(R.id.checkBox);
+            checkBox = itemView.findViewById(R.id.checkBoxID);
             linearLayout = itemView.findViewById(R.id.row);
         }
     }

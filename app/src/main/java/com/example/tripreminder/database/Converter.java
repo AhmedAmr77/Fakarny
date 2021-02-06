@@ -3,18 +3,20 @@ package com.example.tripreminder.database;
 import androidx.room.TypeConverter;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
-import java.util.ArrayList;
+import java.lang.reflect.Type;
 import java.util.List;
 
 public class Converter {
     @TypeConverter
-    public String fromListToGson(List<String> notes){
-        return new Gson().toJson(notes);
+    public String fromListToGson(List<NoteData> notes){
+        Type listType = new TypeToken<List<NoteData>>() {}.getType();
+        return new Gson().toJson(notes,listType);
     }
 
     @TypeConverter
-    public List fromGsonToList(String notes){
-        return new Gson().fromJson(notes, List.class);
+    public List<NoteData> fromGsonToList(String notes){
+        return new Gson().fromJson(notes, new TypeToken<List<NoteData>>(){}.getType());
     }
 }

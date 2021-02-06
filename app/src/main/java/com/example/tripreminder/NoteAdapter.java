@@ -11,21 +11,23 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.tripreminder.database.NoteData;
+
 import java.util.List;
 
 
 public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
     private final Context context;
-    private List<String> values;
+    private List<NoteData> values;
 
-    public NoteAdapter(Context context, List<String> values) {
+    public NoteAdapter(Context context, List<NoteData> values) {
         this.context = context;
         this.values = values;
     }
 
 
 
-    public List<String> getValues() {
+    public List<NoteData> getValues() {
         return values;
     }
 
@@ -38,13 +40,13 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
         return viewHolder;
     }
 
-    public void setValues(List<String> list) {
+    public void setValues(List<NoteData> list) {
         values = list;
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        String current=values.get(position);
+        String current=values.get(position).getNote();
         holder.note.setText(current);
     }
 

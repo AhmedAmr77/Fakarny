@@ -22,9 +22,14 @@
         <receiver
             android:name=".AlarmReceiver"
             android:enabled="true"
-            android:exported="true"></receiver>
+            android:exported="true">
 
-        <activity android:name=".ShowNotes" />
+        </receiver>
+
+        <activity
+            android:name=".ShowNotes"
+            android:label="@string/notes"
+            android:theme="@style/Theme.AppCompat.Light.Dialog.Alert" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -40,7 +45,8 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity android:name=".AlarmDialog"
+        <activity
+            android:name=".AlarmDialog"
             android:theme="@style/Theme.AppCompat.Transparent.NoActionBar">
 
         </activity>

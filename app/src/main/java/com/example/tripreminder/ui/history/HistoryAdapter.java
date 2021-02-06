@@ -1,6 +1,7 @@
 package com.example.tripreminder.ui.history;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tripreminder.R;
+import com.example.tripreminder.ShowNotes;
 import com.example.tripreminder.database.TripData;
 
 import java.util.List;
@@ -54,6 +56,14 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
         holder.toVal.setText(current.getEnaPoint());
         holder.typeVal.setText(current.getWayData());
         holder.dateVal.setText(current.getDate()+" At "+current.getTime());
+        holder.constraintLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent =new Intent(context, ShowNotes.class);
+                intent.putExtra("tripNotes",current);
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override

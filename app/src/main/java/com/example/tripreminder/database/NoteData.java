@@ -1,6 +1,8 @@
-package com.example.tripreminder;
+package com.example.tripreminder.database;
 
-public class noteData {
+import java.io.Serializable;
+
+public class NoteData implements Serializable {
 
     String note;
 

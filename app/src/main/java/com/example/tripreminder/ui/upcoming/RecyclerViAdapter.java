@@ -24,6 +24,7 @@ import com.example.tripreminder.ApplicationR;
 import com.example.tripreminder.FloatingViewService;
 import com.example.tripreminder.MainActivity;
 import com.example.tripreminder.R;
+import com.example.tripreminder.ShowNotes;
 import com.example.tripreminder.database.Repository;
 import com.example.tripreminder.database.TripData;
 
@@ -34,8 +35,7 @@ public class RecyclerViAdapter extends RecyclerView.Adapter<RecyclerViAdapter.Vi
     final Context context;
     List<TripData> tripDataList;
     private static final int SYSTEM_ALERT_WINDOW_PERMISSION = 2084;
-    private Repository repository ;
-
+    private Repository repository;
     public RecyclerViAdapter(Context context, List<TripData> tripDataList) {
         repository = new Repository(ApplicationR.getApplication());
         this.context = context;
@@ -48,7 +48,7 @@ public class RecyclerViAdapter extends RecyclerView.Adapter<RecyclerViAdapter.Vi
         ConstraintLayout row;
         TextView textViewTripName, textViewTripDate, textViewTripTime,
                 textViewTripFrom, textViewTripTo, textViewTripWay, textViewRepeat;
-        Button btnTripStart, btnTripCancel, btnTripNotes,btnAddNote;
+        Button btnTripStart, btnTripCancel, btnshowNote, btnAddNote;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -64,25 +64,26 @@ public class RecyclerViAdapter extends RecyclerView.Adapter<RecyclerViAdapter.Vi
             textViewRepeat = itemView.findViewById(R.id.txtRepeat);
             btnTripStart = itemView.findViewById(R.id.buttonTripStart);
             btnTripCancel = itemView.findViewById(R.id.buttonTripCancel);
-            btnAddNote =itemView.findViewById(R.id.buttonAddNote);
-
+            btnAddNote = itemView.findViewById(R.id.buttonAddNote);
+            btnshowNote=itemView.findViewById(R.id.btnshowNote);
         }
     }
 
     private void askPermission() {
         Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
                 Uri.parse("package:" + context.getPackageName()));
-        ((MainActivity)context).startActivityForResult(intent, SYSTEM_ALERT_WINDOW_PERMISSION);
+        ((MainActivity) context).startActivityForResult(intent, SYSTEM_ALERT_WINDOW_PERMISSION);
     }
 
-    void showWidget(){
-
+    void showWidget(int id) {
+        Intent intent = new Intent(context.getApplicationContext(), FloatingViewService.class);
+        intent.putExtra("tripID", id);
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-            ((MainActivity)context).startService(new Intent(context, FloatingViewService.class));
-            ((MainActivity)context).finish();
+            ( context.getApplicationContext()).startService(intent);
+            ((MainActivity) context).finish();
         } else if (Settings.canDrawOverlays(context)) {
-            ((MainActivity)context).startService(new Intent(context, FloatingViewService.class));
-            ((MainActivity)context).finish();
+            (context.getApplicationContext()).startService(intent);
+            ((MainActivity) context).finish();
         } else {
             askPermission();
             Toast.makeText(context, "You need System Alert Window Permission to do this", Toast.LENGTH_SHORT).show();
@@ -121,7 +122,7 @@ public class RecyclerViAdapter extends RecyclerView.Adapter<RecyclerViAdapter.Vi
                 try {
                     context.startActivity(chooser);
                     updateTrip(current, "done");
-                    showWidget();
+                    showWidget(current.getId());
                 } catch (ActivityNotFoundException e) {
                     Toast.makeText(context, "NO APP Can Open THIS !!!", Toast.LENGTH_SHORT).show();
                 }
@@ -137,8 +138,17 @@ public class RecyclerViAdapter extends RecyclerView.Adapter<RecyclerViAdapter.Vi
         holder.btnAddNote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent =new Intent(context, AddNote.class);
-                intent.putExtra("TripData",current);
+                Intent intent = new Intent(context, AddNote.class);
+                intent.putExtra("TripData", current);
+                context.startActivity(intent);
+            }
+        });
+
+        holder.btnshowNote.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(context, ShowNotes.class);
+                intent.putExtra("tripNotes",current);
                 context.startActivity(intent);
             }
         });
@@ -154,9 +164,9 @@ public class RecyclerViAdapter extends RecyclerView.Adapter<RecyclerViAdapter.Vi
 
     public void updateTrip(TripData tripData, String state) {
         tripData.setState(state);
-        if(state.equals("done")) {
+        if (state.equals("done")) {
             repository.start(tripData);
-        }else {
+        } else {
             repository.update(tripData);
         }
     }

@@ -4,8 +4,10 @@ import android.app.Service;
 import android.content.Intent;
 import android.graphics.PixelFormat;
 import android.os.Build;
+import android.os.Handler;
 import android.os.IBinder;
 import android.provider.Settings;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -15,7 +17,15 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.Toast;
 
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
+
+import com.example.tripreminder.database.NoteData;
+import com.example.tripreminder.database.Repository;
+import com.example.tripreminder.database.TripData;
+
 import java.util.ArrayList;
+import java.util.List;
 
 public class FloatingViewService extends Service implements View.OnClickListener {
 
@@ -27,56 +37,71 @@ public class FloatingViewService extends Service implements View.OnClickListener
     private ScrollView scrolly;
     private int versionFlag;
 
-    ArrayList<noteData> notesList;
 
     public FloatingViewService() {
     }
 
     @Override
     public IBinder onBind(Intent intent) {
+
         return null;
     }
 
     @Override
-    public void onCreate() {
-        super.onCreate();
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        int id = intent.getIntExtra("tripID", -1);
+        Repository repository = new Repository(ApplicationR.getApplication());
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                TripData tripData = repository.getByID(id);
+                List<NoteData> notesList = tripData.getNotes();
+                if (notesList == null) {
+                    notesList = new ArrayList<>();
+                }
+                List<NoteData> finalNotesList = notesList;
+                new Handler(getMainLooper()).post(new Runnable() {
+                    @Override
+                    public void run() {
+                        mFloatingView = LayoutInflater.from(getApplicationContext()).inflate(R.layout.floating_widget, null);
 
-        //addItemsNotesList();
+                        checkVersion();
 
-        //getting the widget layout from xml using layout inflater
-        mFloatingView = LayoutInflater.from(this).inflate(R.layout.floating_widget, null);
+                        //setting the layout parameters
+                        final WindowManager.LayoutParams params = new WindowManager.LayoutParams(
+                                WindowManager.LayoutParams.WRAP_CONTENT,
+                                WindowManager.LayoutParams.WRAP_CONTENT,
+                                versionFlag,
+                                WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
+                                PixelFormat.TRANSLUCENT);
 
-        checkVersion();
+                        //getting windows services and adding the floating view to it
+                        mWindowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
+                        mWindowManager.addView(mFloatingView, params);
 
-        //setting the layout parameters
-        final WindowManager.LayoutParams params = new WindowManager.LayoutParams(
-                WindowManager.LayoutParams.WRAP_CONTENT,
-                WindowManager.LayoutParams.WRAP_CONTENT,
-                versionFlag,
-                WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
-                PixelFormat.TRANSLUCENT);
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(FloatingViewService.this)) {
+                            Toast.makeText(getApplicationContext(), "CANNOT OVERLAY", Toast.LENGTH_SHORT).show();
+                        }
 
-        //getting windows services and adding the floating view to it
-        mWindowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
-        mWindowManager.addView(mFloatingView, params);
+                        //getting the collapsed and expanded view from the floating view
+                        collapsedView = mFloatingView.findViewById(R.id.layoutCollapsed);
+                        expandedView = mFloatingView.findViewById(R.id.layoutExpanded);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(this)) {
-            Toast.makeText(this, "CANNOT OVERLAY", Toast.LENGTH_SHORT).show();
-        }
+                        scrolly = mFloatingView.findViewById(R.id.scrolly);
+                        linearLayoutCheckBox = mFloatingView.findViewById(R.id.linearLayoutCheckBox);
 
-        //getting the collapsed and expanded view from the floating view
-        collapsedView = mFloatingView.findViewById(R.id.layoutCollapsed);
-        expandedView = mFloatingView.findViewById(R.id.layoutExpanded);
+                        //adding click listener to close button and expanded view
+                        mFloatingView.findViewById(R.id.buttonClose).setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                checkedCheckBox(tripData, finalNotesList, repository);
+                                stopSelf();
+                            }
+                        });
+                        scrolly.setOnClickListener(FloatingViewService.this);
+                        expandedView.setOnClickListener(FloatingViewService.this);
 
-        scrolly = mFloatingView.findViewById(R.id.scrolly);
-        linearLayoutCheckBox = mFloatingView.findViewById(R.id.linearLayoutCheckBox);
-
-        //adding click listener to close button and expanded view
-        mFloatingView.findViewById(R.id.buttonClose).setOnClickListener(this);
-        scrolly.setOnClickListener(this);
-        expandedView.setOnClickListener(this);
-
-        createCheckBox();
+                        createCheckBox(finalNotesList);
 
 /*
         collapsedView.setOnClickListener(new View.OnClickListener() {
@@ -97,37 +122,37 @@ public class FloatingViewService extends Service implements View.OnClickListener
         });
 */
 
-        mFloatingView.findViewById(R.id.relativeLayoutParent).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(FloatingViewService.this, "CLICK", Toast.LENGTH_SHORT).show();
-                if (collapsedView.getVisibility() == View.VISIBLE) {
-                    collapsedView.setVisibility(View.GONE);
-                    expandedView.setVisibility(View.VISIBLE);
-                } else {                                        //NOT USED
-                    collapsedView.setVisibility(View.VISIBLE);
-                    expandedView.setVisibility(View.GONE);
-                }
-            }
-        });
+                        mFloatingView.findViewById(R.id.relativeLayoutParent).setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Toast.makeText(FloatingViewService.this, "CLICK", Toast.LENGTH_SHORT).show();
+                                if (collapsedView.getVisibility() == View.VISIBLE) {
+                                    collapsedView.setVisibility(View.GONE);
+                                    expandedView.setVisibility(View.VISIBLE);
+                                } else {                                        //NOT USED
+                                    collapsedView.setVisibility(View.VISIBLE);
+                                    expandedView.setVisibility(View.GONE);
+                                }
+                            }
+                        });
 
-        //adding an touchlistener to make drag movement of the floating widget
-        mFloatingView.findViewById(R.id.relativeLayoutParent).setOnTouchListener(new View.OnTouchListener() {
-            private int initialX;
-            private int initialY;
-            private float initialTouchX;
-            private float initialTouchY;
+                        //adding an touchlistener to make drag movement of the floating widget
+                        mFloatingView.findViewById(R.id.relativeLayoutParent).setOnTouchListener(new View.OnTouchListener() {
+                            private int initialX;
+                            private int initialY;
+                            private float initialTouchX;
+                            private float initialTouchY;
 
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                //Toast.makeText(FloatingViewService.this, "TOOTooooooOOAST", Toast.LENGTH_SHORT).show();
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        initialX = params.x;
-                        initialY = params.y;
-                        initialTouchX = event.getRawX();
-                        initialTouchY = event.getRawY();
-                        return false;
+                            @Override
+                            public boolean onTouch(View v, MotionEvent event) {
+                                //Toast.makeText(FloatingViewService.this, "TOOTooooooOOAST", Toast.LENGTH_SHORT).show();
+                                switch (event.getAction()) {
+                                    case MotionEvent.ACTION_DOWN:
+                                        initialX = params.x;
+                                        initialY = params.y;
+                                        initialTouchX = event.getRawX();
+                                        initialTouchY = event.getRawY();
+                                        return false;
 /*
                     case MotionEvent.ACTION_UP:
                         //when the drag is ended switching the state of the widget
@@ -135,48 +160,67 @@ public class FloatingViewService extends Service implements View.OnClickListener
                         expandedView.setVisibility(View.VISIBLE);
                         return true;
 */
-                    case MotionEvent.ACTION_MOVE:
-                        //this code is helping the widget to move around the screen with fingers
-                        params.x = initialX + (int) (event.getRawX() - initialTouchX);
-                        params.y = initialY + (int) (event.getRawY() - initialTouchY);
-                        mWindowManager.updateViewLayout(mFloatingView, params);
-                        return false;
-                }
-                return false;
+                                    case MotionEvent.ACTION_MOVE:
+                                        //this code is helping the widget to move around the screen with fingers
+                                        params.x = initialX + (int) (event.getRawX() - initialTouchX);
+                                        params.y = initialY + (int) (event.getRawY() - initialTouchY);
+                                        mWindowManager.updateViewLayout(mFloatingView, params);
+                                        return false;
+                                }
+                                return false;
+                            }
+                        });
+                    }
+                });
+
             }
-        });
+        }).start();
+
+
+        return super.onStartCommand(intent, flags, startId);
     }
-/*
-    void addItemsNotesList(){
-        notesList = new ArrayList<>();
-        notesList.add("Vege");
-        notesList.add("meat");
-        notesList.add("water");
-        notesList.add("ATM");
-        notesList.add("Pharm");
-        notesList.add("car");
-        notesList.add("beaks");
-        notesList.add("Vege");
-        notesList.add("meat");
-        notesList.add("water");
-        notesList.add("ATM");
-        notesList.add("Pharm");
-        notesList.add("car");
-        notesList.add("beaks");
-        notesList.add("Vege");
-        notesList.add("meat");
-        notesList.add("water");
-        notesList.add("ATM");
-        notesList.add("Pharm");
-        notesList.add("car");
-        notesList.add("beaks");
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+
+        //addItemsNotesList();
+
+        //getting the widget layout from xml using layout inflater
+
     }
-*/
-    private void createCheckBox() {
-        if(notesList.size()==0) {
+
+    /*
+        void addItemsNotesList(){
+            notesList = new ArrayList<>();
+            notesList.add("Vege");
+            notesList.add("meat");
+            notesList.add("water");
+            notesList.add("ATM");
+            notesList.add("Pharm");
+            notesList.add("car");
+            notesList.add("beaks");
+            notesList.add("Vege");
+            notesList.add("meat");
+            notesList.add("water");
+            notesList.add("ATM");
+            notesList.add("Pharm");
+            notesList.add("car");
+            notesList.add("beaks");
+            notesList.add("Vege");
+            notesList.add("meat");
+            notesList.add("water");
+            notesList.add("ATM");
+            notesList.add("Pharm");
+            notesList.add("car");
+            notesList.add("beaks");
+        }
+    */
+    private void createCheckBox(List<NoteData> notesList) {
+        if (notesList.size() == 0) {
             Toast.makeText(this, "There is no notes", Toast.LENGTH_LONG).show();
         } else {
-            for(int i=0; i<notesList.size();i++){
+            for (int i = 0; i < notesList.size(); i++) {
                 CheckBox c = new CheckBox(this);
                 c.setId(i);
                 c.setText(notesList.get(i).getNote());
@@ -187,8 +231,8 @@ public class FloatingViewService extends Service implements View.OnClickListener
 
     }
 
-    void checkVersion(){
-        if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O)
+    void checkVersion() {
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O)
             versionFlag = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY;
         else
             versionFlag = WindowManager.LayoutParams.TYPE_PHONE;
@@ -210,11 +254,7 @@ public class FloatingViewService extends Service implements View.OnClickListener
                 expandedView.setVisibility(View.GONE);
                 break;
             */
-            case R.id.buttonClose:
-                //closing the widget
-                checkedCheckBox();
-                stopSelf();
-                break;
+
 
             case R.id.layoutExpanded:
                 Toast.makeText(this, "testScrolla", Toast.LENGTH_SHORT).show();
@@ -223,18 +263,20 @@ public class FloatingViewService extends Service implements View.OnClickListener
         }
     }
 
-    public void checkedCheckBox(){         //to store in DB what user had check from list
+    public void checkedCheckBox(TripData tripData, List<NoteData> notesList, Repository repository) {         //to store in DB what user had check from list
         CheckBox c;
-        if(notesList.size()==0) {
+        if (notesList.size() == 0) {
             Toast.makeText(this, "Dev, empty notes list", Toast.LENGTH_LONG).show();
         } else {
-            for(int i=0; i<notesList.size();i++){
-                c = (CheckBox)linearLayoutCheckBox.getChildAt(i);
-                if (c.isChecked()){
+            for (int i = 0; i < notesList.size(); i++) {
+                c = (CheckBox) linearLayoutCheckBox.getChildAt(i);
+                if (c.isChecked()) {
                     notesList.get(i).setStatus(true);
                 }
             }
         }
+        tripData.setNotes(notesList);
+        repository.update(tripData);
     }
 }
 
