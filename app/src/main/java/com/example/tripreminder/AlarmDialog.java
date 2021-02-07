@@ -33,7 +33,7 @@ public class AlarmDialog extends AppCompatActivity {
     private static final int NOTIFICATION_ID = 77;
     private static final String PRIMARY_CHANNEL_ID = "primary_notification_channel";
     private Repository repository;
-    TripData tripData;
+
     private int ID;
     private static final int SYSTEM_ALERT_WINDOW_PERMISSION = 2084;
 
@@ -46,7 +46,7 @@ public class AlarmDialog extends AppCompatActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                tripData = repository.getByID(ID);
+                TripData tripData = repository.getByID(ID);
                 new Handler(getMainLooper()).post(new Runnable() {
                     @Override
                     public void run() {
@@ -97,7 +97,7 @@ public class AlarmDialog extends AppCompatActivity {
                 tripData.setState("done");
                 repository.start(tripData);
                 player.stop();
-                start();
+                start(tripData);
                 finish();
 
             }
@@ -125,10 +125,9 @@ public class AlarmDialog extends AppCompatActivity {
         builder.show();
     }
 
-    void start(){
+    void start(TripData tripData) {
         Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
                 Uri.parse("http://maps.google.com/maps?daddr=" + tripData.getLat_long_endPoint()));
-        Toast.makeText(this, "LATLONG => "+tripData.getLat_long_endPoint(), Toast.LENGTH_SHORT).show();
         String title = "TripyyReminder ";
         Intent chooser = Intent.createChooser(intent, title);
 
@@ -136,18 +135,16 @@ public class AlarmDialog extends AppCompatActivity {
             showWidget(tripData.getId());
             this.startActivity(chooser);
             updateTrip(tripData, "done");
-
         } catch (ActivityNotFoundException e) {
             Toast.makeText(this, "NO APP Can Open THIS !!!", Toast.LENGTH_SHORT).show();
         }
     }
 
     void showWidget(int id) {
-        Toast.makeText(this, "Widget => "+tripData.getId()+" <= ID => "+ID, Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(this.getApplicationContext(), FloatingViewService.class);
         intent.putExtra("tripID", id);
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-            ( this.getApplicationContext()).startService(intent);
+            (this.getApplicationContext()).startService(intent);
         } else if (Settings.canDrawOverlays(this)) {
             (this.getApplicationContext()).startService(intent);
         } else {
@@ -164,7 +161,6 @@ public class AlarmDialog extends AppCompatActivity {
     }
 
     public void updateTrip(TripData tripData, String state) {
-        Toast.makeText(this, "ID => "+tripData.getId()+" <= ID => "+ID, Toast.LENGTH_SHORT).show();
         tripData.setState(state);
         if (state.equals("done")) {
             repository.start(tripData);

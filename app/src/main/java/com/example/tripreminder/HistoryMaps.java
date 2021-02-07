@@ -58,7 +58,6 @@ public class HistoryMaps extends FragmentActivity implements OnMapReadyCallback,
     int MAGENTA = 0xFFFF00FF;
     int j=0;
     int [] color = {RED, GREEN, BLUE, YELLOW, CYAN ,MAGENTA,BLACK,GRAY,WHITE};
-    /////////////////////////
     protected LatLng start=null;
     protected LatLng end=null;
     //polyline object
@@ -79,7 +78,6 @@ public class HistoryMaps extends FragmentActivity implements OnMapReadyCallback,
             @Override
             public void onChanged(List<TripData> tripData) {
                 historyTrips = tripData;
-                Toast.makeText(HistoryMaps.this, historyTrips.size()+"", Toast.LENGTH_SHORT).show();
                 polylines = new ArrayList<>();
                 mapFragment.getMapAsync(HistoryMaps.this);
                 Log.i("map","onCREATEEEE");
@@ -99,9 +97,7 @@ public class HistoryMaps extends FragmentActivity implements OnMapReadyCallback,
         Log.i("map","polly start");
         CameraUpdate center = CameraUpdateFactory.newLatLng(start);
         CameraUpdate zoom = CameraUpdateFactory.zoomTo(16);
-        if(polylines!=null) {
-            //polylines.clear();
-        }
+
         PolylineOptions polyOptions = new PolylineOptions();
         LatLng polylineStartLatLng=null;
         LatLng polylineEndLatLng=null;
@@ -165,7 +161,6 @@ public class HistoryMaps extends FragmentActivity implements OnMapReadyCallback,
             s=historyTrips.get(i).getLat_long_endPoint().split(",");
             end = new LatLng(Double.parseDouble(s[0]), Double.parseDouble(s[1]));
             Findroutes(start,end);
-            Toast.makeText(this, "one", Toast.LENGTH_SHORT).show();
         }
 
         Log.i("map","onMapReadyyy");

@@ -22,7 +22,7 @@ import java.util.List;
 public class ShowVoteAdapter extends RecyclerView.Adapter<ShowVoteAdapter.ViewHolder> {
     private final Context context;
     private List<NoteData> values;
-    private boolean upcoming;
+    private final boolean upcoming;
 
     public ShowVoteAdapter(Context context, List<NoteData> values, boolean upcoming) {
         this.context = context;
