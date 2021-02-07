@@ -52,18 +52,18 @@ public class HistoryMaps extends FragmentActivity implements OnMapReadyCallback,
     int WHITE = 0xFFFFFFFF;
     int RED = 0xFFFF0000;
     int GREEN = 0xFF00FF00;
-    int BLUE  = 0xFF0000FF;
-    int YELLOW  = 0xFFFFFF00;
-    int CYAN  = 0xFF00FFFF;
+    int BLUE = 0xFF0000FF;
+    int YELLOW = 0xFFFFFF00;
+    int CYAN = 0xFF00FFFF;
     int MAGENTA = 0xFFFF00FF;
-    int j=0;
-    int [] color = {RED, GREEN, BLUE, YELLOW, CYAN ,MAGENTA,BLACK,GRAY,WHITE};
-    protected LatLng start=null;
-    protected LatLng end=null;
+    int j = 0;
+    int[] color = {RED, GREEN, BLUE, YELLOW, CYAN, MAGENTA, BLACK, GRAY, WHITE};
+    protected LatLng start = null;
+    protected LatLng end = null;
     //polyline object
-    private List<Polyline> polylines=null;
+    private List<Polyline> polylines = null;
 
-    int name=0;
+    int name = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,14 +73,14 @@ public class HistoryMaps extends FragmentActivity implements OnMapReadyCallback,
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         //data
-        repository=new Repository(getApplication());
+        repository = new Repository(getApplication());
         repository.getDoneHistory().observeForever(new Observer<List<TripData>>() {
             @Override
             public void onChanged(List<TripData> tripData) {
                 historyTrips = tripData;
                 polylines = new ArrayList<>();
                 mapFragment.getMapAsync(HistoryMaps.this);
-                Log.i("map","onCREATEEEE");
+                Log.i("map", "onCREATEEEE");
             }
         });
 
@@ -88,41 +88,32 @@ public class HistoryMaps extends FragmentActivity implements OnMapReadyCallback,
 
     @Override
     public void onRoutingStart() {
-        Toast.makeText(this,"Finding Route...",Toast.LENGTH_LONG).show();
-        Log.i("map","onRoutingStart");
+        Log.i("map", "onRoutingStart");
     }
 
     @Override
     public void onRoutingSuccess(ArrayList<Route> route, int shortestRouteIndex) {
-        Log.i("map","polly start");
+        Log.i("map", "polly start");
         CameraUpdate center = CameraUpdateFactory.newLatLng(start);
         CameraUpdate zoom = CameraUpdateFactory.zoomTo(16);
 
         PolylineOptions polyOptions = new PolylineOptions();
-        LatLng polylineStartLatLng=null;
-        LatLng polylineEndLatLng=null;
-        
-        //add route(s) to the map using polyline
-        for (int i = 0; i <route.size(); i++) {
-            Toast.makeText(this, "TOOOOOOOOOOOAAAAAAAAAAAAST", Toast.LENGTH_SHORT).show();
-            if(i==shortestRouteIndex)
-            {
-                if (j > 8)
-                    j = 0; //chande color from begining
-                polyOptions.color(color[j]);
-                polyOptions.width(7);
-                polyOptions.addAll(route.get(shortestRouteIndex).getPoints());
-                Polyline polyline = mMap.addPolyline(polyOptions);
-                polylineStartLatLng=polyline.getPoints().get(0);
-                int k=polyline.getPoints().size();
-                polylineEndLatLng=polyline.getPoints().get(k-1);
-                polylines.add(polyline);
-                j++;
-            }
-            else {
-            }
-        }
-        //Add Marker on route starting position
+        LatLng polylineStartLatLng = null;
+        LatLng polylineEndLatLng = null;
+
+
+        if (j > 8)
+            j = 0;
+        polyOptions.color(color[j]);
+        polyOptions.width(7);
+        polyOptions.addAll(route.get(shortestRouteIndex).getPoints());
+        Polyline polyline = mMap.addPolyline(polyOptions);
+        polylineStartLatLng = polyline.getPoints().get(0);
+        int k = polyline.getPoints().size();
+        polylineEndLatLng = polyline.getPoints().get(k - 1);
+        polylines.add(polyline);
+        j++;
+
         MarkerOptions startMarker = new MarkerOptions();
         startMarker.position(polylineStartLatLng);
         startMarker.title(historyTrips.get(name).getTripName());
@@ -133,22 +124,16 @@ public class HistoryMaps extends FragmentActivity implements OnMapReadyCallback,
         endMarker.title(historyTrips.get(name).getTripName());
         mMap.addMarker(endMarker);
         name++;
-        Log.i("map","poly end");
+        Log.i("map", "poly end");
     }
 
     @Override
     public void onRoutingFailure(RouteException e) {
-        View parentLayout = findViewById(android.R.id.content);
-        Snackbar snackbar= Snackbar.make(parentLayout, e.toString(), Snackbar.LENGTH_LONG);
-        snackbar.show();
-        Log.i("map","Routing Fail");
-        Findroutes(start,end);
-        Log.i("map","Routing Fail called again");
+
     }
 
     @Override
     public void onRoutingCancelled() {
-        Log.i("map","CANCELED");
     }
 
     @Override
@@ -156,22 +141,20 @@ public class HistoryMaps extends FragmentActivity implements OnMapReadyCallback,
         mMap = googleMap;
         String[] s;
         for (int i = 0; i < historyTrips.size(); i++) {
-            s=historyTrips.get(i).getLat_long_startPoint().split(",");
+            s = historyTrips.get(i).getLat_long_startPoint().split(",");
             start = new LatLng(Double.parseDouble(s[0]), Double.parseDouble(s[1]));
-            s=historyTrips.get(i).getLat_long_endPoint().split(",");
+            s = historyTrips.get(i).getLat_long_endPoint().split(",");
             end = new LatLng(Double.parseDouble(s[0]), Double.parseDouble(s[1]));
-            Findroutes(start,end);
+            Findroutes(start, end);
         }
 
-        Log.i("map","onMapReadyyy");
+        Log.i("map", "onMapReadyyy");
     }
 
     public void Findroutes(LatLng Start, LatLng End) {
-        if(Start==null || End==null) {
-            Toast.makeText(HistoryMaps.this,"Unable to get location", Toast.LENGTH_LONG).show();
-        }
-        else
-        {
+        if (Start == null || End == null) {
+            Toast.makeText(HistoryMaps.this, "Unable to get location", Toast.LENGTH_LONG).show();
+        } else {
             Routing routing = new Routing.Builder()
                     .travelMode(AbstractRouting.TravelMode.DRIVING)
                     .withListener(this)
@@ -182,7 +165,7 @@ public class HistoryMaps extends FragmentActivity implements OnMapReadyCallback,
             routing.execute();
         }
 
-        Log.i("map","FINDROUTES");
+        Log.i("map", "FINDROUTES");
     }
 
 }
