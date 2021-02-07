@@ -147,7 +147,7 @@ public class HistoryMaps extends FragmentActivity implements OnMapReadyCallback,
             end = new LatLng(Double.parseDouble(s[0]), Double.parseDouble(s[1]));
             Findroutes(start, end);
         }
-
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(start, 6f));
         Log.i("map", "onMapReadyyy");
     }
 
