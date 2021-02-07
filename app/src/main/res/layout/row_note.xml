@@ -18,6 +18,7 @@
 
         <TextView
             android:id="@+id/txtViewNote"
+            android:fontFamily="sans-serif-black"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@android:color/holo_blue_dark"

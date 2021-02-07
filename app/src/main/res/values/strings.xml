@@ -125,7 +125,8 @@
     <string name="Type" />
     <string name="type">Type</string>
     <string name="startTeip">Start</string>
-    <string name="repeat">Repeat</string>
     <string name="title_activity_history_maps">Map</string>
     <string name="notes">Notes</string>
+    <string name="fakarny">Fakarny</string>
+    <string name="repeat">Repeat</string>
 </resources>

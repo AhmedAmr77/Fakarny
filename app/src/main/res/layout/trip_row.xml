@@ -1,246 +1,261 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/card_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginStart="2dp"
-    android:layout_marginTop="10dp"
-    android:elevation="22dp"
     android:layout_margin="6dp"
-    card_view:cardCornerRadius="30dp"
-    card_view:cardElevation="30dp">
+    app:cardCornerRadius="30dp"
+    app:cardElevation="8dp">
 
-    <LinearLayout
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/row"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_margin="13dp">
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/textView10"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="1dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="6dp"
+            android:background="#B20099CC"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="3dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtType" />
+
+        <TextView
+            android:id="@+id/textView12"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginEnd="3dp"
+            android:layout_marginStart="10dp"
+            android:background="#B20099CC"
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="2dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewTripWayTo" />
+        <TextView
+            android:id="@+id/textView17"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginStart="10dp"
+            android:background="#B20099CC"
             android:layout_marginTop="6dp"
-            android:orientation="horizontal"
-            android:weightSum="10">
-
-            <TextView
-                android:id="@+id/textViewTripName"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="18dp"
-                android:layout_marginTop="6dp"
-                android:layout_weight="9"
-                android:gravity="center_horizontal"
-                android:text="My Trip"
-                android:textColor="@color/pro"
-                android:textSize="22sp"
-                android:textStyle="bold" />
-
-            <Button
-                android:id="@+id/buttonTripCancel"
-                android:layout_width="0dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginBottom="10dp"
-                android:layout_weight="1"
-                android:background="@drawable/ic_baseline_close_24"
-                android:foreground="@drawable/ic_baseline_close_24"
-                android:paddingStart="15dp"
-                android:paddingEnd="15dp"
-                android:paddingBottom="15dp"
-                android:textSize="1dp" />
-        </LinearLayout>
+            android:layout_marginBottom="2dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/time" />
+        <Button
+            android:id="@+id/buttonTripCancel"
+            android:layout_width="42dp"
+            android:layout_height="24dp"
+            android:background="@drawable/ic_baseline_close_24"
+            android:foreground="@drawable/ic_baseline_close_24"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/textViewTripName"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:layout_margin="10dp"
-            android:background="@color/pro" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
+            android:id="@+id/txtRepeat"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
-            android:orientation="horizontal"
-            android:weightSum="7">
-
-            <TextView
-                android:id="@+id/textView10"
-                android:layout_width="0dp"
-                android:textColor="@color/pro"
-
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_weight="1.5"
-                android:text="@string/date" />
-
-            <TextView
-                android:id="@+id/textViewTripDate"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1.7"
-                android:text="21/10/1998" />
-
-            <TextView
-                android:id="@+id/textView14"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight=".5"
-                android:text="@string/at" />
-
-            <TextView
-                android:id="@+id/textTime"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="10dp"
-                android:layout_weight="3.3"
-                android:text="10:50Am" />
-        </LinearLayout>
+            android:fontFamily="sans-serif-black"
+            android:text="Repeat Monthy"
+            android:textColor="#B5000000"
+            app:layout_constraintStart_toStartOf="@+id/repeat"
+            app:layout_constraintTop_toBottomOf="@+id/repeat" />
 
         <TextView
+            android:id="@+id/repeat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_marginStart="156dp"
+            android:layout_marginTop="8dp"
+            android:fontFamily="sans-serif-black"
+            android:text="@string/repeat"
+            android:textColor="@color/pro"
+            app:layout_constraintStart_toEndOf="@+id/type"
+            app:layout_constraintTop_toBottomOf="@+id/textViewTripWayTo" />
+
+        <TextView
+            android:id="@+id/textViewTripName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-black"
+            android:layout_marginBottom="15dp"
+            android:text="In previous "
+            android:textColor="@color/pro"
+            android:textSize="23sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.489"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/from"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="8dp"
+
+            android:fontFamily="sans-serif-black"
+            android:text="@string/from"
+            android:textColor="@color/pro"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/time" />
+
+
+        <TextView
+            android:id="@+id/to"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:fontFamily="sans-serif-black"
+            android:text="@string/to"
+            android:textColor="@color/pro"
+            app:layout_constraintStart_toStartOf="@+id/from"
+            app:layout_constraintTop_toBottomOf="@+id/textViewTripWayFrom" />
+
+        <TextView
+            android:id="@+id/type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="7dp"
+            android:fontFamily="sans-serif-black"
+            android:text="@string/type"
+            android:textColor="@color/pro"
+            app:layout_constraintStart_toStartOf="@+id/textViewTripWayTo"
+            app:layout_constraintTop_toBottomOf="@+id/textViewTripWayTo" />
+
+        <TextView
+            android:id="@+id/textViewTripWayFrom"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-black"
+            android:text="user taps a button or a notification. "
+            android:textColor="#B5000000"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/from"
+            app:layout_constraintTop_toBottomOf="@+id/from" />
+
+        <TextView
+            android:id="@+id/textViewTripWayTo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="1dp"
+            android:fontFamily="sans-serif-black"
+            android:text="This practical codelab is part of Unit 3: Working in the background in the Android Developer"
+            android:textColor="#B5000000"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/to"
+            app:layout_constraintTop_toBottomOf="@+id/to" />
+
+        <TextView
+            android:id="@+id/textViewTripDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="11dp"
+            android:fontFamily="sans-serif-black"
+            android:text="12/3/2011 "
+            android:textColor="#B5000000"
+            app:layout_constraintBottom_toBottomOf="@+id/time"
+            app:layout_constraintStart_toEndOf="@+id/time"
+            app:layout_constraintTop_toBottomOf="@+id/textView"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <TextView
+            android:id="@+id/txtType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-black"
+            android:text="one way"
+            android:textColor="#B5000000"
+            app:layout_constraintStart_toStartOf="@+id/type"
+            app:layout_constraintTop_toBottomOf="@+id/type" />
+
+        <TextView
+            android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_margin="10dp"
-            android:background="@color/pro" />
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="3dp"
+            android:background="#B20099CC"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewTripName" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <ImageView
+            android:id="@+id/time"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="10dp"
-            android:orientation="horizontal"
-            android:weightSum="7">
-
-            <TextView
-                android:id="@+id/textVi"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_weight="1.5"
-                android:textColor="@color/pro"
-
-                android:text="@string/from" />
-
-            <TextView
-                android:id="@+id/textViewTripWayFrom"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="5.5"
-                android:text="TextView" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="10dp"
-            android:orientation="horizontal"
-            android:weightSum="7">
-
-            <TextView
-                android:id="@+id/textView1to"
-                android:layout_width="0dp"
-                android:textColor="@color/pro"
-
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_weight="1.5"
-                android:text="@string/to" />
-
-            <TextView
-                android:id="@+id/textViewTripWayTo"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="5.5"
-                android:text="TextView" />
-        </LinearLayout>
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewTripName"
+            app:srcCompat="@drawable/ic_baseline_today_24" />
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_margin="10dp"
-            android:background="@color/pro" />
+            android:id="@+id/textTime1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:fontFamily="sans-serif-black"
+            android:text="15"
+            android:textColor="#B5000000"
+            app:layout_constraintBottom_toBottomOf="@+id/imageView3"
+            app:layout_constraintStart_toEndOf="@+id/imageView3"
+            app:layout_constraintTop_toTopOf="@+id/textViewTripDate"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="92dp"
+            app:layout_constraintBottom_toBottomOf="@+id/textViewTripDate"
+            app:layout_constraintStart_toEndOf="@+id/textViewTripDate"
+            app:layout_constraintTop_toTopOf="@+id/time"
+            app:layout_constraintVertical_bias="0.0"
+            app:srcCompat="@drawable/ic_baseline_access_time_24" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="10dp"
             android:orientation="horizontal"
-            android:weightSum="7">
-
-            <TextView
-                android:id="@+id/textViewtype"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:textColor="@color/pro"
-
-                android:layout_weight="1.5"
-                android:text="@string/type" />
-
-            <TextView
-                android:id="@+id/txtType"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="5.5"
-                android:text="TextView" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="10dp"
-            android:orientation="horizontal"
-            android:weightSum="7">
-
-            <TextView
-                android:id="@+id/textView16"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:textColor="@color/pro"
-
-                android:layout_weight="1.5"
-                android:text="@string/repeat" />
-
-            <TextView
-                android:id="@+id/txtRepeat"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="5.5"
-                android:text="TextView" />
-        </LinearLayout>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_margin="10dp"
-            android:background="@color/pro" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="10dp"
-            android:orientation="horizontal"
-            android:weightSum="7">
+            android:weightSum="7"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView10"
+            app:layout_constraintVertical_bias="0.02">
 
 
             <Button
                 android:id="@+id/btnshowNote"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
+                android:layout_marginStart="6dp"
+                android:layout_weight="1.5"
                 android:background="@drawable/ic_baseline_note_24"
-                android:foreground="@drawable/ic_baseline_note_24"
-                android:layout_weight="1.5" />
+                android:foreground="@drawable/ic_baseline_note_24" />
 
             <Button
                 android:id="@+id/buttonTripStart"
@@ -248,19 +263,24 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
                 android:layout_weight="4"
+                android:backgroundTint="@color/pro"
+
                 android:text="@string/startTeip"
-                android:textStyle="bold"
-                card_view:backgroundTint="@color/pro" />
+                android:textStyle="bold" />
 
             <Button
                 android:id="@+id/buttonAddNote"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1.5"
                 android:layout_marginStart="3dp"
+                android:layout_weight="1.5"
                 android:background="@drawable/ic_baseline_note_add_24"
+                android:fontFamily="sans-serif-black"
                 android:foreground="@drawable/ic_baseline_note_add_24" />
 
         </LinearLayout>
-    </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>
+
+

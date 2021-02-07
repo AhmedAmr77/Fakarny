@@ -53,11 +53,18 @@ android:layout_height="wrap_content">
             android:id="@+id/tripNameTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="#CF8C8C"
-            android:text="TRIPPPPNAME"
-            app:layout_constraintEnd_toEndOf="@+id/scrolly"
-            app:layout_constraintStart_toStartOf="@+id/scrolly"
-            app:layout_constraintTop_toTopOf="parent">
+            android:fontFamily="sans-serif-black"
+            android:textColor="@color/white"
+            android:layout_marginTop="72dp"
+            android:background="@color/pro"
+            android:elevation="5dp"
+            android:text="TripNotes"
+            android:textSize="25dp"
+            app:layout_constraintBottom_toTopOf="@+id/scrolly"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0">
 
         </TextView>
 
@@ -65,19 +72,20 @@ android:layout_height="wrap_content">
             android:id="@+id/scrolly"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:layout_marginBottom="220dp"
             android:fillViewport="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHeight_percent="0.5"
+            android:elevation="5dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tripNameTextView"
             app:layout_constraintWidth_percent="0.7">
 
             <LinearLayout
                 android:id="@+id/linearLayoutCheckBox"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="#a0c3d7"
+                android:background="@color/pro"
                 android:orientation="vertical"></LinearLayout>
         </ScrollView>
     </androidx.constraintlayout.widget.ConstraintLayout>

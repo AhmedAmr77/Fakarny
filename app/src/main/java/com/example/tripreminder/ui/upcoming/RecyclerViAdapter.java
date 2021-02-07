@@ -57,7 +57,7 @@ public class RecyclerViAdapter extends RecyclerView.Adapter<RecyclerViAdapter.Vi
             row = itemView.findViewById(R.id.row);
             textViewTripName = itemView.findViewById(R.id.textViewTripName);
             textViewTripDate = itemView.findViewById(R.id.textViewTripDate);
-            textViewTripTime = itemView.findViewById(R.id.textTime);
+            textViewTripTime = itemView.findViewById(R.id.textTime1);
             textViewTripFrom = itemView.findViewById(R.id.textViewTripWayFrom);
             textViewTripTo = itemView.findViewById(R.id.textViewTripWayTo);
             textViewTripWay = itemView.findViewById(R.id.txtType);

@@ -5,10 +5,7 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -78,12 +75,12 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            tripName = itemView.findViewById(R.id.extName);
+            tripName = itemView.findViewById(R.id.textViewTripName);
             txtStates = itemView.findViewById(R.id.txtState);
-            fromVal = itemView.findViewById(R.id.txtFromVal);
-            toVal = itemView.findViewById(R.id.txtToVal);
-            dateVal = itemView.findViewById(R.id.txtDateVal);
-            typeVal = itemView.findViewById(R.id.txtTypeVal);
+            fromVal = itemView.findViewById(R.id.textViewTripWayFrom);
+            toVal = itemView.findViewById(R.id.textViewTripWayTo);
+            dateVal = itemView.findViewById(R.id.textViewTripDate);
+            typeVal = itemView.findViewById(R.id.txtType);
 
             constraintLayout = itemView.findViewById(R.id.row);
 
