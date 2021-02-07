@@ -314,8 +314,7 @@ public class NewTripActivity extends AppCompatActivity implements View.OnClickLi
     private void checkDataForSetTrip() {
         String cDate = year + "" + month + "" + day;
         String sDate = finalSelectedYear + "" + finalSelectedMoth + "" + finalSelectedDay;
-        Toast.makeText(this, year+"--"+month+"--"+day, Toast.LENGTH_SHORT).show();
-        Toast.makeText(this, finalSelectedYear+"--"+finalSelectedMoth+"--"+finalSelectedDay, Toast.LENGTH_SHORT).show();
+
         if (finalStartAddress != null && finalEndAddress != null) {
             if (Integer.parseInt(cDate) < Integer.parseInt(sDate)) {
                 if (!finalWay.equals("Round Trip")) {
