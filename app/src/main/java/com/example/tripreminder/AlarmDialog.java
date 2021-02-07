@@ -4,14 +4,18 @@ import android.app.AlertDialog;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.Settings;
+import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,6 +25,7 @@ import androidx.lifecycle.Observer;
 
 import com.example.tripreminder.database.Repository;
 import com.example.tripreminder.database.TripData;
+import com.example.tripreminder.ui.upcoming.RecyclerViAdapter;
 
 
 public class AlarmDialog extends AppCompatActivity {
@@ -28,18 +33,20 @@ public class AlarmDialog extends AppCompatActivity {
     private static final int NOTIFICATION_ID = 77;
     private static final String PRIMARY_CHANNEL_ID = "primary_notification_channel";
     private Repository repository;
-
+    TripData tripData;
+    private int ID;
+    private static final int SYSTEM_ALERT_WINDOW_PERMISSION = 2084;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         repository = new Repository(getApplication());
-        int ID = (int) getIntent().getIntExtra("tripData", -1);
+        ID = (int) getIntent().getIntExtra("tripData", -1);
         new Thread(new Runnable() {
             @Override
             public void run() {
-                TripData tripData = repository.getByID(ID);
+                tripData = repository.getByID(ID);
                 new Handler(getMainLooper()).post(new Runnable() {
                     @Override
                     public void run() {
@@ -90,6 +97,7 @@ public class AlarmDialog extends AppCompatActivity {
                 tripData.setState("done");
                 repository.start(tripData);
                 player.stop();
+                start();
                 finish();
 
             }
@@ -115,6 +123,54 @@ public class AlarmDialog extends AppCompatActivity {
         });
         builder.create();
         builder.show();
+    }
+
+    void start(){
+        Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
+                Uri.parse("http://maps.google.com/maps?daddr=" + tripData.getLat_long_endPoint()));
+        Toast.makeText(this, "LATLONG => "+tripData.getLat_long_endPoint(), Toast.LENGTH_SHORT).show();
+        String title = "TripyyReminder ";
+        Intent chooser = Intent.createChooser(intent, title);
+
+        try {
+            showWidget(tripData.getId());
+            this.startActivity(chooser);
+            updateTrip(tripData, "done");
+
+        } catch (ActivityNotFoundException e) {
+            Toast.makeText(this, "NO APP Can Open THIS !!!", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    void showWidget(int id) {
+        Toast.makeText(this, "Widget => "+tripData.getId()+" <= ID => "+ID, Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(this.getApplicationContext(), FloatingViewService.class);
+        intent.putExtra("tripID", id);
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+            ( this.getApplicationContext()).startService(intent);
+        } else if (Settings.canDrawOverlays(this)) {
+            (this.getApplicationContext()).startService(intent);
+        } else {
+            askPermission();
+            Toast.makeText(this, "You need System Alert Window Permission to do this", Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+    private void askPermission() {
+        Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                Uri.parse("package:" + this.getPackageName()));
+        startActivityForResult(intent, SYSTEM_ALERT_WINDOW_PERMISSION);
+    }
+
+    public void updateTrip(TripData tripData, String state) {
+        Toast.makeText(this, "ID => "+tripData.getId()+" <= ID => "+ID, Toast.LENGTH_SHORT).show();
+        tripData.setState(state);
+        if (state.equals("done")) {
+            repository.start(tripData);
+        } else {
+            repository.update(tripData);
+        }
     }
 
     private void deliverNotification(Context context) {
