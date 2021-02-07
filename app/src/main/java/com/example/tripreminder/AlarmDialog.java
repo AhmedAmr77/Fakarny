@@ -42,7 +42,9 @@ public class AlarmDialog extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         repository = new Repository(getApplication());
-        ID = (int) getIntent().getIntExtra("tripData", -1);
+
+        ID = getIntent().getIntExtra("tripData", -1);
+
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -60,6 +62,7 @@ public class AlarmDialog extends AppCompatActivity {
 
 
     }
+
 
     public void createNotificationChannel() {
         // Create a notification manager object.
@@ -105,7 +108,7 @@ public class AlarmDialog extends AppCompatActivity {
         builder.setNeutralButton("Snooze", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                deliverNotification(AlarmDialog.this);
+                deliverNotification(AlarmDialog.this ,tripData);
                 player.stop();
                 finish();
             }
@@ -169,16 +172,17 @@ public class AlarmDialog extends AppCompatActivity {
         }
     }
 
-    private void deliverNotification(Context context) {
+    private void deliverNotification(Context context, TripData tripData) {
         Intent contentIntent = new Intent(context.getApplicationContext(), AlarmDialog.class);
+        contentIntent.putExtra("tripData", ID);
         PendingIntent contentPendingIntent = PendingIntent.getActivity
                 (context, NOTIFICATION_ID, contentIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, PRIMARY_CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_launcher_foreground)
-                .setContentTitle("Reminder")
-                .setContentText("You Are waiting for trip ITI Damitta")
+                .setContentTitle("Reminder for Trip "+tripData.getTripName())
+                .setContentText(tripData.getEnaPoint())
                 .setContentIntent(contentPendingIntent)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setAutoCancel(true)
