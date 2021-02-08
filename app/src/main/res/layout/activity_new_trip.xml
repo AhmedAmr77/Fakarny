@@ -42,7 +42,7 @@
             android:textColor="@color/black"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="8dp"
             android:fontFamily="sans-serif-black"
             android:text="@string/start" />
 
@@ -50,10 +50,12 @@
             android:id="@+id/editStartPoint"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="@color/blacklight"
             android:hint=" Search For Your Start Point"
             android:background="@color/white"
             android:padding="10dp"
-            app:drawableStartCompat="@drawable/ic_baseline_search_24" />
+            app:drawableStartCompat="@drawable/ic_baseline_search_24"
+            tools:ignore="MissingPrefix" />
 
         <TextView
             android:id="@+id/textView4"
@@ -70,11 +72,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
+            android:textColor="@color/blacklight"
             android:hint=" Search For Your End Point"
             android:padding="10dp"
-            app:drawableStartCompat="@drawable/ic_baseline_search_24" />
+            app:drawableStartCompat="@drawable/ic_baseline_search_24"
+            tools:ignore="MissingPrefix" />
 
-
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginStart="2dp"
+            android:background="@color/pro"
+            android:layout_marginTop="2dp"
+            />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -156,11 +166,17 @@
                 android:id="@+id/textTime"
                 android:layout_width="0dp"
                 android:textColor="@color/black"
-
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center_horizontal" />
         </LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginStart="2dp"
+            android:background="@color/pro"
+            android:layout_marginTop="5dp"
+            />
         <LinearLayout
             android:id="@+id/ko"
             android:layout_width="match_parent"
@@ -203,7 +219,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
-
                 android:layout_weight="1" />
 
             <Spinner

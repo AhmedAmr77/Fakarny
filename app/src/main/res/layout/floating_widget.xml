@@ -49,25 +49,6 @@ android:layout_height="wrap_content">
         app:layout_constraintTop_toTopOf="parent"
         tools:visibility="visible">
 
-        <TextView
-            android:id="@+id/tripNameTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-black"
-            android:textColor="@color/white"
-            android:layout_marginTop="72dp"
-            android:background="@color/pro"
-            android:elevation="5dp"
-            android:text="TripNotes"
-            android:textSize="25dp"
-            app:layout_constraintBottom_toTopOf="@+id/scrolly"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0">
-
-        </TextView>
-
         <ScrollView
             android:id="@+id/scrolly"
             android:layout_width="0dp"
