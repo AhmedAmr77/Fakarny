@@ -55,7 +55,11 @@ public class UpcomingViewModel extends AndroidViewModel {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, tripData.getAlarmTime(), notifyPendingIntent);
         } else {
-            alarmManager.set(AlarmManager.RTC_WAKEUP, tripData.getAlarmTime(), notifyPendingIntent);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                alarmManager.setExact(AlarmManager.RTC_WAKEUP, tripData.getAlarmTime(), notifyPendingIntent);
+            }else {
+                alarmManager.set(AlarmManager.RTC_WAKEUP, tripData.getAlarmTime(), notifyPendingIntent);
+            }
         }
 
     }
