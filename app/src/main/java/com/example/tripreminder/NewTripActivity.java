@@ -143,7 +143,7 @@ public class NewTripActivity extends AppCompatActivity implements View.OnClickLi
                             endDate = selectedDay + "-" + (selectedMonth + 1) + "-" + selectedYear;
                             backYear = selectedYear;
                             backDay = selectedDay;
-                            backMonth = selectedMonth ;
+                            backMonth = selectedMonth;
                             hour = calendar.get(Calendar.HOUR);
                             minute = calendar.get(Calendar.MINUTE);
                             TimePickerDialog mTimePicker;
@@ -318,61 +318,81 @@ public class NewTripActivity extends AppCompatActivity implements View.OnClickLi
     private void checkDataForSetTrip() {
         String cDate = year + "" + month + "" + day;
         String sDate = finalSelectedYear + "" + finalSelectedMoth + "" + finalSelectedDay;
-
-        if (finalStartAddress != null && finalEndAddress != null) {
-            if (Integer.parseInt(cDate) < Integer.parseInt(sDate)) {
-                if (!finalWay.equals("Round Trip")) {
-                    if (!textTime.getText().toString().isEmpty()) {
-
-                        setTrip();
-                    } else {
-                        Toast.makeText(this, "please enter time", Toast.LENGTH_LONG).show();
-                    }
-                } else {
-
-                    String backDate = backYear + "" + (backMonth) + "" + backDay;
-                    if (Integer.parseInt(sDate) < Integer.parseInt(backDate)) {
-                        setTrip();
-                    } else {
-                        way.setSelection(0);
-                        Toast.makeText(this, "please enter valid back date", Toast.LENGTH_SHORT).show();
-                    }
-                }
-            } else if (Integer.parseInt(cDate) == Integer.parseInt(sDate)) {
-                if (hour < finalHours) {
+        String backDate = backYear + "" + (backMonth) + "" + backDay;
+        if (!textTime.getText().toString().isEmpty()) {
+            if (finalStartAddress != null && finalEndAddress != null) {
+                final boolean b = Integer.parseInt(cDate) == Integer.parseInt(backDate);
+                final boolean b1 = Integer.parseInt(sDate) < Integer.parseInt(backDate);
+                if (Integer.parseInt(cDate) < Integer.parseInt(sDate)) {
                     if (!finalWay.equals("Round Trip")) {
                         setTrip();
-
                     } else {
-                        if (finalHours < backHour) {
-                            setTrip();
-                        } else {
-                            way.setSelection(0);
-                            Toast.makeText(this, "please enter valid back time", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                } else {
-                    if (minute < finalMinute) {
-                        if (!finalWay.equals("Round Trip")) {
-                            setTrip();
 
-                        } else {
-                            if (finalMinute < backmint) {
+                        if (b1) {
+                            setTrip();
+                        } else if (b) {
+                            if (finalHours < backHour) {
                                 setTrip();
                             } else {
                                 way.setSelection(0);
                                 Toast.makeText(this, "please enter valid back time", Toast.LENGTH_SHORT).show();
                             }
+                        } else {
+                            way.setSelection(0);
+                            Toast.makeText(this, "please enter valid back date", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                } else if (Integer.parseInt(cDate) == Integer.parseInt(sDate)) {
+                    if (hour < finalHours) {
+                        if (!finalWay.equals("Round Trip")) {
+                            setTrip();
+
+                        } else {
+                            if (b1) {
+                                setTrip();
+                            } else if (b) {
+                                if (finalHours < backHour) {
+                                    setTrip();
+                                } else {
+                                    way.setSelection(0);
+                                    Toast.makeText(this, "please enter valid back time", Toast.LENGTH_SHORT).show();
+                                }
+                            } else {
+                                way.setSelection(0);
+                                Toast.makeText(this, "please enter valid back date", Toast.LENGTH_SHORT).show();
+                            }
                         }
                     } else {
-                        Toast.makeText(this, "please enter correct time", Toast.LENGTH_LONG).show();
+                        if (minute < finalMinute) {
+                            if (!finalWay.equals("Round Trip")) {
+                                setTrip();
+                            } else {
+                                if (b1) {
+                                    setTrip();
+                                } else if (b) {
+                                    if (finalHours < backHour) {
+                                        setTrip();
+                                    } else {
+                                        way.setSelection(0);
+                                        Toast.makeText(this, "please enter valid back time", Toast.LENGTH_SHORT).show();
+                                    }
+                                } else {
+                                    way.setSelection(0);
+                                    Toast.makeText(this, "please enter valid back date", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        } else {
+                            Toast.makeText(this, "please enter correct time", Toast.LENGTH_LONG).show();
+                        }
                     }
+                } else {
+                    Toast.makeText(this, "the date you selected is less than current date", Toast.LENGTH_LONG).show();
                 }
             } else {
-                Toast.makeText(this, "the date you selected is less than current date", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "please enter start and end points", Toast.LENGTH_LONG).show();
             }
         } else {
-            Toast.makeText(this, "please enter start and end points", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "please enter time", Toast.LENGTH_LONG).show();
         }
     }
 
