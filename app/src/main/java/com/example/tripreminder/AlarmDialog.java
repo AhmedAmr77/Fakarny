@@ -36,6 +36,7 @@ public class AlarmDialog extends AppCompatActivity {
 
     private int ID;
     private static final int SYSTEM_ALERT_WINDOW_PERMISSION = 2084;
+    private AlertDialog alarmDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,7 +109,7 @@ public class AlarmDialog extends AppCompatActivity {
         builder.setNeutralButton("Snooze", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                deliverNotification(AlarmDialog.this ,tripData);
+                deliverNotification(AlarmDialog.this, tripData);
                 player.stop();
                 finish();
             }
@@ -124,8 +125,14 @@ public class AlarmDialog extends AppCompatActivity {
 
             }
         });
-        builder.create();
+        alarmDialog = builder.create();
         builder.show();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        alarmDialog.cancel();
     }
 
     void start(TripData tripData) {
@@ -182,7 +189,7 @@ public class AlarmDialog extends AppCompatActivity {
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, PRIMARY_CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_launcher_foreground)
-                .setContentTitle("Reminder for Trip "+tripData.getTripName())
+                .setContentTitle("Reminder for Trip " + tripData.getTripName())
                 .setContentText(tripData.getEnaPoint())
                 .setContentIntent(contentPendingIntent)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
