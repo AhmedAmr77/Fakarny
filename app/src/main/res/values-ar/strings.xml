@@ -132,11 +132,19 @@
     <string name="repeat">تكرار</string>
     <string name="upcomingFrag">القادم</string>
     <string name="history_Frag">التاريخ</string>
-    <string name="No_Repeat">بدون</string>
-    <string name="Repeat_Daily">يومي</string>
-    <string name="Repeat_Weekly">إسبوعي</string>
-    <string name="Repeat_Monthly">شهري</string>
+    <string name="No_Repeat">بدون تكرار</string>
+    <string name="Repeat_Daily">يومي تكرار</string>
+    <string name="Repeat_Weekly">إسبوعي تكرار</string>
+    <string name="Repeat_Monthly">شهري تكرار</string>
     <string name="One_Way_Trip">ذهاب فقط</string>
     <string name="Round_Trip">ذهاب وعودة</string>
+    <string name="start_btn_alertDialog">بدأ</string>
+    <string name="cancel_btn_alertDialog">إلغاء</string>
+    <string name="snooze_btn_alertDialog">غفوة</string>
+    <string name="reminder_title_alertDialog">تذكير</string>
+    <string name="msg_alertDialog">لا تنسى رحلة اليوم</string>
+    <string name="mshwary"> فكّرني</string>
+    <string name="add_note">إضافة مذكرة</string>
+    <string name="new_trip">رحلة جديدة</string>
 
 </resources>

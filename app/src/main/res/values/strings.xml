@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">TripReminder</string>
+    <string name="app_name">Fakarny</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Android Studio</string>
@@ -127,7 +127,7 @@
     <string name="startTeip">Start</string>
     <string name="title_activity_history_maps">Map</string>
     <string name="notes">Notes</string>
-    <string name="fakarny">Fakarny</string>
+    <string name="fakarny">F A K A R N Y</string>
     <string name="repeat">Repeat</string>
     <string name="upcomingFrag">Upcoming</string>
     <string name="history_Frag">History</string>
@@ -137,6 +137,12 @@
     <string name="Repeat_Monthly">Repeat Monthly</string>
     <string name="One_Way_Trip">One Way Trip</string>
     <string name="Round_Trip">Round Trip</string>
-    <string name="Mshwary" />
-    <string name="mshwary">Mshwary</string>
+    <string name="mshwary"></string>
+    <string name="start_btn_alertDialog">Start</string>
+    <string name="snooze_btn_alertDialog">Snooze</string>
+    <string name="cancel_btn_alertDialog">Cancel</string>
+    <string name="reminder_title_alertDialog">Reminder</string>
+    <string name="msg_alertDialog">Is this what you intended to do?</string>
+    <string name="add_note">Add Note</string>
+    <string name="new_trip">New Trip</string>
 </resources>

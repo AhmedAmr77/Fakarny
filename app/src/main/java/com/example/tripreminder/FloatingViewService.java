@@ -125,7 +125,6 @@ public class FloatingViewService extends Service implements View.OnClickListener
                         mFloatingView.findViewById(R.id.relativeLayoutParent).setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                Toast.makeText(FloatingViewService.this, "CLICK", Toast.LENGTH_SHORT).show();
                                 if (collapsedView.getVisibility() == View.VISIBLE) {
                                     collapsedView.setVisibility(View.GONE);
                                     expandedView.setVisibility(View.VISIBLE);
@@ -257,7 +256,6 @@ public class FloatingViewService extends Service implements View.OnClickListener
 
 
             case R.id.layoutExpanded:
-                Toast.makeText(this, "testScrolla", Toast.LENGTH_SHORT).show();
                 collapsedView.setVisibility(View.VISIBLE);
                 expandedView.setVisibility(View.GONE);
         }
@@ -266,7 +264,7 @@ public class FloatingViewService extends Service implements View.OnClickListener
     public void checkedCheckBox(TripData tripData, List<NoteData> notesList, Repository repository) {         //to store in DB what user had check from list
         CheckBox c;
         if (notesList.size() == 0) {
-            Toast.makeText(this, "Dev, empty notes list", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Empty notes list", Toast.LENGTH_LONG).show();
         } else {
             for (int i = 0; i < notesList.size(); i++) {
                 c = (CheckBox) linearLayoutCheckBox.getChildAt(i);

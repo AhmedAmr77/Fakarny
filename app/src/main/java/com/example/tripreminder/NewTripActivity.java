@@ -43,8 +43,8 @@ import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 public class NewTripActivity extends AppCompatActivity implements View.OnClickListener {
-    private final String[] dataRepeat = {"No Repeat", "Repeat Daily", "Repeat Weekly", "Repeat Monthly"};
-    private final String[] dataWay = {"One Way Trip", "Round Trip"};
+    private String[] dataRepeat;
+    private String[] dataWay;
     private final static int START_PLACE = 33;
     private final static int END_PLACE = 55;
     private TextView textDate, textTime, startPlace, endPlace;
@@ -71,6 +71,10 @@ public class NewTripActivity extends AppCompatActivity implements View.OnClickLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_trip);
+
+        dataRepeat = new String[]{getResources().getString(R.string.No_Repeat), getResources().getString(R.string.Repeat_Daily), getResources().getString(R.string.Repeat_Weekly), getResources().getString(R.string.Repeat_Monthly)};
+        dataWay = new String[]{getResources().getString(R.string.One_Way_Trip), getResources().getString(R.string.Round_Trip)};
+
         if (!Places.isInitialized()) {
             Places.initialize(getApplicationContext(), "AIzaSyDnbtBwgXmFh-e3jDYu3ffqDpOEOb8vU3Y", Locale.US);
         }

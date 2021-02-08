@@ -15,6 +15,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
+import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
@@ -37,6 +38,7 @@ public class AlarmDialog extends AppCompatActivity {
     private int ID;
     private static final int SYSTEM_ALERT_WINDOW_PERMISSION = 2084;
     private AlertDialog alarmDialog;
+    MediaPlayer player;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,15 +88,14 @@ public class AlarmDialog extends AppCompatActivity {
     }
 
     public void showDialogWithSound(TripData tripData) {
-        MediaPlayer player = MediaPlayer.create(AlarmDialog.this, R.raw.fail);
+        player = MediaPlayer.create(AlarmDialog.this, R.raw.fail);
         player.setLooping(true);
         player.start();
 
-
         AlertDialog.Builder builder = new AlertDialog.Builder(AlarmDialog.this, AlertDialog.THEME_DEVICE_DEFAULT_LIGHT);
-        builder.setTitle("Reminder");
-        builder.setMessage("Is this what you intended to do?");
-        builder.setPositiveButton("Start ", new DialogInterface.OnClickListener() {
+        builder.setTitle(R.string.reminder_title_alertDialog);
+        builder.setMessage(getResources().getString(R.string.msg_alertDialog)+"  :   "+tripData.getTripName());
+        builder.setPositiveButton(R.string.start_btn_alertDialog, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
@@ -106,7 +107,7 @@ public class AlarmDialog extends AppCompatActivity {
 
             }
         });
-        builder.setNeutralButton("Snooze", new DialogInterface.OnClickListener() {
+        builder.setNeutralButton(R.string.snooze_btn_alertDialog, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 deliverNotification(AlarmDialog.this, tripData);
@@ -114,7 +115,7 @@ public class AlarmDialog extends AppCompatActivity {
                 finish();
             }
         });
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(R.string.cancel_btn_alertDialog, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
@@ -125,14 +126,39 @@ public class AlarmDialog extends AppCompatActivity {
 
             }
         });
+        builder.setCancelable(false);
         alarmDialog = builder.create();
-        builder.show();
+
+
+
+        alarmDialog.show();
+
+        Button positiveButton = alarmDialog.getButton(AlertDialog.BUTTON_POSITIVE);
+        Button negativeButton = alarmDialog.getButton(AlertDialog.BUTTON_NEGATIVE);
+        Button neutralButton = alarmDialog.getButton(AlertDialog.BUTTON_NEUTRAL);
+
+        // Change the alert dialog buttons text and background color
+        positiveButton.setTextColor(Color.parseColor("#16c79a"));
+        //positiveButton.setBackgroundColor(Color.parseColor("#16c79a"));
+
+        negativeButton.setTextColor(Color.parseColor("#d35d6e"));
+        //negativeButton.setBackgroundColor(Color.parseColor("#d35d6e"));
+
+        neutralButton.setTextColor(Color.parseColor("#16c79a"));
+        //neutralButton.setBackgroundColor(Color.parseColor("#d9dab0"));
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
         alarmDialog.cancel();
+        player.stop();
     }
 
     void start(TripData tripData) {
