@@ -43,8 +43,8 @@ import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 public class NewTripActivity extends AppCompatActivity implements View.OnClickListener {
-    private String[] dataRepeat;
-    private String[] dataWay;
+    private  String[] dataRepeat ;
+    private  String[] dataWay ;
     private final static int START_PLACE = 33;
     private final static int END_PLACE = 55;
     private TextView textDate, textTime, startPlace, endPlace;
