@@ -331,7 +331,7 @@ public class NewTripActivity extends AppCompatActivity implements View.OnClickLi
                         if (b1) {
                             setTrip();
                         } else if (b) {
-                            if (finalHours < backHour) {
+                            if (finalHours < backHour || backmint>finalMinute) {
                                 setTrip();
                             } else {
                                 way.setSelection(0);
@@ -343,7 +343,7 @@ public class NewTripActivity extends AppCompatActivity implements View.OnClickLi
                         }
                     }
                 } else if (Integer.parseInt(cDate) == Integer.parseInt(sDate)) {
-                    if (hour < finalHours) {
+                    if (hour < finalHours ||minute < finalMinute) {
                         if (!finalWay.equals("Round Trip")) {
                             setTrip();
 
@@ -351,7 +351,7 @@ public class NewTripActivity extends AppCompatActivity implements View.OnClickLi
                             if (b1) {
                                 setTrip();
                             } else if (b) {
-                                if (finalHours < backHour) {
+                                if (finalHours < backHour || backmint>finalMinute) {
                                     setTrip();
                                 } else {
                                     way.setSelection(0);
@@ -363,27 +363,8 @@ public class NewTripActivity extends AppCompatActivity implements View.OnClickLi
                             }
                         }
                     } else {
-                        if (minute < finalMinute) {
-                            if (!finalWay.equals("Round Trip")) {
-                                setTrip();
-                            } else {
-                                if (b1) {
-                                    setTrip();
-                                } else if (b) {
-                                    if (finalHours < backHour) {
-                                        setTrip();
-                                    } else {
-                                        way.setSelection(0);
-                                        Toast.makeText(this, "please enter valid back time", Toast.LENGTH_SHORT).show();
-                                    }
-                                } else {
-                                    way.setSelection(0);
-                                    Toast.makeText(this, "please enter valid back date", Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        } else {
-                            Toast.makeText(this, "please enter correct time", Toast.LENGTH_LONG).show();
-                        }
+                        Toast.makeText(this, "please enter correct time", Toast.LENGTH_LONG).show();
+
                     }
                 } else {
                     Toast.makeText(this, "the date you selected is less than current date", Toast.LENGTH_LONG).show();
