@@ -98,10 +98,8 @@ public class AlarmDialog extends AppCompatActivity {
         builder.setPositiveButton(R.string.start_btn_alertDialog, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-
-                 updateTrip(tripData,"done");
-                player.stop();
                 start(tripData);
+                player.stop();
                 finish();
 
             }
@@ -117,7 +115,6 @@ public class AlarmDialog extends AppCompatActivity {
         builder.setNegativeButton(R.string.cancel_btn_alertDialog, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-
                 updateTrip(tripData,"cancel");
                 player.stop();
                 finish();
@@ -167,6 +164,7 @@ public class AlarmDialog extends AppCompatActivity {
 
         try {
             showWidget(tripData.getId());
+            updateTrip(tripData,"done");
             this.startActivity(chooser);
         } catch (ActivityNotFoundException e) {
             Toast.makeText(this, "NO APP Can Open THIS !!!", Toast.LENGTH_SHORT).show();
@@ -187,10 +185,12 @@ public class AlarmDialog extends AppCompatActivity {
 
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
     private void askPermission() {
-        Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
-                Uri.parse("package:" + this.getPackageName()));
+        Intent intent = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+            intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                    Uri.parse("package:" + this.getPackageName()));
+        }
         startActivityForResult(intent, SYSTEM_ALERT_WINDOW_PERMISSION);
     }
 

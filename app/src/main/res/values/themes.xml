@@ -6,6 +6,7 @@
         <item name="colorPrimaryVariant">@color/pro</item>
         <item name="colorOnPrimary">#EFEFEF</item>
         <!-- Secondary brand color. -->
+        <item name="fontFamily">@font/merinda_carter_regular</item>
         <item name="colorSecondary">@android:color/holo_blue_dark</item>
         <item name="colorSecondaryVariant">@android:color/holo_blue_dark</item>
         <item name="colorOnSecondary">@color/white</item>
