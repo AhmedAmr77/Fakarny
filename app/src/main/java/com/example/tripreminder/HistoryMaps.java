@@ -49,7 +49,7 @@ public class HistoryMaps extends FragmentActivity implements OnMapReadyCallback,
 
     int BLACK = 0xFF000000;
     int GRAY = 0xFF888888;
-    int WHITE = 0xFFFFFFFF;
+    int WHITE = 0xFF0000FF;
     int RED = 0xFFFF0000;
     int GREEN = 0xFF00FF00;
     int BLUE = 0xFF0000FF;
