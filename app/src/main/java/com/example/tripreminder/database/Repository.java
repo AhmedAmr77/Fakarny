@@ -26,21 +26,24 @@ import java.util.Date;
 import java.util.List;
 
 public class Repository {
-    private static TripDao tripDao;
-    private static LiveData<List<TripData>> upcoming;
-    private static LiveData<List<TripData>> history;
-    private static LiveData<List<TripData>> doneHistory;
-    private static DatabaseReference myRef;
+    private final TripDao tripDao;
+    private final LiveData<List<TripData>> upcoming;
+    private final LiveData<List<TripData>> history;
+    private final LiveData<List<TripData>> doneHistory;
+    private DatabaseReference myRef;
 
     public Repository(Application application) {
-            Database db = Database.getDatabase(application);
-            tripDao = db.tripDao();
-            upcoming = tripDao.getUpcoming();
-            history = tripDao.getHistory();
-            doneHistory = tripDao.getDoneHistory();
-            FirebaseDatabase database = FirebaseDatabase.getInstance();
-            FirebaseAuth mAuth = FirebaseAuth.getInstance();
+
+        Database db = Database.getDatabase(application);
+        tripDao = db.tripDao();
+        upcoming = tripDao.getUpcoming();
+        history = tripDao.getHistory();
+        doneHistory = tripDao.getDoneHistory();
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        if (mAuth.getCurrentUser() != null) {
             myRef = database.getReference().child(mAuth.getCurrentUser().getUid());
+        }
 
     }
 
