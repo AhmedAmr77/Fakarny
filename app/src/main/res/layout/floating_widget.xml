@@ -25,7 +25,7 @@ android:layout_height="wrap_content">
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:layout_marginTop="8dp"
-            android:src="@mipmap/ic_launcher_trip_round" />
+            android:src="@mipmap/trip_icon_round" />
 
         <ImageView
             android:id="@+id/buttonClose"
@@ -50,8 +50,8 @@ android:layout_height="wrap_content">
 
         <ScrollView
             android:id="@+id/scrolly"
-            android:layout_width="194dp"
-            android:layout_height="261dp"
+            android:layout_width="230dp"
+            android:layout_height="299dp"
             android:elevation="5dp"
             android:fillViewport="true"
             app:layout_constraintBottom_toBottomOf="parent"
