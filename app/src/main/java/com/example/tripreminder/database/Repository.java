@@ -33,7 +33,6 @@ public class Repository {
     private static DatabaseReference myRef;
 
     public Repository(Application application) {
-        if (tripDao == null) {
             Database db = Database.getDatabase(application);
             tripDao = db.tripDao();
             upcoming = tripDao.getUpcoming();
@@ -42,7 +41,7 @@ public class Repository {
             FirebaseDatabase database = FirebaseDatabase.getInstance();
             FirebaseAuth mAuth = FirebaseAuth.getInstance();
             myRef = database.getReference().child(mAuth.getCurrentUser().getUid());
-        }
+
     }
 
     public LiveData<List<TripData>> getDoneHistory() {
