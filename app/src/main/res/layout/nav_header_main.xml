@@ -21,8 +21,6 @@
         android:layout_margin="4dp"
         app:srcCompat="@mipmap/trip_icon_round" />
 
-
-
     <TextView
         android:id="@+id/emailOfUser"
         android:layout_width="wrap_content"

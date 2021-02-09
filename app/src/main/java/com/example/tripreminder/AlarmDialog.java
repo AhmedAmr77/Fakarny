@@ -93,7 +93,7 @@ public class AlarmDialog extends AppCompatActivity {
         player.start();
 
         AlertDialog.Builder builder = new AlertDialog.Builder(AlarmDialog.this, AlertDialog.THEME_DEVICE_DEFAULT_LIGHT);
-        builder.setTitle(R.string.reminder_title_alertDialog);
+        builder.setTitle(R.string.fakarny);
         builder.setMessage(getResources().getString(R.string.msg_alertDialog)+"  :   "+tripData.getTripName());
         builder.setPositiveButton(R.string.start_btn_alertDialog, new DialogInterface.OnClickListener() {
             @Override
@@ -139,7 +139,7 @@ public class AlarmDialog extends AppCompatActivity {
         negativeButton.setTextColor(Color.parseColor("#d35d6e"));
         //negativeButton.setBackgroundColor(Color.parseColor("#d35d6e"));
 
-        neutralButton.setTextColor(Color.parseColor("#16c79a"));
+        neutralButton.setTextColor(Color.parseColor("#0099CC"));
         //neutralButton.setBackgroundColor(Color.parseColor("#d9dab0"));
     }
 
@@ -211,7 +211,7 @@ public class AlarmDialog extends AppCompatActivity {
 
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, PRIMARY_CHANNEL_ID)
-                .setSmallIcon(R.drawable.ic_launcher_foreground)
+                .setSmallIcon(R.mipmap.trip_icon_round)
                 .setContentTitle("Reminder for Trip " + tripData.getTripName())
                 .setContentText(tripData.getEnaPoint())
                 .setContentIntent(contentPendingIntent)
