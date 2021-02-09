@@ -69,7 +69,7 @@
             android:id="@+id/txtRepeat"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-black"
+            android:fontFamily="@font/merinda_carter_regular"
             android:text="Repeat Monthy"
             android:textColor="#B5000000"
             app:layout_constraintStart_toStartOf="@+id/repeat"
@@ -82,7 +82,7 @@
 
             android:layout_marginStart="156dp"
             android:layout_marginTop="8dp"
-            android:fontFamily="sans-serif-black"
+            android:fontFamily="@font/merinda_carter_regular"
             android:text="@string/repeat"
             android:textColor="@color/pro"
             app:layout_constraintStart_toEndOf="@+id/type"
@@ -92,7 +92,7 @@
             android:id="@+id/textViewTripName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-black"
+            android:fontFamily="@font/merinda_carter_regular"
             android:layout_marginBottom="15dp"
             android:text="In previous "
             android:textColor="@color/pro"
@@ -110,7 +110,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginTop="8dp"
 
-            android:fontFamily="sans-serif-black"
+            android:fontFamily="@font/merinda_carter_regular"
             android:text="@string/from"
             android:textColor="@color/pro"
             app:layout_constraintStart_toStartOf="parent"
@@ -121,8 +121,8 @@
             android:id="@+id/to"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="3dp"
-            android:fontFamily="sans-serif-black"
+            android:layout_marginTop="1dp"
+            android:fontFamily="@font/merinda_carter_regular"
             android:text="@string/to"
             android:textColor="@color/pro"
             app:layout_constraintStart_toStartOf="@+id/from"
@@ -133,7 +133,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="7dp"
-            android:fontFamily="sans-serif-black"
+            android:fontFamily="@font/merinda_carter_regular"
             android:text="@string/type"
             android:textColor="@color/pro"
             app:layout_constraintStart_toStartOf="@+id/textViewTripWayTo"
@@ -143,7 +143,7 @@
             android:id="@+id/textViewTripWayFrom"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-black"
+            android:fontFamily="@font/merinda_carter_regular"
             android:text="user taps a button or a notification. "
             android:textColor="#B5000000"
             app:layout_constraintEnd_toEndOf="parent"
@@ -156,7 +156,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="1dp"
-            android:fontFamily="sans-serif-black"
+            android:fontFamily="@font/merinda_carter_regular"
             android:text="This practical codelab is part of Unit 3: Working in the background in the Android Developer"
             android:textColor="#B5000000"
             app:layout_constraintEnd_toEndOf="parent"
@@ -170,7 +170,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
             android:layout_marginTop="11dp"
-            android:fontFamily="sans-serif-black"
+            android:fontFamily="@font/merinda_carter_regular"
             android:text="12/3/2011 "
             android:textColor="#B5000000"
             app:layout_constraintBottom_toBottomOf="@+id/time"
@@ -182,7 +182,7 @@
             android:id="@+id/txtType"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-black"
+            android:fontFamily="@font/merinda_carter_regular"
             android:text="one way"
             android:textColor="#B5000000"
             app:layout_constraintStart_toStartOf="@+id/type"
@@ -209,14 +209,15 @@
             android:layout_marginTop="16dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewTripName"
-            app:srcCompat="@drawable/ic_baseline_today_24" />
+            app:srcCompat="@drawable/ic_baseline_today_24"
+            tools:ignore="VectorDrawableCompat" />
 
         <TextView
             android:id="@+id/textTime1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
-            android:fontFamily="sans-serif-black"
+            android:fontFamily="@font/merinda_carter_regular"
             android:text="15"
             android:textColor="#B5000000"
             app:layout_constraintBottom_toBottomOf="@+id/imageView3"
@@ -233,7 +234,8 @@
             app:layout_constraintStart_toEndOf="@+id/textViewTripDate"
             app:layout_constraintTop_toTopOf="@+id/time"
             app:layout_constraintVertical_bias="0.0"
-            app:srcCompat="@drawable/ic_baseline_access_time_24" />
+            app:srcCompat="@drawable/ic_baseline_access_time_24"
+            tools:ignore="VectorDrawableCompat" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -265,7 +267,7 @@
                 android:layout_marginStart="5dp"
                 android:layout_weight="4"
                 android:backgroundTint="@color/pro"
-
+                android:fontFamily="@font/merinda_carter_regular"
                 android:text="@string/startTeip"
                 android:textStyle="bold" />
 
@@ -276,7 +278,6 @@
                 android:layout_marginStart="3dp"
                 android:layout_weight="1.5"
                 android:background="@drawable/ic_baseline_note_add_24"
-                android:fontFamily="sans-serif-black"
                 android:foreground="@drawable/ic_baseline_note_add_24" />
 
         </LinearLayout>

@@ -18,7 +18,6 @@ android:layout_height="wrap_content">
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:visibility="visible"
         tools:visibility="gone">
 
         <ImageView
@@ -51,22 +50,24 @@ android:layout_height="wrap_content">
 
         <ScrollView
             android:id="@+id/scrolly"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_width="194dp"
+            android:layout_height="261dp"
             android:elevation="5dp"
             android:fillViewport="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHeight_percent="0.5"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0"
             app:layout_constraintWidth_percent="0.7">
 
             <LinearLayout
                 android:id="@+id/linearLayoutCheckBox"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/pro"
+                android:background="@drawable/round_note"
                 android:orientation="vertical"></LinearLayout>
         </ScrollView>
     </androidx.constraintlayout.widget.ConstraintLayout>
