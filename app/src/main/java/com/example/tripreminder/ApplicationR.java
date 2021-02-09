@@ -27,6 +27,9 @@ public class ApplicationR extends Application {
         mRepository.getUpcomingTrips().observeForever(new Observer<List<TripData>>() {
             @Override
             public void onChanged(List<TripData> tripData) {
+                Intent notifyIntent = new Intent(ApplicationR.this, AlarmReceiver.class);
+                notifyPendingIntent = PendingIntent.getBroadcast(ApplicationR.this, 77, notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+                alarmManager.cancel(notifyPendingIntent);
                 if (tripData.size() > 0) {
                     setAlarmToSystem(tripData.get(0));
                 }
@@ -35,12 +38,9 @@ public class ApplicationR extends Application {
     }
 
     void setAlarmToSystem(TripData tripData) {
-        Log.i("trip", "setAlaToSys " + tripData);
         Intent notifyIntent = new Intent(this, AlarmReceiver.class);
         notifyIntent.putExtra("tripData", tripData.getId());
         notifyPendingIntent = PendingIntent.getBroadcast(this, 77, notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        alarmManager.cancel(notifyPendingIntent);
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, tripData.getAlarmTime(), notifyPendingIntent);
         } else {
