@@ -43,8 +43,8 @@ import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 public class NewTripActivity extends AppCompatActivity implements View.OnClickListener {
-    private  String[] dataRepeat ;
-    private  String[] dataWay ;
+    private String[] dataRepeat;
+    private String[] dataWay;
     private final static int START_PLACE = 33;
     private final static int END_PLACE = 55;
     private TextView textDate, textTime, startPlace, endPlace;
@@ -327,11 +327,12 @@ public class NewTripActivity extends AppCompatActivity implements View.OnClickLi
                     if (!finalWay.equals("Round Trip")) {
                         setTrip();
                     } else {
-
                         if (b1) {
                             setTrip();
                         } else if (b) {
-                            if (finalHours < backHour || backmint>finalMinute) {
+                            if (finalHours < backHour) {
+                                setTrip();
+                            } else if (finalHours == backHour && backmint > finalMinute) {
                                 setTrip();
                             } else {
                                 way.setSelection(0);
@@ -343,7 +344,7 @@ public class NewTripActivity extends AppCompatActivity implements View.OnClickLi
                         }
                     }
                 } else if (Integer.parseInt(cDate) == Integer.parseInt(sDate)) {
-                    if (hour < finalHours ||minute < finalMinute) {
+                    if (hour < finalHours || minute < finalMinute) {
                         if (!finalWay.equals("Round Trip")) {
                             setTrip();
 
@@ -351,7 +352,9 @@ public class NewTripActivity extends AppCompatActivity implements View.OnClickLi
                             if (b1) {
                                 setTrip();
                             } else if (b) {
-                                if (finalHours < backHour || backmint>finalMinute) {
+                                if (finalHours < backHour) {
+                                    setTrip();
+                                } else if (finalHours == backHour && backmint > finalMinute) {
                                     setTrip();
                                 } else {
                                     way.setSelection(0);

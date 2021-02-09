@@ -80,10 +80,15 @@ public class Repository {
             @Override
             public void run() {
                 tripDao.updateTripData(tripData);
-                if (tripData.getWayData().equals("Round Trip") && !tripData.getRepeatData().contains("No")) {
+                Log.e("round trio",tripData.getWayData());
+                if (tripData.getWayData().contains("Round Trip") && !tripData.getRepeatData().contains("No")) {
                     repeatAndRound(tripData);
-                } else if (tripData.getWayData().equals("Round Trip")) {
-                    if (tripData.getEndAlarmTime() > tripData.getAlarmTime()) {
+                } else if (tripData.getWayData().contains("Round Trip")) {
+                    Log.e("round trio2",tripData.getWayData());
+                    Log.e("roundtrio3",(tripData.getEndAlarmTime()-tripData.getAlarmTime())+"");
+
+                    if (tripData.getEndAlarmTime() >= tripData.getAlarmTime()) {
+                        Log.e("round trio2",tripData.getWayData());
                         round(tripData);
                     }
                 } else if (!tripData.getRepeatData().contains("No")) {

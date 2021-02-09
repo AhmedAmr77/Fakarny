@@ -30,7 +30,6 @@
         <activity
             android:name=".ShowNotes"
             android:label="@string/notes"
-            android:fontFamily="@font/merinda_carter_regular"
             android:theme="@style/Theme.AppCompat.Light.Dialog.Alert" />
 
         <meta-data

@@ -163,8 +163,8 @@ public class AlarmDialog extends AppCompatActivity {
         Intent chooser = Intent.createChooser(intent, title);
 
         try {
-            showWidget(tripData.getId());
             updateTrip(tripData,"done");
+            showWidget(tripData.getId());
             this.startActivity(chooser);
         } catch (ActivityNotFoundException e) {
             Toast.makeText(this, "NO APP Can Open THIS !!!", Toast.LENGTH_SHORT).show();
