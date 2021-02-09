@@ -1,5 +1,6 @@
 package com.example.tripreminder;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,6 +11,7 @@ import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -34,6 +36,7 @@ import com.google.android.libraries.places.widget.Autocomplete;
 import com.google.android.libraries.places.widget.AutocompleteActivity;
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
 
+import java.text.SimpleDateFormat;
 import java.time.Month;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -54,7 +57,7 @@ public class NewTripActivity extends AppCompatActivity implements View.OnClickLi
     private int finalHours, finalMinute;
     private List<Place.Field> fields;
     private EditText name;
-    private LatLng startLatLng, endLatLng;
+    private String startLatLng, endLatLng;
     private Button btnTime, btnDate, addNewTrip;
     private Spinner repeat, way;
     private Calendar calendar;
@@ -100,6 +103,87 @@ public class NewTripActivity extends AppCompatActivity implements View.OnClickLi
         onWayClick();
     }
 
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        outState.putInt("year", year);
+        outState.putInt("month", month);
+        outState.putInt("day", day);
+        outState.putInt("hour", hour);
+        outState.putInt("minute", minute);
+        outState.putInt("finalSelectedYear", finalSelectedYear);
+        outState.putInt("finalSelectedMoth", finalSelectedMoth);
+        outState.putInt("finalSelectedDay", finalSelectedDay);
+        outState.putInt("finalHours", finalHours);
+        outState.putInt("finalMinute", finalMinute);
+        outState.putInt("backYear", backYear);
+        outState.putInt("backMonth", backMonth);
+        outState.putInt("backDay", backDay);
+        outState.putInt("backHour", backHour);
+        outState.putInt("backmint", backmint);
+        outState.putLong("startAlarmTime", startAlarmTime);
+        outState.putLong("endAlarmTrim", endAlarmTrim);
+        outState.putString("name", name.getText().toString());
+        outState.putString("finalStartAddress", finalStartAddress);
+        outState.putString("finalEndAddress", finalEndAddress);
+        outState.putLong("repeatPlus", repeatPlus);
+        outState.putString("finalWay", finalWay);
+        outState.putString("finalRepeat", finalRepeat);
+        outState.putSerializable("TripData", data);
+        outState.putString("startLatLng", startLatLng);
+        outState.putString("endLatLng", endLatLng);
+        outState.putString("endDate",endDate);
+        outState.putString("endTime",endTime);
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        year = savedInstanceState.getInt("year", year);
+        month = savedInstanceState.getInt("month", month);
+        day = savedInstanceState.getInt("day", day);
+        hour = savedInstanceState.getInt("hour", hour);
+        minute = savedInstanceState.getInt("minute", minute);
+        finalSelectedYear = savedInstanceState.getInt("finalSelectedYear", finalSelectedYear);
+        finalSelectedMoth = savedInstanceState.getInt("finalSelectedMoth", finalSelectedMoth);
+        finalSelectedDay = savedInstanceState.getInt("finalSelectedDay", finalSelectedDay);
+        finalHours = savedInstanceState.getInt("finalHours", finalHours);
+        finalMinute = savedInstanceState.getInt("finalMinute", finalMinute);
+        backYear = savedInstanceState.getInt("backYear", backYear);
+        backMonth = savedInstanceState.getInt("backMonth", backMonth);
+        backDay = savedInstanceState.getInt("backDay", backDay);
+        backHour = savedInstanceState.getInt("backHour", backHour);
+        backmint = savedInstanceState.getInt("backmint", backmint);
+        startAlarmTime = savedInstanceState.getLong("startAlarmTime", startAlarmTime);
+        endAlarmTrim = savedInstanceState.getLong("endAlarmTrim", endAlarmTrim);
+        name.setText(savedInstanceState.getString("name", ""));
+        finalStartAddress = savedInstanceState.getString("finalStartAddress", finalStartAddress);
+        finalEndAddress = savedInstanceState.getString("finalEndAddress", finalEndAddress);
+        repeatPlus = savedInstanceState.getLong("repeatPlus", repeatPlus);
+        finalWay = savedInstanceState.getString("finalWay", finalWay);
+        finalRepeat = savedInstanceState.getString("finalRepeat", finalRepeat);
+        startLatLng = savedInstanceState.getString("startLatLng", startLatLng);
+        endLatLng = savedInstanceState.getString("endLatLng", endLatLng);
+        endDate=savedInstanceState.getString("endDate",endDate);
+        endTime=savedInstanceState.getString("endTime",endTime);
+        data = (TripData) savedInstanceState.getSerializable("TripData");
+        startPlace.setText(finalStartAddress);
+        endPlace.setText(finalEndAddress);
+        if (finalSelectedYear > 0) {
+            textDate.setText(finalSelectedDay + "-" + (finalSelectedMoth + 1) + "-" + finalSelectedYear);
+
+        }
+        Date date = new Date();
+        date.setHours(finalHours);
+        date.setMinutes(finalMinute);
+        textTime.setText(new SimpleDateFormat("HH:mm").format(date));
+
+
+        int posR = repeatAd.getPosition(finalRepeat);
+        repeat.setSelection(posR);
+        int posW = wayAd.getPosition(finalWay);
+        way.setSelection(posW);
+        super.onRestoreInstanceState(savedInstanceState);
+    }
 
     private void onRepeatClick() {
         repeat.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -130,43 +214,50 @@ public class NewTripActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     private void onWayClick() {
+
         way.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                finalWay = dataWay[position];
-                if (finalWay.endsWith("Round Trip")) {
-                    year = calendar.get(Calendar.YEAR);
-                    month = calendar.get(Calendar.MONTH);
-                    day = calendar.get(Calendar.DAY_OF_MONTH);
-                    DatePickerDialog mDatePicker = new DatePickerDialog(NewTripActivity.this, new DatePickerDialog.OnDateSetListener() {
-                        public void onDateSet(DatePicker datepicker, int selectedYear, int selectedMonth, int selectedDay) {
-                            endDate = selectedDay + "-" + (selectedMonth + 1) + "-" + selectedYear;
-                            backYear = selectedYear;
-                            backDay = selectedDay;
-                            backMonth = selectedMonth;
-                            hour = calendar.get(Calendar.HOUR);
-                            minute = calendar.get(Calendar.MINUTE);
-                            TimePickerDialog mTimePicker;
-                            mTimePicker = new TimePickerDialog(NewTripActivity.this, new TimePickerDialog.OnTimeSetListener() {
-                                @Override
-                                public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                                    endTime = selectedHour + ":" + selectedMinute;
-                                    backHour = selectedHour;
-                                    backmint = selectedMinute;
-                                    Calendar date = Calendar.getInstance();
-                                    date.set(backYear, backMonth, backDay, backHour, backmint);
-                                    endAlarmTrim = date.getTimeInMillis();
-                                }
-                            }, hour, minute, false);
-                            mTimePicker.setTitle("Select back Time");
-                            mTimePicker.show();
+                if (finalWay == null || !finalWay.equals(dataWay[position])) {
+                    finalWay = dataWay[position];
+                    if (finalWay.endsWith("Round Trip")) {
+                        year = calendar.get(Calendar.YEAR);
+                        month = calendar.get(Calendar.MONTH);
+                        day = calendar.get(Calendar.DAY_OF_MONTH);
+                        DatePickerDialog mDatePicker = new DatePickerDialog(NewTripActivity.this, new DatePickerDialog.OnDateSetListener() {
+                            public void onDateSet(DatePicker datepicker, int selectedYear, int selectedMonth, int selectedDay) {
+                                endDate = selectedDay + "-" + (selectedMonth + 1) + "-" + selectedYear;
+                                backYear = selectedYear;
+                                backDay = selectedDay;
+                                backMonth = selectedMonth;
+                                hour = calendar.get(Calendar.HOUR);
+                                minute = calendar.get(Calendar.MINUTE);
+                                TimePickerDialog mTimePicker;
+                                mTimePicker = new TimePickerDialog(NewTripActivity.this, new TimePickerDialog.OnTimeSetListener() {
+                                    @Override
+                                    public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+                                        Date date1 = new Date();
+                                        date1.setHours(finalHours);
+                                        date1.setMinutes(finalMinute);
+                                        endTime = new SimpleDateFormat("HH:mm").format(date1);
+                                        backHour = selectedHour;
+                                        backmint = selectedMinute;
+                                        Calendar date = Calendar.getInstance();
+                                        date.set(backYear, backMonth, backDay, backHour, backmint);
+                                        endAlarmTrim = date.getTimeInMillis();
+                                    }
+                                }, hour, minute, false);
+                                mTimePicker.setTitle("Select back Time");
+                                mTimePicker.show();
 
 
-                        }
+                            }
 
-                    }, year, month, day);
-                    mDatePicker.setTitle("Select return date");
-                    mDatePicker.show();
+                        }, year, month, day);
+
+                        mDatePicker.setTitle("Select return date");
+                        mDatePicker.show();
+                    }
                 }
             }
 
@@ -182,10 +273,9 @@ public class NewTripActivity extends AppCompatActivity implements View.OnClickLi
         finalEndAddress = data.getEnaPoint();
         finalWay = data.getWayData();
         finalRepeat = data.getRepeatData();
-        String sll[] = data.getLat_long_startPoint().split(",");
-        startLatLng = new LatLng(Double.parseDouble(sll[0]), Double.parseDouble(sll[1]));
-        String ell[] = data.getLat_long_endPoint().split(",");
-        endLatLng = new LatLng(Double.parseDouble(ell[0]), Double.parseDouble(ell[1]));
+
+        startLatLng = data.getLat_long_startPoint();
+        endLatLng = data.getLat_long_endPoint();
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(data.getAlarmTime());
         finalSelectedYear = calendar.get(Calendar.YEAR);
@@ -193,6 +283,7 @@ public class NewTripActivity extends AppCompatActivity implements View.OnClickLi
         finalSelectedDay = calendar.get(Calendar.DAY_OF_MONTH);
         finalHours = calendar.get(Calendar.HOUR);
         finalMinute = calendar.get(Calendar.MINUTE);
+        startAlarmTime = data.getAlarmTime();
         if (data.getBackDate() != null) {
             calendar.setTimeInMillis(data.getEndAlarmTime());
             backYear = calendar.get(Calendar.YEAR);
@@ -200,6 +291,7 @@ public class NewTripActivity extends AppCompatActivity implements View.OnClickLi
             backDay = calendar.get(Calendar.DAY_OF_MONTH);
             backHour = calendar.get(Calendar.HOUR);
             backmint = calendar.get(Calendar.MINUTE);
+            endAlarmTrim = data.getEndAlarmTime();
         }
     }
 
@@ -249,7 +341,7 @@ public class NewTripActivity extends AppCompatActivity implements View.OnClickLi
                     place = Autocomplete.getPlaceFromIntent(data);
                     finalStartAddress = place.getAddress();
                     startPlace.setText(finalStartAddress);
-                    startLatLng = place.getLatLng();
+                    startLatLng = place.getLatLng().latitude + "," + place.getLatLng().longitude;
                 }
             }
         } else if (requestCode == END_PLACE) {
@@ -259,7 +351,7 @@ public class NewTripActivity extends AppCompatActivity implements View.OnClickLi
                     place = Autocomplete.getPlaceFromIntent(data);
                     finalEndAddress = place.getAddress();
                     endPlace.setText(finalEndAddress);
-                    endLatLng = place.getLatLng();
+                    endLatLng = place.getLatLng().latitude + "," + place.getLatLng().longitude;
                 }
             }
         }
@@ -290,9 +382,14 @@ public class NewTripActivity extends AppCompatActivity implements View.OnClickLi
         mTimePicker = new TimePickerDialog(NewTripActivity.this, new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                textTime.setText(selectedHour + ":" + selectedMinute);
+
                 finalHours = selectedHour;
                 finalMinute = selectedMinute;
+                Date date = new Date();
+                date.setHours(finalHours);
+                date.setMinutes(finalMinute);
+                textTime.setText(new SimpleDateFormat("HH:mm").format(date));
+
             }
         }, hour, minute, false);
         mTimePicker.setTitle("Select Trip Time");
@@ -388,12 +485,12 @@ public class NewTripActivity extends AppCompatActivity implements View.OnClickLi
         if (data == null) {
             data = new TripData();
             data.setDate(textDate.getText().toString());
-            data.setTime(finalHours + ":" + finalMinute);
+            data.setTime(textTime.getText().toString());
             data.setStartPoint(finalStartAddress);
             data.setEnaPoint(finalEndAddress);
             data.setTripName(name.getText().toString());
-            data.setLat_long_startPoint(startLatLng.latitude + "," + startLatLng.longitude);
-            data.setLat_long_endPoint(endLatLng.latitude + "," + endLatLng.longitude);
+            data.setLat_long_startPoint(startLatLng);
+            data.setLat_long_endPoint(endLatLng);
             data.setRepeatData(finalRepeat);
             data.setWayData(finalWay);
             data.setState("upcoming");
@@ -405,12 +502,12 @@ public class NewTripActivity extends AppCompatActivity implements View.OnClickLi
             repository.insert(data);
         } else {
             data.setDate(textDate.getText().toString());
-            data.setTime(finalHours + ":" + finalMinute);
+            data.setTime(textTime.getText().toString());
             data.setStartPoint(finalStartAddress);
             data.setEnaPoint(finalEndAddress);
             data.setTripName(name.getText().toString());
-            data.setLat_long_startPoint(startLatLng.latitude + "," + startLatLng.longitude);
-            data.setLat_long_endPoint(endLatLng.latitude + "," + endLatLng.longitude);
+            data.setLat_long_startPoint(startLatLng);
+            data.setLat_long_endPoint(endLatLng);
             data.setRepeatData(finalRepeat);
             data.setWayData(finalWay);
             data.setBackDate(endDate);
