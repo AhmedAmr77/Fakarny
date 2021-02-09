@@ -13,10 +13,7 @@ import androidx.lifecycle.Observer;
 import com.example.tripreminder.database.Repository;
 import com.example.tripreminder.database.TripData;
 
-import java.lang.reflect.Field;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class ApplicationR extends Application {
     AlarmManager alarmManager;

@@ -26,26 +26,26 @@ import java.util.Date;
 import java.util.List;
 
 public class Repository {
-    private TripDao tripDao;
-    private LiveData<List<TripData>> upcoming;
-    private LiveData<List<TripData>> history;
-    private LiveData<List<TripData>> doneHistory;
-    private DatabaseReference myRef;
+    private static TripDao tripDao;
+    private static LiveData<List<TripData>> upcoming;
+    private static LiveData<List<TripData>> history;
+    private static LiveData<List<TripData>> doneHistory;
+    private static DatabaseReference myRef;
 
     public Repository(Application application) {
-        Database db = Database.getDatabase(application);
-        tripDao = db.tripDao();
-        upcoming = tripDao.getUpcoming();
-        history = tripDao.getHistory();
-        doneHistory = tripDao.getDoneHistory();
-
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        myRef = database.getReference().child(mAuth.getCurrentUser().getUid());
+        if (tripDao == null) {
+            Database db = Database.getDatabase(application);
+            tripDao = db.tripDao();
+            upcoming = tripDao.getUpcoming();
+            history = tripDao.getHistory();
+            doneHistory = tripDao.getDoneHistory();
+            FirebaseDatabase database = FirebaseDatabase.getInstance();
+            FirebaseAuth mAuth = FirebaseAuth.getInstance();
+            myRef = database.getReference().child(mAuth.getCurrentUser().getUid());
+        }
     }
 
     public LiveData<List<TripData>> getDoneHistory() {
-
         return doneHistory;
     }
 
@@ -80,15 +80,15 @@ public class Repository {
             @Override
             public void run() {
                 tripDao.updateTripData(tripData);
-                Log.e("round trio",tripData.getWayData());
+                Log.e("round trio", tripData.getWayData());
                 if (tripData.getWayData().contains("Round Trip") && !tripData.getRepeatData().contains("No")) {
                     repeatAndRound(tripData);
                 } else if (tripData.getWayData().contains("Round Trip")) {
-                    Log.e("round trio2",tripData.getWayData());
-                    Log.e("roundtrio3",(tripData.getEndAlarmTime()-tripData.getAlarmTime())+"");
+                    Log.e("round trio2", tripData.getWayData());
+                    Log.e("roundtrio3", (tripData.getEndAlarmTime() - tripData.getAlarmTime()) + "");
 
                     if (tripData.getEndAlarmTime() >= tripData.getAlarmTime()) {
-                        Log.e("round trio2",tripData.getWayData());
+                        Log.e("round trio2", tripData.getWayData());
                         round(tripData);
                     }
                 } else if (!tripData.getRepeatData().contains("No")) {
@@ -191,7 +191,7 @@ public class Repository {
 
     public TripData getByID(int id) {
 
-       return tripDao.getTripById(id);
+        return tripDao.getTripById(id);
 
     }
 
