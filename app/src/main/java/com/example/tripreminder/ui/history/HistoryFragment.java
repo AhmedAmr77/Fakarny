@@ -92,7 +92,7 @@ public class HistoryFragment extends Fragment {
                                 adapter.notifyItemRemoved(viewHolder.getAdapterPosition());
                             }
                         })
-                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .setIcon(R.drawable.ic_baseline_report_problem_24)
                         .show();
             }
         });
