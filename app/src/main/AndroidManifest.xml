@@ -17,6 +17,7 @@
         android:icon="@drawable/car2"
         android:label="@string/app_name"
         android:roundIcon="@drawable/car2"
+        android:name=".ApplicationR"
         android:supportsRtl="true"
         android:theme="@style/Theme.TripReminder">
 
@@ -31,14 +32,7 @@
             android:label="@string/notes"
             android:fontFamily="@font/merinda_carter_regular"
             android:theme="@style/Theme.AppCompat.Light.Dialog.Alert" />
-        <!--
-             The API key for Google Maps-based APIs is defined as a string resource.
-             (See the file "res/values/google_maps_api.xml").
-             Note that the API key is linked to the encryption key used to sign the APK.
-             You need a different API key for each encryption key, including the release key that is used to
-             sign the APK for publishing.
-             You can define the keys for the debug and release targets in src/debug/ and src/release/.
-        -->
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyBr20rtMn4dMk3l0ydTGtku8AU_zCh6rRQ" />

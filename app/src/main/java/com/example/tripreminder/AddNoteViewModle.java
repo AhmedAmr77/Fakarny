@@ -1,5 +1,7 @@
 package com.example.tripreminder;
 
+import android.app.Application;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -16,11 +18,11 @@ public class AddNoteViewModle extends ViewModel {
     private Repository repository;
     private TripData tripData;
 
-    public void intiData(TripData tripData) {
+    public void intiData(TripData tripData, Application application) {
         if (this.tripData == null) {
             this.tripData = tripData;
             this.notes = tripData.getNotes();
-            repository = new Repository(ApplicationR.getApplication());
+            repository = new Repository(application);
         }
     }
 

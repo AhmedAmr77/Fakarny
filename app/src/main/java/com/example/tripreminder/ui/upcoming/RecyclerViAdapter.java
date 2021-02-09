@@ -1,5 +1,6 @@
 package com.example.tripreminder.ui.upcoming;
 
+import android.app.Application;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
@@ -36,8 +37,9 @@ public class RecyclerViAdapter extends RecyclerView.Adapter<RecyclerViAdapter.Vi
     List<TripData> tripDataList;
     private static final int SYSTEM_ALERT_WINDOW_PERMISSION = 2084;
     private Repository repository;
-    public RecyclerViAdapter(Context context, List<TripData> tripDataList) {
-        repository = new Repository(ApplicationR.getApplication());
+
+    public RecyclerViAdapter(Context context, List<TripData> tripDataList, Application application) {
+        repository = new Repository(application);
         this.context = context;
         this.tripDataList = tripDataList;
     }
@@ -65,7 +67,7 @@ public class RecyclerViAdapter extends RecyclerView.Adapter<RecyclerViAdapter.Vi
             btnTripStart = itemView.findViewById(R.id.buttonTripStart);
             btnTripCancel = itemView.findViewById(R.id.buttonTripCancel);
             btnAddNote = itemView.findViewById(R.id.buttonAddNote);
-            btnshowNote=itemView.findViewById(R.id.btnshowNote);
+            btnshowNote = itemView.findViewById(R.id.btnshowNote);
         }
     }
 
@@ -79,7 +81,7 @@ public class RecyclerViAdapter extends RecyclerView.Adapter<RecyclerViAdapter.Vi
         Intent intent = new Intent(context.getApplicationContext(), FloatingViewService.class);
         intent.putExtra("tripID", id);
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-            ( context.getApplicationContext()).startService(intent);
+            (context.getApplicationContext()).startService(intent);
             ((MainActivity) context).finish();
         } else if (Settings.canDrawOverlays(context)) {
             (context.getApplicationContext()).startService(intent);
@@ -147,8 +149,8 @@ public class RecyclerViAdapter extends RecyclerView.Adapter<RecyclerViAdapter.Vi
         holder.btnshowNote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(context, ShowNotes.class);
-                intent.putExtra("tripNotes",current);
+                Intent intent = new Intent(context, ShowNotes.class);
+                intent.putExtra("tripNotes", current);
                 context.startActivity(intent);
             }
         });

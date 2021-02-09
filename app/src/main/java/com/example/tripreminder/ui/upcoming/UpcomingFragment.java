@@ -56,15 +56,13 @@ public class UpcomingFragment extends Fragment {
         recyclerView = root.findViewById(R.id.recyclerViID);
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this.getContext());
-        adapter = new RecyclerViAdapter(getContext(), new ArrayList<>());
+        adapter = new RecyclerViAdapter(getContext(), new ArrayList<>(),getActivity().getApplication());
 
         model = ViewModelProviders.of(this).get(UpcomingViewModel.class);
         recyclerView.setLayoutManager(linearLayoutManager);
         model.getUpcoming().observe(getViewLifecycleOwner(), new Observer<List<TripData>>() {
             @Override
             public void onChanged(List<TripData> tripData) {
-                if (tripData.size() > 0)
-                    model.setAlarmToSystem(tripData.get(0));
                 adapter.setValues(tripData);
                 adapter.notifyDataSetChanged();
             }

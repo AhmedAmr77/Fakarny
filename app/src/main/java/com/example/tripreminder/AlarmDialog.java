@@ -99,8 +99,7 @@ public class AlarmDialog extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
-                tripData.setState("done");
-                repository.start(tripData);
+                 updateTrip(tripData,"done");
                 player.stop();
                 start(tripData);
                 finish();
@@ -119,8 +118,7 @@ public class AlarmDialog extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
-                tripData.setState("cancel");
-                repository.update(tripData);
+                updateTrip(tripData,"cancel");
                 player.stop();
                 finish();
 
@@ -170,7 +168,6 @@ public class AlarmDialog extends AppCompatActivity {
         try {
             showWidget(tripData.getId());
             this.startActivity(chooser);
-            updateTrip(tripData, "done");
         } catch (ActivityNotFoundException e) {
             Toast.makeText(this, "NO APP Can Open THIS !!!", Toast.LENGTH_SHORT).show();
         }

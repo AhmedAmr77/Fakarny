@@ -50,7 +50,7 @@ public class FloatingViewService extends Service implements View.OnClickListener
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         int id = intent.getIntExtra("tripID", -1);
-        Repository repository = new Repository(ApplicationR.getApplication());
+        Repository repository = new Repository(getApplication());
         new Thread(new Runnable() {
             @Override
             public void run() {

@@ -34,7 +34,7 @@ public class AddNote extends AppCompatActivity {
 
         TripData trip=(TripData) getIntent().getSerializableExtra("TripData");
         if(trip!=null){
-            model.intiData(trip);
+            model.intiData(trip,getApplication());
         }
         recyclerView = (RecyclerView) findViewById(R.id.recyclerViewNote);
         recyclerView.setHasFixedSize(true);
