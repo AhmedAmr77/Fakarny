@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
                             finish();
                         }
                     })
-                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .setIcon(R.drawable.ic_baseline_report_problem_24)
                     .show();
 
         } else if (id == R.id.nav_sync) {
