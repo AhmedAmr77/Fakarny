@@ -41,15 +41,14 @@ public class ApplicationR extends Application {
         Intent notifyIntent = new Intent(this, AlarmReceiver.class);
         notifyIntent.putExtra("tripData", tripData.getId());
         notifyPendingIntent = PendingIntent.getBroadcast(this, 77, notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, tripData.getAlarmTime(), notifyPendingIntent);
-        } else {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                alarmManager.setExact(AlarmManager.RTC_WAKEUP, tripData.getAlarmTime(), notifyPendingIntent);
-            } else {
-                alarmManager.set(AlarmManager.RTC_WAKEUP, tripData.getAlarmTime(), notifyPendingIntent);
-            }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            alarmManager.setAlarmClock(new AlarmManager.AlarmClockInfo(tripData.getAlarmTime(),notifyPendingIntent),notifyPendingIntent);
+        }else {
+            alarmManager.set(AlarmManager.RTC_WAKEUP, tripData.getAlarmTime(), notifyPendingIntent);
+
         }
+
+
 
     }
 }
