@@ -2,6 +2,7 @@ package com.FakarnyAppForTripReminder.Fakarny;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.view.Menu;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.FakarnyAppForTripReminder.Fakarny.Demo.FragmentsAdapter;
 import com.FakarnyAppForTripReminder.Fakarny.database.Repository;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -24,6 +26,7 @@ import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.viewpager.widget.ViewPager;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -31,11 +34,24 @@ public class MainActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private Repository repository;
+    ViewPager viewPager;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        SharedPreferences shared =getSharedPreferences("shared",MODE_PRIVATE);
+        boolean firstTime=shared.getBoolean("firstStart",true);
+        if(firstTime)
+        {
+            viewPager =findViewById(R.id.viewPager);
+
+            FragmentsAdapter introAdaptor= new FragmentsAdapter(getSupportFragmentManager());
+            viewPager.setAdapter(introAdaptor);
+
+        }
         repository = new Repository(getApplication());
 
         Toolbar toolbar = findViewById(R.id.toolbar);
