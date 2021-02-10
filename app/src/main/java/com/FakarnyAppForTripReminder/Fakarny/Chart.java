@@ -1,4 +1,4 @@
-package com.example.tripreminder;
+package com.FakarnyAppForTripReminder.Fakarny;
 
 
 
