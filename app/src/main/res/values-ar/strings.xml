@@ -146,5 +146,8 @@
     <string name="mshwary"> فكّرني</string>
     <string name="add_note">إضافة مذكرة</string>
     <string name="new_trip">رحلة جديدة</string>
+    <string name="demo_start_point">لإضافه نقطة البداية</string>
+    <string name="demo_add">لإضافه رحلة جديدة</string>
+    <string name="chart_info_textVi">2020</string>
 
 </resources>

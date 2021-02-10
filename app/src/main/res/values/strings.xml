@@ -145,4 +145,7 @@
     <string name="msg_alertDialog">Is this what you intended to do?</string>
     <string name="add_note">Add Note</string>
     <string name="new_trip">New Trip</string>
+    <string name="demo_start_point">To set start point</string>
+    <string name="demo_add">To Add new trip</string>
+    <string name="chart_info_textVi">2020</string>
 </resources>

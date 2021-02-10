@@ -101,6 +101,20 @@ public class HistoryMaps extends FragmentActivity implements OnMapReadyCallback,
         LatLng polylineStartLatLng = null;
         LatLng polylineEndLatLng = null;
 
+        Log.i("map", "route of 0 Dist Valu => "+route.get(shortestRouteIndex).getDistanceValue());
+        Log.i("map", "route of 0 Dist Text => "+route.get(shortestRouteIndex).getDistanceText());
+        Log.i("map", "route of 0 Dura Valu => "+route.get(shortestRouteIndex).getDurationValue());
+        Log.i("map", "route of 0 Dura Text => "+route.get(shortestRouteIndex).getDurationText());
+        Log.i("map", "route of 0 Name => "+route.get(shortestRouteIndex).getName());
+        Log.i("map", "route of 0 PoluLine => "+route.get(shortestRouteIndex).getPolyline());
+        Log.i("map", "route of 0 Length => "+route.get(shortestRouteIndex).getLength());
+        Log.i("map", "route of 0 Warning => "+route.get(shortestRouteIndex).getWarning());
+
+        //Log.i("map", "route of 0 Lat Long => "+route.get(shortestRouteIndex).());
+
+        Log.i("map", "route of 1 Dist Valu => "+route.get(1).getDistanceValue());
+        Log.i("map", "route of 1 Dura Valu => "+route.get(1).getDurationValue());
+
 
         if (j > 8)
             j = 0;
@@ -147,7 +161,11 @@ public class HistoryMaps extends FragmentActivity implements OnMapReadyCallback,
             end = new LatLng(Double.parseDouble(s[0]), Double.parseDouble(s[1]));
             Findroutes(start, end);
         }
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(start, 6f));
+        if(start != null){
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(start, 6f));  
+        } else {
+            Toast.makeText(this, "No DONE trips ", Toast.LENGTH_SHORT).show();
+        }
         Log.i("map", "onMapReadyyy");
     }
 
