@@ -208,7 +208,7 @@ public class AlarmDialog extends AppCompatActivity {
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, PRIMARY_CHANNEL_ID)
                 .setSmallIcon(R.mipmap.trip_icon_round)
-                .setContentTitle("Reminder for Trip " + tripData.getTripName())
+                .setContentTitle(context.getResources().getString(R.string.trip_alarm_title) + tripData.getTripName())
                 .setContentText(tripData.getEnaPoint())
                 .setContentIntent(contentPendingIntent)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)

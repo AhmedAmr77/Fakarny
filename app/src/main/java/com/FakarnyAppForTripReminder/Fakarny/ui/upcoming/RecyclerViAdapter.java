@@ -108,8 +108,8 @@ public class RecyclerViAdapter extends RecyclerView.Adapter<RecyclerViAdapter.Vi
         holder.textViewTripTime.setText(current.getTime());
         holder.textViewTripFrom.setText(current.getStartPoint());
         holder.textViewTripTo.setText(current.getEnaPoint());
-        holder.textViewRepeat.setText(current.getRepeatData());
-        holder.textViewTripWay.setText(current.getWayData());
+        holder.textViewRepeat.setText(checkStringRpt(current.getRepeatData()));
+        holder.textViewTripWay.setText(checkString(current.getWayData()));
 
         holder.btnTripStart.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -152,6 +152,32 @@ public class RecyclerViAdapter extends RecyclerView.Adapter<RecyclerViAdapter.Vi
                 context.startActivity(intent);
             }
         });
+    }
+
+    String checkString(String s){
+        switch (s){
+            case "One Way Trip":
+                return context.getResources().getString(R.string.One_Way_Trip);
+            case "Round Trip":
+                return context.getResources().getString(R.string.Round_Trip);
+            default:
+                return null;
+        }
+    }
+
+    String checkStringRpt(String s){
+        switch (s){
+            case "No Repeat":
+                return context.getResources().getString(R.string.No_Repeat);
+            case "Repeat Daily":
+                return context.getResources().getString(R.string.Repeat_Daily);
+            case "Repeat Weekly":
+                return context.getResources().getString(R.string.Repeat_Weekly);
+            case "Repeat Monthly":
+                return context.getResources().getString(R.string.Repeat_Monthly);
+            default:
+                return null;
+        }
     }
 
     public void setValues(List<TripData> list) {

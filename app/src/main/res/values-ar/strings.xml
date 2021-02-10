@@ -151,5 +151,7 @@
     <string name="chart_info_textVi">2020</string>
     <string name="finish">"انهاء "</string>
     <string name="skip">تخطي</string>
+    <string name="time_card">الساعة</string>
+    <string name="trip_alarm_title">"تذكير لرحلة "</string>
 
 </resources>

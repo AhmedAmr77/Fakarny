@@ -51,8 +51,8 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
         holder.txtStates.setText(current.getState());
         holder.fromVal.setText(current.getStartPoint());
         holder.toVal.setText(current.getEnaPoint());
-        holder.typeVal.setText(current.getWayData());
-        holder.dateVal.setText(current.getDate()+" At "+current.getTime());
+        holder.typeVal.setText(checkString(current.getWayData()));
+        holder.dateVal.setText(current.getDate()+"  "+ context.getResources().getString(R.string.time_card) +"  "+current.getTime());
         holder.constraintLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -61,6 +61,17 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
                 context.startActivity(intent);
             }
         });
+    }
+
+    String checkString(String s){
+        switch (s){
+            case "One Way Trip":
+                return context.getResources().getString(R.string.One_Way_Trip);
+            case "Round Trip":
+                return context.getResources().getString(R.string.Round_Trip);
+            default:
+                return null;
+        }
     }
 
     @Override

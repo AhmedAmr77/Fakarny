@@ -150,4 +150,6 @@
     <string name="chart_info_textVi">2020</string>
     <string name="finish"><![CDATA[Finish >>]]></string>
     <string name="skip">Skip</string>
+    <string name="time_card">At</string>
+    <string name="trip_alarm_title">Reminder for Trip</string>
 </resources>

@@ -35,8 +35,8 @@ import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 public class NewTripActivity extends AppCompatActivity implements View.OnClickListener {
-    private String[] dataRepeat;
-    private String[] dataWay;
+    private String[] dataRepeat, dataRepeatAr;
+    private String[] dataWay, dataWayAr;
     private final static int START_PLACE = 33;
     private final static int END_PLACE = 55;
     private TextView textDate, textTime, startPlace, endPlace;
@@ -64,8 +64,11 @@ public class NewTripActivity extends AppCompatActivity implements View.OnClickLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_trip);
 
-        dataRepeat = new String[]{getResources().getString(R.string.No_Repeat), getResources().getString(R.string.Repeat_Daily), getResources().getString(R.string.Repeat_Weekly), getResources().getString(R.string.Repeat_Monthly)};
-        dataWay = new String[]{getResources().getString(R.string.One_Way_Trip), getResources().getString(R.string.Round_Trip)};
+        dataRepeat = new String[]{"No Repeat", "Repeat Daily", "Repeat Weekly", "Repeat Monthly"};
+        dataWay = new String[]{"One Way Trip", "Round Trip"};
+
+        dataRepeatAr = new String[]{getResources().getString(R.string.No_Repeat), getResources().getString(R.string.Repeat_Daily), getResources().getString(R.string.Repeat_Weekly), getResources().getString(R.string.Repeat_Monthly)};
+        dataWayAr = new String[]{getResources().getString(R.string.One_Way_Trip), getResources().getString(R.string.Round_Trip)};
 
         if (!Places.isInitialized()) {
             Places.initialize(getApplicationContext(), "AIzaSyDnbtBwgXmFh-e3jDYu3ffqDpOEOb8vU3Y", Locale.US);
@@ -74,8 +77,8 @@ public class NewTripActivity extends AppCompatActivity implements View.OnClickLi
         calendar = Calendar.getInstance();
         initFindView();
         initOnAction();
-        repeatAd = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, dataRepeat);
-        wayAd = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, dataWay);
+        repeatAd = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, dataRepeatAr);
+        wayAd = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, dataWayAr);
         repeatAd.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         wayAd.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         repeat.setAdapter(repeatAd);
@@ -167,9 +170,21 @@ public class NewTripActivity extends AppCompatActivity implements View.OnClickLi
         textTime.setText(new SimpleDateFormat("HH:mm").format(date));
 
 
-        int posR = repeatAd.getPosition(finalRepeat);
+        int posR = 0;
+        for (int i = 0; i < dataRepeat.length; i++){
+            if(data.getRepeatData().equals(dataRepeat[i])){
+                posR = i;
+                break;
+            }
+        }
         repeat.setSelection(posR);
-        int posW = wayAd.getPosition(finalWay);
+        int posW = 0;
+        for (int i = 0; i < dataRepeat.length; i++){
+            if(data.getRepeatData().equals(dataRepeat[i])){
+                posW = i;
+                break;
+            }
+        }
         way.setSelection(posW);
         super.onRestoreInstanceState(savedInstanceState);
     }
@@ -291,9 +306,21 @@ public class NewTripActivity extends AppCompatActivity implements View.OnClickLi
         endPlace.setText(data.getEnaPoint());
         textDate.setText(data.getDate());
         textTime.setText(data.getTime());
-        int posR = repeatAd.getPosition(data.getRepeatData());
+        int posR = 0;
+        for (int i = 0; i < dataRepeat.length; i++){
+            if(data.getRepeatData().equals(dataRepeat[i])){
+                posR = i;
+                break;
+            }
+        }
         repeat.setSelection(posR);
-        int posW = wayAd.getPosition(data.getWayData());
+        int posW = 0;
+        for (int i = 0; i < dataRepeat.length; i++){
+            if(data.getRepeatData().equals(dataRepeat[i])){
+                posW = i;
+                break;
+            }
+        }
         way.setSelection(posW);
     }
 
