@@ -3,8 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#050955"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".FragmentFive">
+    tools:context=".Demo.FragmentFive">
 
     <ImageView
         android:id="@+id/imageView2"

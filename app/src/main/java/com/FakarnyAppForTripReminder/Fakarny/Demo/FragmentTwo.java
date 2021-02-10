@@ -31,7 +31,7 @@ public class FragmentTwo extends Fragment {
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                viewPager.setCurrentItem(3);
+                viewPager.setCurrentItem(2);
             }
         });
         back=view.findViewById(R.id.back2);
