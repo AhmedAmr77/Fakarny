@@ -84,7 +84,7 @@ public class AlarmDialog extends AppCompatActivity {
     }
 
     public void showDialogWithSound(TripData tripData) {
-        player = MediaPlayer.create(AlarmDialog.this, R.raw.fail);
+        player = MediaPlayer.create(AlarmDialog.this, R.raw.let);
         player.setLooping(true);
         player.start();
 
