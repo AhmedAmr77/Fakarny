@@ -149,5 +149,7 @@
     <string name="demo_start_point">لإضافه نقطة البداية</string>
     <string name="demo_add">لإضافه رحلة جديدة</string>
     <string name="chart_info_textVi">2020</string>
+    <string name="finish">"انهاء "</string>
+    <string name="skip">تخطي</string>
 
 </resources>

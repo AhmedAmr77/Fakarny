@@ -1,5 +1,6 @@
 package com.FakarnyAppForTripReminder.Fakarny;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
@@ -14,6 +15,10 @@ public class DemoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_demo);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.hide();
+        }
         SharedPreferences shared =getSharedPreferences("shared",MODE_PRIVATE);
         boolean firstTime=shared.getBoolean("firstStart",true);
         if(firstTime)

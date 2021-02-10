@@ -148,4 +148,6 @@
     <string name="demo_start_point">To set start point</string>
     <string name="demo_add">To Add new trip</string>
     <string name="chart_info_textVi">2020</string>
+    <string name="finish"><![CDATA[Finish >>]]></string>
+    <string name="skip">Skip</string>
 </resources>
