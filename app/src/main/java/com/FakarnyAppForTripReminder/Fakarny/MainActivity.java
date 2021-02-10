@@ -34,24 +34,12 @@ public class MainActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private Repository repository;
-    ViewPager viewPager;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        SharedPreferences shared =getSharedPreferences("shared",MODE_PRIVATE);
-        boolean firstTime=shared.getBoolean("firstStart",true);
-        if(firstTime)
-        {
-            viewPager =findViewById(R.id.viewPager);
-
-            FragmentsAdapter introAdaptor= new FragmentsAdapter(getSupportFragmentManager());
-            viewPager.setAdapter(introAdaptor);
-
-        }
         repository = new Repository(getApplication());
 
         Toolbar toolbar = findViewById(R.id.toolbar);

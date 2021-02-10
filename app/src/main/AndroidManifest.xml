@@ -19,12 +19,13 @@
         android:roundIcon="@mipmap/trip_icon_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TripReminder">
-        <activity android:name=".Chart"></activity>
+        <activity android:name=".DemoActivity"></activity>
+        <activity android:name=".Chart" />
 
         <receiver
             android:name=".AlarmReceiver"
             android:enabled="true"
-            android:exported="true"></receiver>
+            android:exported="true" />
 
         <activity
             android:name=".ShowNotes"
@@ -41,7 +42,7 @@
         <activity
             android:name=".AlarmDialog"
             android:excludeFromRecents="true"
-            android:theme="@style/Theme.AppCompat.Transparent.NoActionBar"></activity>
+            android:theme="@style/Theme.AppCompat.Transparent.NoActionBar" />
         <activity
             android:name=".HistoryMaps"
             android:label="@string/title_activity_history_maps" />
