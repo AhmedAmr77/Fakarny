@@ -1,5 +1,6 @@
 package com.FakarnyAppForTripReminder.Fakarny;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 
@@ -25,6 +26,9 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
 public class Chart extends AppCompatActivity {
 
@@ -38,6 +42,8 @@ public class Chart extends AppCompatActivity {
     private BarChart chart;
     TextView xAxisName, yAxisName, monthTextVi;
 
+    List<HistoryTripInfo> historyTripInfoList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +51,9 @@ public class Chart extends AppCompatActivity {
 
         chart = (BarChart) findViewById(R.id.chart);
         monthTextVi = findViewById(R.id.monthTextVi);
+
+        Intent i = getIntent();
+        historyTripInfoList = (List<HistoryTripInfo>) i.getSerializableExtra("histInfo");
 
         BarData data = createChartData();
         configureChartAppearance();
@@ -57,16 +66,31 @@ public class Chart extends AppCompatActivity {
         chart.invalidate();
     }
 
+    int convertDate(long l){
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(l);
+        return calendar.get(Calendar.MONTH);
+    }
+
+     float setMonthData(int m){
+        float current = 0.0f;
+        for(HistoryTripInfo currentTrip : historyTripInfoList){
+            if (m==convertDate(currentTrip.getTripTime()))
+                current += (float)(currentTrip.getTripDistance());
+        }
+        return (current/1000);
+    }
+
     private BarData createChartData() {
         ArrayList<BarEntry> values = new ArrayList<>();
 
-        for (int i = 0; i < MAX_X_VALUE; i++) {
+        for (int i = 0; i < Months.length; i++) {
             float x = i;
-            float y = i+1 * 2f;
+            float y = setMonthData(i);
             values.add(new BarEntry(x, y));
         }
 
-        monthTextVi.setText("Jan" + "  " + "2020");
+        //monthTextVi.setText("" + "" + "2020");
 
         BarDataSet set1 = new BarDataSet(values, SET_LABEL);
 
@@ -126,5 +150,7 @@ public class Chart extends AppCompatActivity {
         axisRight.setAxisMinimum(0);
  */
     }
+
+
 }
 

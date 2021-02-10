@@ -3,8 +3,10 @@ package com.FakarnyAppForTripReminder.Fakarny;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.Observer;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import com.directions.route.AbstractRouting;
@@ -24,6 +26,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,6 +37,8 @@ public class HistoryMaps extends FragmentActivity implements OnMapReadyCallback,
 
     Repository repository;
     List<TripData> historyTrips;
+    List<HistoryTripInfo> historyTripInfoList;
+    int historyCounter=0;
 
     int BLACK = 0xFF000000;
     int GRAY = 0xFF888888;
@@ -60,6 +65,9 @@ public class HistoryMaps extends FragmentActivity implements OnMapReadyCallback,
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
+
+        historyTripInfoList = new ArrayList<>();
+
         //data
         repository = new Repository(getApplication());
         repository.getDoneHistory().observeForever(new Observer<List<TripData>>() {
@@ -126,6 +134,10 @@ public class HistoryMaps extends FragmentActivity implements OnMapReadyCallback,
         endMarker.title(historyTrips.get(name).getTripName());
         mMap.addMarker(endMarker);
         name++;
+
+        setHistoryTripInfoList(historyTrips.get(historyCounter), route.get(shortestRouteIndex).getDistanceValue(), route.get(shortestRouteIndex).getDurationValue());
+        historyCounter++;
+
         Log.i("map", "poly end");
     }
 
@@ -174,4 +186,16 @@ public class HistoryMaps extends FragmentActivity implements OnMapReadyCallback,
         Log.i("map", "FINDROUTES");
     }
 
+    public void displayChart(View view) {
+        Toast.makeText(this, "CHARTTTT", Toast.LENGTH_SHORT).show();
+        Intent i = new Intent(this, Chart.class);
+        i.putExtra("histInfo", (Serializable) historyTripInfoList);
+        startActivity(i);
+    }
+
+    void setHistoryTripInfoList(TripData current, int distance, int duration){
+        HistoryTripInfo historyTripInfo;
+        historyTripInfo = new HistoryTripInfo(current.getTripName(), current.getAlarmTime(), distance, duration);
+        historyTripInfoList.add(historyTripInfo);
+    }
 }
