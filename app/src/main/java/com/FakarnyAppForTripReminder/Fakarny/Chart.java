@@ -32,12 +32,9 @@ import java.util.List;
 
 public class Chart extends AppCompatActivity {
 
-    private static final int MAX_X_VALUE = 12;
-    private static final int MAX_Y_VALUE = 1500;
-    private static final int MIN_Y_VALUE = 0;
-    private static final String SET_LABEL = "Distance per Year";
-    private static final String[] DAYS = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30"};
-    private static final String[] Months = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
+    private final String SET_LABEL = "Distance per Year";
+    //private static final String[] DAYS = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30"};
+    private String[] Months;
     ArrayList<String> xEntrys = new ArrayList<>();
     private BarChart chart;
     TextView xAxisName, yAxisName, monthTextVi;
@@ -54,7 +51,7 @@ public class Chart extends AppCompatActivity {
 
         Intent i = getIntent();
         historyTripInfoList = (List<HistoryTripInfo>) i.getSerializableExtra("histInfo");
-
+        Months = new String[]{getApplicationContext().getResources().getString(R.string.jan), getApplicationContext().getResources().getString(R.string.feb), getApplicationContext().getResources().getString(R.string.mar), getApplicationContext().getResources().getString(R.string.april), getApplicationContext().getResources().getString(R.string.may), getApplicationContext().getResources().getString(R.string.jun), getApplicationContext().getResources().getString(R.string.jul), getApplicationContext().getResources().getString(R.string.aug), getApplicationContext().getResources().getString(R.string.sep), getApplicationContext().getResources().getString(R.string.oct), getApplicationContext().getResources().getString(R.string.nov), getApplicationContext().getResources().getString(R.string.dec)};
         BarData data = createChartData();
         configureChartAppearance();
         prepareChartData(data);
@@ -90,7 +87,7 @@ public class Chart extends AppCompatActivity {
             values.add(new BarEntry(x, y));
         }
 
-        //monthTextVi.setText("" + "" + "2020");
+        monthTextVi.setText(getApplicationContext().getResources().getString(R.string.chart_description));
 
         BarDataSet set1 = new BarDataSet(values, SET_LABEL);
 

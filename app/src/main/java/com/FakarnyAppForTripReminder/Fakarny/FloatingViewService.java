@@ -185,32 +185,6 @@ public class FloatingViewService extends Service implements View.OnClickListener
 
     }
 
-    /*
-        void addItemsNotesList(){
-            notesList = new ArrayList<>();
-            notesList.add("Vege");
-            notesList.add("meat");
-            notesList.add("water");
-            notesList.add("ATM");
-            notesList.add("Pharm");
-            notesList.add("car");
-            notesList.add("beaks");
-            notesList.add("Vege");
-            notesList.add("meat");
-            notesList.add("water");
-            notesList.add("ATM");
-            notesList.add("Pharm");
-            notesList.add("car");
-            notesList.add("beaks");
-            notesList.add("Vege");
-            notesList.add("meat");
-            notesList.add("water");
-            notesList.add("ATM");
-            notesList.add("Pharm");
-            notesList.add("car");
-            notesList.add("beaks");
-        }
-    */
     private void createCheckBox(List<NoteData> notesList) {
         if (notesList.size() == 0) {
             Toast.makeText(this, "There is no notes", Toast.LENGTH_LONG).show();
@@ -273,5 +247,3 @@ public class FloatingViewService extends Service implements View.OnClickListener
         repository.update(tripData);
     }
 }
-
-//to open note from any where and when touch anywhere close note ...  TRY two activity: 1-tranceparent 2-widet.  (THINK BEFORE DO IT)

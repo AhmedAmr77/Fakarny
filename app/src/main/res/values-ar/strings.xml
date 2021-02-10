@@ -153,5 +153,18 @@
     <string name="skip">تخطي</string>
     <string name="time_card">الساعة</string>
     <string name="trip_alarm_title">"تذكير لرحلة "</string>
+    <string name="chart_description">مسافة كيلومنر / الشهر</string>
+    <string name="jan">يناير</string>
+    <string name="feb">فبراير</string>
+    <string name="mar">مارس</string>
+    <string name="april">ابريل</string>
+    <string name="may">مايو</string>
+    <string name="jun">يونيو</string>
+    <string name="jul">يوليو</string>
+    <string name="aug">أغسطس</string>
+    <string name="sep">سبتمبر</string>
+    <string name="oct">اكتوبر</string>
+    <string name="nov">نوفمبر</string>
+    <string name="dec">ديسمبر</string>
 
 </resources>

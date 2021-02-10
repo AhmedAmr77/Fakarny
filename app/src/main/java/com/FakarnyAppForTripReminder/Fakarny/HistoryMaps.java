@@ -106,12 +106,6 @@ public class HistoryMaps extends FragmentActivity implements OnMapReadyCallback,
         Log.i("map", "route of 0 Length => "+route.get(shortestRouteIndex).getLength());
         Log.i("map", "route of 0 Warning => "+route.get(shortestRouteIndex).getWarning());
 
-        //Log.i("map", "route of 0 Lat Long => "+route.get(shortestRouteIndex).());
-
-        Log.i("map", "route of 1 Dist Valu => "+route.get(1).getDistanceValue());
-        Log.i("map", "route of 1 Dura Valu => "+route.get(1).getDurationValue());
-
-
         if (j > 8)
             j = 0;
         polyOptions.color(color[j]);
