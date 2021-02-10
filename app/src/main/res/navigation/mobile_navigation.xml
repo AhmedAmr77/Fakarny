@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/nav_upcoming"
-        android:name="com.example.tripreminder.ui.upcoming.UpcomingFragment"
+        android:name="com.FakarnyAppForTripReminder.Fakarny.ui.upcoming.UpcomingFragment"
         android:label="@string/upcomingFrag"
         tools:layout="@layout/fragment_upcoming">
         <action
@@ -21,7 +21,7 @@
 
     <fragment
         android:id="@+id/nav_history"
-        android:name="com.example.tripreminder.ui.history.HistoryFragment"
+        android:name="com.FakarnyAppForTripReminder.Fakarny.ui.history.HistoryFragment"
         android:label="@string/history_Frag"
         tools:layout="@layout/fragment_history">
         <action

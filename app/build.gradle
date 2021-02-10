@@ -9,7 +9,7 @@ android {
     defaultConfig {
         multiDexEnabled true
 
-        applicationId "com.example.tripreminder"
+        applicationId "com.FakarnyAppForTripReminder.Fakarny"
         minSdkVersion 17
         targetSdkVersion 30
         versionCode 1

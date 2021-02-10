@@ -8,6 +8,35 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:499722924936:android:bd7149d3a7c54a21ee003d",
+        "android_client_info": {
+          "package_name": "com.FakarnyAppForTripReminder.Fakarny"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "499722924936-ph4fbloq18ahp7q9boejhlqbipsfkfrl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCFkAiJQWYaJXL3wD09fRAFcltPKMAy3AM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "499722924936-n78f1rcend6n9ddf53n6fbt2v6nbeg00.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:499722924936:android:09c8e3ffe77a46e3ee003d",
         "android_client_info": {
           "package_name": "com.example.prototype"
@@ -28,7 +57,7 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "499722924936-ph4fbloq18ahp7q9boejhlqbipsfkfrl.apps.googleusercontent.com",
+              "client_id": "499722924936-n78f1rcend6n9ddf53n6fbt2v6nbeg00.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
@@ -57,7 +86,7 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "499722924936-ph4fbloq18ahp7q9boejhlqbipsfkfrl.apps.googleusercontent.com",
+              "client_id": "499722924936-n78f1rcend6n9ddf53n6fbt2v6nbeg00.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
@@ -86,7 +115,7 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "499722924936-ph4fbloq18ahp7q9boejhlqbipsfkfrl.apps.googleusercontent.com",
+              "client_id": "499722924936-n78f1rcend6n9ddf53n6fbt2v6nbeg00.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
