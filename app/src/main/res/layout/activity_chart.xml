@@ -22,6 +22,5 @@
         android:layout_marginStart="20dp"
         android:layout_weight="0.5"
         android:text="@string/chart_info_textVi" />
-    />
 
 </LinearLayout>

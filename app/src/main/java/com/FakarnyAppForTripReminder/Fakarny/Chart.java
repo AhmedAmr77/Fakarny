@@ -1,7 +1,5 @@
 package com.FakarnyAppForTripReminder.Fakarny;
 
-
-
 import android.graphics.Color;
 import android.os.Bundle;
 
@@ -29,7 +27,6 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-
 public class Chart extends AppCompatActivity {
 
     private static final int MAX_X_VALUE = 12;
@@ -41,7 +38,6 @@ public class Chart extends AppCompatActivity {
     ArrayList<String> xEntrys = new ArrayList<>();
     private BarChart chart;
     TextView xAxisName, yAxisName, monthTextVi;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +51,6 @@ public class Chart extends AppCompatActivity {
         configureChartAppearance();
         prepareChartData(data);
     }
-
 
     private void prepareChartData(BarData data) {
         data.setValueTextSize(12f);
@@ -132,5 +127,5 @@ public class Chart extends AppCompatActivity {
         axisRight.setAxisMinimum(0);
  */
     }
-
 }
+

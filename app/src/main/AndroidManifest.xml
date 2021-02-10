@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.FakarnyAppForTripReminder.Fakarny">
-
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
          Google Maps Android API v2, but you must specify either coarse or fine
@@ -13,22 +12,22 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
+        android:name=".ApplicationR"
         android:allowBackup="true"
         android:icon="@mipmap/trip_icon_round"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/trip_icon_round"
-        android:name="com.FakarnyAppForTripReminder.Fakarny.ApplicationR"
         android:supportsRtl="true"
         android:theme="@style/Theme.TripReminder">
+        <activity android:name=".Chart"></activity>
 
         <receiver
-            android:name="com.FakarnyAppForTripReminder.Fakarny.AlarmReceiver"
+            android:name=".AlarmReceiver"
             android:enabled="true"
-            android:exported="true">
-        </receiver>
+            android:exported="true"></receiver>
 
         <activity
-            android:name="com.FakarnyAppForTripReminder.Fakarny.ShowNotes"
+            android:name=".ShowNotes"
             android:label="@string/notes"
             android:theme="@style/Theme.AppCompat.Light.Dialog.Alert" />
 
@@ -40,36 +39,32 @@
             android:value="@integer/google_play_services_version" />
 
         <activity
+            android:name=".AlarmDialog"
             android:excludeFromRecents="true"
-            android:name="com.FakarnyAppForTripReminder.Fakarny.AlarmDialog"
-            android:theme="@style/Theme.AppCompat.Transparent.NoActionBar">
-        </activity>
-
+            android:theme="@style/Theme.AppCompat.Transparent.NoActionBar"></activity>
         <activity
-            android:name="com.FakarnyAppForTripReminder.Fakarny.HistoryMaps"
+            android:name=".HistoryMaps"
             android:label="@string/title_activity_history_maps" />
-
-        <activity android:name="com.FakarnyAppForTripReminder.Fakarny.AddNote"
-                  android:label="@string/add_note"/>
-
-        <activity android:name="com.FakarnyAppForTripReminder.Fakarny.SplashScreen">
+        <activity
+            android:name=".AddNote"
+            android:label="@string/add_note" />
+        <activity android:name=".SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name="com.FakarnyAppForTripReminder.Fakarny.NewTripActivity"
-            android:label="@string/new_trip"/>
-
         <activity
-            android:name="com.FakarnyAppForTripReminder.Fakarny.MainActivity"
+            android:name=".NewTripActivity"
+            android:label="@string/new_trip" />
+        <activity
+            android:name=".MainActivity"
             android:label="@string/app_name"
             android:theme="@style/Theme.TripReminder.NoActionBar" />
 
         <service
-            android:name="com.FakarnyAppForTripReminder.Fakarny.FloatingViewService"
+            android:name=".FloatingViewService"
             android:enabled="true"
             android:exported="false" />
     </application>
