@@ -1,6 +1,7 @@
 package com.FakarnyAppForTripReminder.Fakarny;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -33,9 +34,13 @@ public class SplashScreen extends AppCompatActivity {
             actionBar.hide();
         }
 
-
-        intent = new Intent(this, MainActivity.class);
-
+        SharedPreferences shared = getSharedPreferences("shared", MODE_PRIVATE);
+        boolean firstTime = shared.getBoolean("firstStart", true);
+        if (!firstTime) {
+            intent = new Intent(this, MainActivity.class);
+        } else {
+            intent = new Intent(this, DemoActivity.class);
+        }
         mAuth = FirebaseAuth.getInstance();
         authStateListener = firebaseAuth -> {
             FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
@@ -66,7 +71,7 @@ public class SplashScreen extends AppCompatActivity {
 
         if (requestCode == RC_SIGN_IN) {
             if (resultCode == RESULT_OK) {
-                Repository repository =new Repository(getApplication());
+                Repository repository = new Repository(getApplication());
                 repository.initDatabase();
                 startActivity(intent);
                 finish();

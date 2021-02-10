@@ -37,6 +37,7 @@ public class FragmentNine extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), MainActivity.class);
                 startActivity(intent);
+                getActivity().finish();
             }
         });
         back=view.findViewById(R.id.back9);

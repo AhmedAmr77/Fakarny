@@ -19,10 +19,9 @@ public class DemoActivity extends AppCompatActivity {
         if(firstTime)
         {
             viewPager =findViewById(R.id.viewPager);
-
             FragmentsAdapter introAdaptor= new FragmentsAdapter(getSupportFragmentManager());
             viewPager.setAdapter(introAdaptor);
-
+            shared.edit().putBoolean("firstStart",false).apply();
         }
     }
 }
