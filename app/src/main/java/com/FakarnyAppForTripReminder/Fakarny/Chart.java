@@ -5,39 +5,27 @@ import android.graphics.Color;
 import android.os.Bundle;
 
 import com.github.mikephil.charting.charts.BarChart;
-import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
-import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 
 import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
-import android.view.Gravity;
-import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 public class Chart extends AppCompatActivity {
 
-    private final String SET_LABEL = "Distance per Year";
-    //private static final String[] DAYS = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30"};
     private String[] Months;
-    ArrayList<String> xEntrys = new ArrayList<>();
     private BarChart chart;
-    TextView xAxisName, yAxisName, monthTextVi;
+    TextView monthTextVi;
 
     List<HistoryTripInfo> historyTripInfoList;
 
@@ -46,7 +34,7 @@ public class Chart extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chart);
 
-        chart = (BarChart) findViewById(R.id.chart);
+        chart = findViewById(R.id.chart);
         monthTextVi = findViewById(R.id.monthTextVi);
 
         Intent i = getIntent();
@@ -89,7 +77,7 @@ public class Chart extends AppCompatActivity {
 
         monthTextVi.setText(getApplicationContext().getResources().getString(R.string.chart_description));
 
-        BarDataSet set1 = new BarDataSet(values, SET_LABEL);
+        BarDataSet set1 = new BarDataSet(values, "");
 
         set1.setColor(Color.CYAN);
         //set1.setFormSize(25f);
@@ -109,6 +97,7 @@ public class Chart extends AppCompatActivity {
         chart.setDrawValueAboveBar(false);
         //chart.setPinchZoom(false);
         //chart.setDoubleTapToZoomEnabled(false);
+        chart.setScaleEnabled(false);
 
         XAxis xAxis = chart.getXAxis();
         xAxis.setValueFormatter(new ValueFormatter() {
@@ -117,37 +106,15 @@ public class Chart extends AppCompatActivity {
                 return Months[(int) value];
             }
         });
-        //xAxis.setGranularity(6f);
-        //chart.getAxisLeft().setDrawGridLines(false);
-        //chart.getAxisRight().setDrawGridLines(false);
+        xAxis.setLabelCount(12);
         chart.getAxisRight().setEnabled(false);
-        //chart.getAxisLeft().setEnabled(true);
         chart.getXAxis().setDrawGridLines(false);
         chart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
-
 
         chart.animateY(1500);   // add a nice and smooth animation
 
         chart.getLegend().setEnabled(false);  //hide text under chart
 
-
-        //chart.setTouchEnabled(false);
-        //chart.setDoubleTapToZoomEnabled(true);
-        //chart.getXAxis().setEnabled(true);
-        //chart.invalidate();  //to call from non ui thread
-
-        //chart.getAxisLeft().setDrawLabels(false);
-/*
-        YAxis axisLeft = chart.getAxisLeft();
-        //axisLeft.setGranularity(10f);
-        //axisLeft.setAxisMinimum(0);
-
-        YAxis axisRight = chart.getAxisRight();
-        axisRight.setGranularity(10f);
-        axisRight.setAxisMinimum(0);
- */
     }
-
-
 }
 

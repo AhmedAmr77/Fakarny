@@ -174,5 +174,7 @@
     <string name="edit_ms">"هل تريد تعديل الرحله ؟ "</string>
     <string name="edit">تعديل</string>
     <string name="delete_ms">هل أنت متأكد أنك تريد حذف هذه الرحلة؟</string>
+    <string name="history_trip_map_start">البداية</string>
+    <string name="history_trip_map_end">النهاية</string>
 
 </resources>

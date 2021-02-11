@@ -3,6 +3,7 @@ package com.FakarnyAppForTripReminder.Fakarny;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.Observer;
 
+import android.app.Application;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -120,12 +121,13 @@ public class HistoryMaps extends FragmentActivity implements OnMapReadyCallback,
 
         MarkerOptions startMarker = new MarkerOptions();
         startMarker.position(polylineStartLatLng);
-        startMarker.title("Start : "+historyTrips.get(name).getTripName());
+        startMarker.title(getResources().getString(R.string.history_trip_map_start) + " : "+historyTrips.get(name).getTripName());
+        Toast.makeText(this, getResources().getString(R.string.history_trip_map_start)+"", Toast.LENGTH_SHORT).show();
         mMap.addMarker(startMarker);
         //Add Marker on route ending position
         MarkerOptions endMarker = new MarkerOptions();
         endMarker.position(polylineEndLatLng);
-        endMarker.title("End : "+historyTrips.get(name).getTripName());
+        endMarker.title(getResources().getString(R.string.history_trip_map_end) + " : "+historyTrips.get(name).getTripName());
         mMap.addMarker(endMarker);
         name++;
 
@@ -181,7 +183,6 @@ public class HistoryMaps extends FragmentActivity implements OnMapReadyCallback,
     }
 
     public void displayChart(View view) {
-        Toast.makeText(this, "CHARTTTT", Toast.LENGTH_SHORT).show();
         Intent i = new Intent(this, Chart.class);
         i.putExtra("histInfo", (Serializable) historyTripInfoList);
         startActivity(i);
