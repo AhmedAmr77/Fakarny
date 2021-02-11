@@ -117,6 +117,7 @@ public class Repository {
         data.setTripName(tripData.getTripName());
         data.setRepeatData(tripData.getRepeatData());
         data.setWayData(tripData.getWayData());
+        data.setRepeatPlus(tripData.getRepeatPlus());
         data.setEndAlarmTime(tripData.getAlarmTime());
         data.setState("upcoming");
         insert(data);
