@@ -241,6 +241,8 @@ public class NewTripActivity extends AppCompatActivity implements View.OnClickLi
                                     @Override
                                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
                                         Date date1 = new Date();
+                                        backHour=selectedHour;
+                                        backmint=selectedMinute;
                                         date1.setHours(backHour);
                                         date1.setMinutes(backmint);
                                         endTime = new SimpleDateFormat("HH:mm").format(date1);
