@@ -123,8 +123,8 @@ public class NewTripActivity extends AppCompatActivity implements View.OnClickLi
         outState.putSerializable("TripData", data);
         outState.putString("startLatLng", startLatLng);
         outState.putString("endLatLng", endLatLng);
-        outState.putString("endDate",endDate);
-        outState.putString("endTime",endTime);
+        outState.putString("endDate", endDate);
+        outState.putString("endTime", endTime);
         super.onSaveInstanceState(outState);
     }
 
@@ -155,8 +155,8 @@ public class NewTripActivity extends AppCompatActivity implements View.OnClickLi
         finalRepeat = savedInstanceState.getString("finalRepeat", finalRepeat);
         startLatLng = savedInstanceState.getString("startLatLng", startLatLng);
         endLatLng = savedInstanceState.getString("endLatLng", endLatLng);
-        endDate=savedInstanceState.getString("endDate",endDate);
-        endTime=savedInstanceState.getString("endTime",endTime);
+        endDate = savedInstanceState.getString("endDate", endDate);
+        endTime = savedInstanceState.getString("endTime", endTime);
         data = (TripData) savedInstanceState.getSerializable("TripData");
         startPlace.setText(finalStartAddress);
         endPlace.setText(finalEndAddress);
@@ -170,22 +170,26 @@ public class NewTripActivity extends AppCompatActivity implements View.OnClickLi
         textTime.setText(new SimpleDateFormat("HH:mm").format(date));
 
 
-        int posR = 0;
-        for (int i = 0; i < dataRepeat.length; i++){
-            if(data.getRepeatData().equals(dataRepeat[i])){
-                posR = i;
-                break;
+        if (finalRepeat != null) {
+            int posR = 0;
+            for (int i = 0; i < dataRepeat.length; i++) {
+                if (finalRepeat.equals(dataRepeat[i])) {
+                    posR = i;
+                    break;
+                }
             }
+            repeat.setSelection(posR);
         }
-        repeat.setSelection(posR);
-        int posW = 0;
-        for (int i = 0; i < dataRepeat.length; i++){
-            if(data.getRepeatData().equals(dataRepeat[i])){
-                posW = i;
-                break;
+        if (finalWay != null) {
+            int posW = 0;
+            for (int i = 0; i < dataWay.length; i++) {
+                if (data.getRepeatData().equals(dataWay[i])) {
+                    posW = i;
+                    break;
+                }
             }
+            way.setSelection(posW);
         }
-        way.setSelection(posW);
         super.onRestoreInstanceState(savedInstanceState);
     }
 
@@ -241,8 +245,8 @@ public class NewTripActivity extends AppCompatActivity implements View.OnClickLi
                                     @Override
                                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
                                         Date date1 = new Date();
-                                        backHour=selectedHour;
-                                        backmint=selectedMinute;
+                                        backHour = selectedHour;
+                                        backmint = selectedMinute;
                                         date1.setHours(backHour);
                                         date1.setMinutes(backmint);
                                         endTime = new SimpleDateFormat("HH:mm").format(date1);
@@ -309,16 +313,16 @@ public class NewTripActivity extends AppCompatActivity implements View.OnClickLi
         textDate.setText(data.getDate());
         textTime.setText(data.getTime());
         int posR = 0;
-        for (int i = 0; i < dataRepeat.length; i++){
-            if(data.getRepeatData().equals(dataRepeat[i])){
+        for (int i = 0; i < dataRepeat.length; i++) {
+            if (data.getRepeatData().equals(dataRepeat[i])) {
                 posR = i;
                 break;
             }
         }
         repeat.setSelection(posR);
         int posW = 0;
-        for (int i = 0; i < dataRepeat.length; i++){
-            if(data.getRepeatData().equals(dataRepeat[i])){
+        for (int i = 0; i < dataRepeat.length; i++) {
+            if (data.getRepeatData().equals(dataRepeat[i])) {
                 posW = i;
                 break;
             }
