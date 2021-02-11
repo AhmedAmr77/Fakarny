@@ -252,13 +252,13 @@
 
 
             <Button
-                android:id="@+id/btnshowNote"
+                android:id="@+id/buttonAddNote"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="6dp"
                 android:layout_weight="1.5"
-                android:background="@drawable/ic_baseline_note_24"
-                android:foreground="@drawable/ic_baseline_note_24" />
+                android:background="@drawable/ic_baseline_note_add_24"
+                android:foreground="@drawable/ic_baseline_note_add_24" />
 
             <Button
                 android:id="@+id/buttonTripStart"
@@ -272,13 +272,13 @@
                 android:textStyle="bold" />
 
             <Button
-                android:id="@+id/buttonAddNote"
+                android:id="@+id/btnshowNote"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="3dp"
                 android:layout_weight="1.5"
-                android:background="@drawable/ic_baseline_note_add_24"
-                android:foreground="@drawable/ic_baseline_note_add_24" />
+                android:background="@drawable/ic_baseline_note_24"
+                android:foreground="@drawable/ic_baseline_note_24" />
 
         </LinearLayout>
 
