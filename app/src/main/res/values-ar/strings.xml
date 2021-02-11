@@ -166,5 +166,13 @@
     <string name="oct">اكتوبر</string>
     <string name="nov">نوفمبر</string>
     <string name="dec">ديسمبر</string>
+    <string name="Logout">تسجيل خروج</string>
+    <string name="logout_ms">هل انت متأكيد تسجيل الخروج؟ \\ n إذا لم تقم بمزامنة ملاحظاتك ، فستفقدها</string>
+    <string name="yes_i_am">نعم متأكد</string>
+    <string name="yes">نعم</string>
+    <string name="no">لا</string>
+    <string name="edit_ms">"هل تريد تعديل الرحله ؟ "</string>
+    <string name="edit">تعديل</string>
+    <string name="delete_ms">هل أنت متأكد أنك تريد حذف هذه الرحلة؟</string>
 
 </resources>

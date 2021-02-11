@@ -165,4 +165,12 @@
     <string name="oct">Oct</string>
     <string name="nov">Nov</string>
     <string name="dec">Dec</string>
+    <string name="Logout">Logout</string>
+    <string name="logout_ms">Are you sure you want to logout?\\nif you did not synchronized your notes you will lose it</string>
+    <string name="yes_i_am">yes I am sure</string>
+    <string name="yes">yes</string>
+    <string name="no">no</string>
+    <string name="edit_ms">you want to Edit this Trip ?</string>
+    <string name="edit">Edit</string>
+    <string name="delete_ms">Are you sure you want to delete this Trip ?</string>
 </resources>

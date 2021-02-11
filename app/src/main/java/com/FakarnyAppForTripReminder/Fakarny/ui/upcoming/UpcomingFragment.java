@@ -80,10 +80,10 @@ public class UpcomingFragment extends Fragment {
                 super.onSelectedChanged(viewHolder, actionState);
                 if (ItemTouchHelper.ACTION_STATE_DRAG == actionState && viewHolder != null) {
                     new AlertDialog.Builder(getContext())
-                            .setTitle("Edit")
-                            .setMessage("you want to Edit this Trip ?")
-                            .setPositiveButton("no", null)
-                            .setNegativeButton("yes", new DialogInterface.OnClickListener() {
+                            .setTitle(getResources().getString(R.string.edit))
+                            .setMessage(getResources().getString(R.string.edit_ms))
+                            .setPositiveButton(getResources().getString(R.string.no), null)
+                            .setNegativeButton(getResources().getString(R.string.yes), new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
                                     TripData tripData = adapter.getTripDataList().get(viewHolder.getAdapterPosition());
                                     Intent intent = new Intent(getContext(), NewTripActivity.class);
@@ -100,14 +100,14 @@ public class UpcomingFragment extends Fragment {
             public void onSwiped(RecyclerView.ViewHolder viewHolder,
                                  int direction) {
                 new AlertDialog.Builder(getContext())
-                        .setTitle("Delete")
-                        .setMessage("Are you sure you want to delete this Trip ?")
-                        .setPositiveButton("cancel", new DialogInterface.OnClickListener() {
+                        .setTitle(getResources().getString(R.string.delete))
+                        .setMessage(getResources().getString(R.string.delete_ms))
+                        .setPositiveButton(getResources().getString(R.string.cancel_btn_alertDialog), new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 adapter.notifyDataSetChanged();
                             }
                         })
-                        .setNegativeButton("yes I am sure", new DialogInterface.OnClickListener() {
+                        .setNegativeButton(getResources().getString(R.string.yes_i_am), new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 model.remove(adapter.getTripDataList().get(viewHolder.getAdapterPosition()));
                                 adapter.notifyItemRemoved(viewHolder.getAdapterPosition());

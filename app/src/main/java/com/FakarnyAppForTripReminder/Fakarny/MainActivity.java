@@ -67,13 +67,14 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
         if (id == R.id.logout) {
             new AlertDialog.Builder(this)
-                    .setTitle("Logout")
-                    .setMessage("Are you sure you want to logout?\nif you did not synchronized your notes you will lose it")
-                    .setPositiveButton("cancel", null)
-                    .setNegativeButton("yes I am sure", new DialogInterface.OnClickListener() {
+                    .setTitle(getResources().getString(R.string.Logout))
+                    .setMessage(getResources().getString(R.string.Logout))
+                    .setPositiveButton(getResources().getString(R.string.cancel_btn_alertDialog), null)
+                    .setNegativeButton(getResources().getString(R.string.yes_i_am), new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             mAuth.signOut();
                             Intent i = new Intent(MainActivity.this, SplashScreen.class);
+                            i.putExtra("from_Main",true);
                             startActivity(i);
                             repository.deleteAll();
                             finish();

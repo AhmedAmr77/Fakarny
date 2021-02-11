@@ -76,14 +76,14 @@ public class HistoryFragment extends Fragment {
             public void onSwiped(RecyclerView.ViewHolder viewHolder,
                                  int direction) {
                 new AlertDialog.Builder(getContext())
-                        .setTitle("delete")
-                        .setMessage("Are you sure you want to delete this Trip ?")
-                        .setPositiveButton("cancel", new DialogInterface.OnClickListener() {
+                        .setTitle(getResources().getString(R.string.delete))
+                        .setMessage(getResources().getString(R.string.delete_ms))
+                        .setPositiveButton(getResources().getString(R.string.cancel_btn_alertDialog), new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 adapter.notifyDataSetChanged();
                             }
                         })
-                        .setNegativeButton("yes I am sure", new DialogInterface.OnClickListener() {
+                        .setNegativeButton(getResources().getString(R.string.yes_i_am), new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 model.remove(adapter.getValues().get(viewHolder.getAdapterPosition()));
                                 adapter.notifyItemRemoved(viewHolder.getAdapterPosition());
