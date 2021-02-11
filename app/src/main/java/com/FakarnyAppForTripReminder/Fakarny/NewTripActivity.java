@@ -183,7 +183,7 @@ public class NewTripActivity extends AppCompatActivity implements View.OnClickLi
         if (finalWay != null) {
             int posW = 0;
             for (int i = 0; i < dataWay.length; i++) {
-                if (data.getRepeatData().equals(dataWay[i])) {
+                if (finalWay.equals(dataWay[i])) {
                     posW = i;
                     break;
                 }
