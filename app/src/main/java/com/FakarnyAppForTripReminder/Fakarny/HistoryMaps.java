@@ -122,7 +122,7 @@ public class HistoryMaps extends FragmentActivity implements OnMapReadyCallback,
         MarkerOptions startMarker = new MarkerOptions();
         startMarker.position(polylineStartLatLng);
         startMarker.title(getResources().getString(R.string.history_trip_map_start) + " : "+historyTrips.get(name).getTripName());
-        Toast.makeText(this, getResources().getString(R.string.history_trip_map_start)+"", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, getResources().getString(R.string.history_trip_map_start)+"", Toast.LENGTH_SHORT).show();
         mMap.addMarker(startMarker);
         //Add Marker on route ending position
         MarkerOptions endMarker = new MarkerOptions();
