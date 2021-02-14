@@ -13,8 +13,6 @@ import com.FakarnyAppForTripReminder.Fakarny.R;
 
 public class FragmentThree extends Fragment {
 
-    Button next;
-    Button back;
     ViewPager viewPager;
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -27,7 +25,7 @@ public class FragmentThree extends Fragment {
                              Bundle savedInstanceState) {
         View view= inflater.inflate(R.layout.fragment_three,container,false);
         viewPager =getActivity().findViewById(R.id.viewPager);
-        next=view.findViewById(R.id.next3);
+        /*next=view.findViewById(R.id.next3);
 
         next.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -42,7 +40,7 @@ public class FragmentThree extends Fragment {
             public void onClick(View v) {
                 viewPager.setCurrentItem(1);
             }
-        });
+        });*/
 
 
 

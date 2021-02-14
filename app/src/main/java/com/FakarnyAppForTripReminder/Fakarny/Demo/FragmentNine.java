@@ -17,7 +17,6 @@ import com.FakarnyAppForTripReminder.Fakarny.R;
 public class FragmentNine extends Fragment {
 
     TextView done;
-    Button back;
     ViewPager viewPager;
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -40,15 +39,6 @@ public class FragmentNine extends Fragment {
                 getActivity().finish();
             }
         });
-        back=view.findViewById(R.id.back9);
-
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                viewPager.setCurrentItem(6);
-            }
-        });
-
 
 
         return view;

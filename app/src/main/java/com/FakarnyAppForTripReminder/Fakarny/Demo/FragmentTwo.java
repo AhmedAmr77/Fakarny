@@ -13,8 +13,7 @@ import com.FakarnyAppForTripReminder.Fakarny.R;
 
 public class FragmentTwo extends Fragment {
 
-    Button next;
-    Button back;
+
     ViewPager viewPager;
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -26,24 +25,6 @@ public class FragmentTwo extends Fragment {
                              Bundle savedInstanceState) {
         View view= inflater.inflate(R.layout.fragment_two,container,false);
         viewPager =getActivity().findViewById(R.id.viewPager);
-        next=view.findViewById(R.id.next2);
-
-        next.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                viewPager.setCurrentItem(2);
-            }
-        });
-        back=view.findViewById(R.id.back2);
-
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                viewPager.setCurrentItem(0);
-            }
-        });
-
-
 
         return view;
     }

@@ -19,7 +19,6 @@ import androidx.viewpager.widget.ViewPager;
 
 public class FragmentOne extends Fragment {
 
-    Button next;
     TextView skip;
     ViewPager viewPager;
     @Override
@@ -41,14 +40,6 @@ public class FragmentOne extends Fragment {
         editor.putBoolean("firstStart",false);
         editor.apply();
 
-        next=view.findViewById(R.id.next);
-
-        next.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                viewPager.setCurrentItem(1);
-            }
-        });
 
         skip=view.findViewById(R.id.skip);
         skip.setOnClickListener(new View.OnClickListener() {

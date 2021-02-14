@@ -27,26 +27,12 @@
         android:clickable="true"
         android:focusable="true"
         android:text="@string/skip"
-        android:textColor="#DD070F"
+        android:textColor="@color/pro"
         android:textSize="29sp"
-        app:backgroundTint="#F31515"
+        app:backgroundTint="@color/pro"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.071"
         app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/next"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
-        android:clickable="true"
-        android:focusable="true"
-       android:background="@drawable/ic_baseline_keyboard_arrow_right_24"
-        app:backgroundTint="#1EE108"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.1"
-        app:layout_constraintStart_toEndOf="@+id/skip" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
